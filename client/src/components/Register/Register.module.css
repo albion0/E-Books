@@ -12,6 +12,7 @@
   border-bottom-right-radius: 50px;
   box-shadow: 0 0 20px rgb(0, 0, 0, 0.1);
   padding: 30px;
+  max-width: 370px;
 }
 
 .heading {
@@ -117,5 +118,5 @@
 .error {
   color: red;
   font-size: 11.7px;
-  margin-top: 2px;
+  margin-top: 5px;
 }

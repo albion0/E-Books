@@ -1,28 +1,42 @@
-import { useState, useRef } from "react";
+import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { IconContext } from "react-icons";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 
+import useInput from "../../hooks/useInput";
+import { validateEmail, validatePassword } from "../../helpers/helpers";
 import classes from "./Login.module.css";
 
 const Login = () => {
   const [iconPassword, setIconPassword] = useState(false);
-  
-  const emailInput = useRef();
-  const passwordInput = useRef();
+  const {
+    value: emailValue,
+    validity: emailValidity,
+    focusOut: emailFocusOut,
+    error: emailError,
+    changeHandler: emailChangeHandler,
+    focusHandler: emailFocusHandler,
+    blurHandler: emailBlurHandler
+  } = useInput(validateEmail);
+  const {
+    value: passwordValue,
+    validity: passwordValidity,
+    focusOut: passwordFocusOut,
+    error: passwordError,
+    changeHandler: passwordChangeHandler,
+    focusHandler: passwordFocusHandler,
+    blurHandler: passwordBlurHandler
+  } = useInput(validatePassword);
 
   const submitHandler = (e) => {
     e.preventDefault();
-
-    const email = emailInput.current.value;
-    const password = passwordInput.current.value;
 
     fetch("http://localhost:5000/api/auth/login", {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({email, password})
+      body: JSON.stringify({email: emailValue, password: passwordValue})
     })
     .then(response => response.json())
     .then(data => console.log(data))
@@ -36,19 +50,30 @@ const Login = () => {
         
         <form className={classes.form} onSubmit={submitHandler}>
           <div className={classes.inputBox}>
-            <input type="email" placeholder="Email address" className={classes.input} ref={emailInput} />
-            {/* <p className={classes.error}>Email Error</p> */}
+            <input
+              type="email"
+              placeholder="Email address"
+              className={classes.input}
+              onChange={emailChangeHandler}
+              onFocus={emailFocusHandler}
+              onBlur={emailBlurHandler} />
+            {!emailValidity && emailFocusOut && <p className={classes.error}>{emailError}</p>}
           </div>
           <div className={classes.inputBox}>
             <div className={classes.passwordBox}>
-              <input type={iconPassword ? 'text' : 'password'} placeholder="Password" ref={passwordInput} />
+              <input
+                type={iconPassword ? 'text' : 'password'}
+                placeholder="Password"
+                onChange={passwordChangeHandler}
+                onFocus={passwordFocusHandler}
+                onBlur={passwordBlurHandler} />
 
               <IconContext.Provider value={{ className: classes.icon }}>
                 {iconPassword && <AiOutlineEye onClick={() => setIconPassword(state => !state)} />}
                 {!iconPassword && <AiOutlineEyeInvisible onClick={() => setIconPassword(state => !state)} />}
               </IconContext.Provider>
             </div>
-            {/* <p className={classes.error}>Password Error</p> */}
+            {!passwordValidity && passwordFocusOut && <p className={classes.error}>{passwordError}</p>}
           </div>
 
           <input type="checkbox" className={classes.checkbox} />

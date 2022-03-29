@@ -1,6 +1,5 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-const mongoose = require("mongoose");
 const cors = require("cors");
 const dotenv = require("dotenv");
 
@@ -9,8 +8,6 @@ const { db } = require("./utils/functions");
 // Imports: error handlers.
 const errorHandler = require("./middlewares/errorHandler");
 const genericErrorHandler = require("./middlewares/genericErrorHandler");
-
-dotenv.config();
 
 const authRoutes = require("./routes/auth.js");
 
@@ -25,16 +22,6 @@ app.use("/api/auth", authRoutes);
 // User error handling middleware.
 app.use(errorHandler);
 app.use(genericErrorHandler);
-
-// const CONNECTION_URL = process.env.DATABASE_URL;
-// const PORT = process.env.PORT || 5000;
-
-// mongoose
-//   .connect(CONNECTION_URL, { useNewUrlParser: true })
-//   .then(() => {
-//     app.listen(PORT, () => console.log(`Server running on port: ${PORT}`));
-//   })
-//   .catch((err) => console.log(err.message));
 
 // Load .env variables.
 dotenv.config({});
