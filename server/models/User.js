@@ -1,24 +1,47 @@
-const mongoose = require('mongoose');
+// Imports: third-party packages.
+const mongoose = require("mongoose");
+const mongoosePaginate = require("mongoose-paginate-v2");
+const mongooseAggregatePaginate = require("mongoose-aggregate-paginate-v2");
+const bcrypt = require("bcryptjs");
 
-const userSchema = mongoose.Schema({
-    username: String,
-    email: String,
-    password: String,
-    credits: {
-        type: Number,
-        default: 0
-    },
-    role: {
-        type: String,
-        default: "user",
-        enum: ["user", "admin",]
-      },
-    createdAt: {
-        type: Date,
-        default: new Date()
-    }
+// Imports: local files.
+const Base = require("./Base");
+
+// User Schema that is used to represent single User in our API.
+const UserSchema = new mongoose.Schema({
+  ...Base,
+  username: {
+    type: String,
+    required: false,
+    default: null,
+  },
+  credits: {
+    type: String,
+    required: false,
+    default: null,
+  },
 });
 
-const User = mongoose.model("User", userSchema);
+// Static & instance methods.
+UserSchema.statics.comparePasswords = async (
+  candidatePassword,
+  hashedPassword
+) => {
+  return await bcrypt.compare(candidatePassword, hashedPassword);
+};
 
-module.exports = User;
+UserSchema.statics.passwordChangedAfter = (
+  passwordChangedAt,
+  tokenIssuedAt
+) => {
+  if (!passwordChangedAt || !tokenIssuedAt) return false;
+
+  return new Date(passwordChangedAt) > new Date(tokenIssuedAt);
+};
+
+// Plugins.
+UserSchema.plugin(mongoosePaginate);
+UserSchema.plugin(mongooseAggregatePaginate);
+
+// Exports of this file.
+module.exports = mongoose.model("User", UserSchema);
