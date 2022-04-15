@@ -1,0 +1,15 @@
+.wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.heading {
+    margin: 20px 0;
+}
+
+.cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 50px;
+}

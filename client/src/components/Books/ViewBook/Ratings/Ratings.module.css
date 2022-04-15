@@ -1,0 +1,50 @@
+.wrapper {
+    box-shadow: 1px 1px 10px rgb(189, 189, 189, 0.5);
+    height: max-content;
+    padding: 20px;
+    position: sticky;
+    top: 20px;
+}
+
+.heading {
+
+}
+
+.stars {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.text {
+    margin-left: 10px;
+    margin-bottom: 0;
+}
+
+.star {
+    display: flex;
+    align-items: center;
+    margin-top: 5px;
+}
+
+.txt, .percent {
+    font-size: 14px;
+    margin: 0;
+    color: rgb(35, 31, 31);
+}
+
+.line {
+    height: 20px;
+    width: 130px;
+    border-radius: 8px;
+    background-color: #eee;
+    margin: 0 10px;
+}
+
+.filled {
+    width: 76%;
+    height: 100%;
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+    background-color: #ffa41c;
+}

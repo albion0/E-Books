@@ -1,0 +1,58 @@
+.book {
+    border: 1px solid #eee;
+    border-radius: 5px;
+    transition: all 0.4s ease;
+}
+
+.book:hover {
+    box-shadow: 1px 1px 10px rgb(211, 211, 211, 0.4);
+}
+
+.img {
+    width: 100%;
+}
+
+.main {
+    padding: 15px 12px;
+    border-top: 1px solid rgb(160, 157, 157, 0.2);
+}
+
+.title {
+
+}
+
+.description {
+    font-size: 12px;
+}
+
+.price {
+    margin: 0;
+    font-size: 13px;
+    color: green;
+    font-weight: 600;
+}
+
+.bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.btn {
+    background-color: #cdcdcd;
+    color: #000;
+    border: 0;
+    border-radius: 5px;
+    outline: none;
+    padding: 5px 15px;
+    font-size: 12px;
+    transition: all 0.3s ease;
+    margin-left: auto;
+    display: block;
+}
+
+.btn:hover {
+    background-color: #b4b4b4;
+    color: #000;
+    box-shadow: 1px 1px 10px rgb(160, 157, 157, 0.4);
+}

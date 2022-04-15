@@ -1,11 +1,12 @@
-import Cards from "./Cards/Cards";
+import Book from "./Book/Book";
 
-import classes from "./Home.module.css";
+import classes from "./Books.module.css";
 import bookImg from "../../assets/images/book.png";
+import Filters from "./Filters/Filters";
 
 const booksData = [];
 
-for(let i = 1; i <= 5; i++) {
+for(let i = 1; i <= 10; i++) {
   booksData.push({
     id: 'key' + i,
     img: bookImg,
@@ -16,14 +17,25 @@ for(let i = 1; i <= 5; i++) {
   })
 }
 
-const Home = () => {
+const Books = () => {
   return (
     <div className={classes.wrapper}>
-      <Cards title="New Releases" items={booksData} />
-      <Cards title="Recommended Books" items={booksData} />
-      <Cards title="Best-selling Books" items={booksData} />
+      <Filters />
+
+      <div className={classes.books}>
+        {booksData.map((item) => (
+          <Book
+            key={item.id}
+            img={item.img}
+            title={item.title}
+            desc={item.desc}
+            price={item.price}
+            date={item.date} 
+          />
+        ))}
+      </div>
     </div>
   )
 }
 
-export default Home
+export default Books

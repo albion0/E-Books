@@ -31,13 +31,25 @@ const Login = React.lazy(() => import('../components/Login/Login'));
 const Register = React.lazy(() => import('../components/Register/Register'));
 const ForgotPassword = React.lazy(() => import('../components/ForgotPassword/ForgotPassword'));
 const Dashboard = React.lazy(() => import('../views/Dashboard'));
+const Books = React.lazy(() => import('../components/Books/Books'));
+const MyBooks = React.lazy(() => import('../components/MyBooks/MyBooks'));
+const Payments = React.lazy(() => import('../components/Payments/Payments'));
+const Forum = React.lazy(() => import('../components/Forum/Forum'));
+const ContactUs = React.lazy(() => import('../components/ContactUs/ContactUs'));
+const Navbar = React.lazy(() => import('../components/Navbar/Navbar'));
+const ViewBook = React.lazy(() => import('../components/Books/ViewBook/ViewBook'));
 
 const ROUTES = [
   {
     path: '/',
     key: 'ROOT',
     exact: true,
-    component: (props) => <Home {...props} />,
+    component: (props) => (
+      <>
+        <Navbar />
+        <Home {...props} />
+      </>
+    ),
   },
   {
     path: '/login',
@@ -50,6 +62,72 @@ const ROUTES = [
     key: 'AUTH',
     exact: true,
     component: (props) => <Register {...props} />,
+  },
+  {
+    path: '/books',
+    key: 'ROOT',
+    exact: true,
+    component: (props) => (
+      <>
+        <Navbar />
+        <Books {...props} />
+      </>
+    ),
+  },
+  {
+    path: '/books/:id',
+    key: 'ROOT',
+    exact: true,
+    component: (props) => (
+      <>
+        <Navbar />
+        <ViewBook {...props} />
+      </>
+    ),
+  },
+  {
+    path: '/my-books',
+    key: 'ROOT',
+    exact: true,
+    component: (props) => (
+      <>
+        <Navbar />
+        <MyBooks {...props} />
+      </>
+    ),
+  },
+  {
+    path: '/payments',
+    key: 'ROOT',
+    exact: true,
+    component: (props) => (
+      <>
+        <Navbar />
+        <Payments {...props} />
+      </>
+    ),
+  },
+  {
+    path: '/forum',
+    key: 'ROOT',
+    exact: true,
+    component: (props) => (
+      <>
+        <Navbar />
+        <Forum {...props} />
+      </>
+    ),
+  },
+  {
+    path: '/contact-us',
+    key: 'ROOT',
+    exact: true,
+    component: (props) => (
+      <>
+        <Navbar />
+        <ContactUs {...props} />
+      </>
+    ),
   },
   {
     path: '/dashboard',
