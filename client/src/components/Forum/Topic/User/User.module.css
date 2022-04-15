@@ -1,0 +1,56 @@
+.user {
+    box-shadow: 1px 1px 10px rgb(207, 207, 207, 0.5);
+    padding: 10px 15px;
+    height: max-content;
+    border: 1px solid rgb(179, 179, 179, 0.3);
+}
+
+.picture {
+    border: 1px solid rgb(179, 179, 179, 0.3);
+    height: 102px;
+    width: 102px;
+    margin: 0 auto;
+}
+
+.img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.username, .account, .text, .value {
+    margin-bottom: 0;
+    font-size: 14px;
+}
+
+.username {
+    color: green;
+    font-weight: 600;
+    margin: 10px 0;
+    text-align: center;
+}
+
+.account {
+    background-color: #eee;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    text-align: center;
+    padding: 2px 5px;
+    border-radius: 10px;
+    box-shadow: 1px 1px 10px rgb(182, 182, 182, 0.3);
+    border: 1px solid rgb(179, 179, 179, 0.3);
+}
+
+.row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.text {
+
+}
+
+.value {
+
+}

@@ -1,0 +1,33 @@
+.wrapper {
+    background-color: rgb(247, 247, 247);
+    padding: 15px;
+    display: grid;
+    grid-template-columns: 0.2fr 1fr;
+    gap: 20px;
+    border: 1px solid rgb(179, 179, 179, 0.3);
+    margin-bottom: 20px;
+    transition: box-shadow 0.2s ease;
+}
+
+.wrapper:hover {
+    box-shadow: 1px 1px 15px rgb(207, 207, 207, 0.5);
+}
+
+.content {
+    padding: 10px 20px;
+    box-shadow: 1px 1px 10px rgb(207, 207, 207, 0.5);
+    border: 1px solid rgb(179, 179, 179, 0.3);
+    height: max-content;
+}
+
+.text {
+    font-size: 14px;
+    margin: 5px 0;
+}
+
+.date {
+    font-size: 14px;
+    margin-top: 20px;
+    margin-bottom: 5px;
+    color: rgb(128, 128, 128);
+}

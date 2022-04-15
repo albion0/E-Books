@@ -1,0 +1,45 @@
+.wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-top: 30px;
+}
+
+.table thead tr td {
+    background-color: rgb(207, 207, 207);
+}
+
+.table thead tr:hover {
+    background-color: #eee;
+}
+
+.user {
+    display: flex;
+    align-items: center;
+}
+
+.img {
+    width: 25px;
+    margin-right: 10px;
+}
+
+.username, .title, .text, .date {
+    margin-bottom: 0;
+}
+
+.title {
+    font-size: 14px;
+}
+
+.text {
+    font-size: 13px;
+}
+
+.username, .date {
+    font-size: 13px;
+    color: rgb(151, 151, 151);
+}

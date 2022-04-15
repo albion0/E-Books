@@ -18,7 +18,7 @@ const Navbar = () => {
                 <NavLink to="/payments" className={classes.link} activeClassName={classes.active} exact>Payments</NavLink>
             </li>
             <li className={classes.item}>
-                <NavLink to="/forum" className={classes.link} activeClassName={classes.active} exact>Forum</NavLink>
+                <NavLink to="/forum" className={classes.link} activeClassName={classes.active}>Forum</NavLink>
             </li>
             <li className={classes.item}>
                 <NavLink to="/contact-us" className={classes.link} activeClassName={classes.active} exact>Contact Us</NavLink>
