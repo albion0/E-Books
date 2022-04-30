@@ -1,12 +1,12 @@
 // Imports: local files.
-const Genre = require("../models/Genre");
+const Author = require("../models/Author");
 const asyncHandler = require("../middlewares/asyncHandler");
 const { statusCodes } = require("../config");
 const { ApiError } = require("../utils/classes");
 
 /**
- * @description Get all genres.
- * @route       GET /api/genres.
+ * @description Get all authors.
+ * @route       GET /api/authors.
  * @access      Public.
  */
 const getAll = asyncHandler(async (request, response, next) => {
@@ -14,25 +14,25 @@ const getAll = asyncHandler(async (request, response, next) => {
   const options = { page, limit, pagination, sort: "-_id" };
   const query = { isDeleted: false, isActive: true };
 
-  const genres = await Genre.paginate(query, options);
+  const authors = await Author.paginate(query, options);
   response
     .status(statusCodes.OK)
-    .json({ success: true, data: { genres }, error: null });
+    .json({ success: true, data: { authors }, error: null });
 });
 
 /**
- * @description Get one genre.
- * @route       GET /api/genres/:genreId.
+ * @description Get one Author.
+ * @route       GET /api/authors/:authorId.
  * @access      Public.
  */
 const getOne = asyncHandler(async (request, response, next) => {
-  const { genreId } = request.params;
+  const { authorId } = request.params;
 
-  const genre = await Genre.findOne({ _id: genreId, isDeleted: false });
-  if (!genre) {
+  const author = await Author.findOne({ _id: authorId, isDeleted: false });
+  if (!author) {
     next(
       new ApiError(
-        "Genre not found with id!",
+        "Author not found with id!",
         "RESOURCE_NOT_FOUND",
         statusCodes.NOT_FOUND
       )
@@ -42,43 +42,43 @@ const getOne = asyncHandler(async (request, response, next) => {
 
   response
     .status(statusCodes.OK)
-    .json({ success: true, data: { genre }, error: null });
+    .json({ success: true, data: { author }, error: null });
 });
 
 /**
- * @description Create new genre.
- * @route       POST /api/genres.
+ * @description Create new author.
+ * @route       POST /api/authors.
  * @access      Private, only roles [ADMIN].
  */
 const create = asyncHandler(async (request, response, next) => {
   const user = request.user;
   const { name, description } = request.body;
 
-  const genreExists =
-    (await Genre.countDocuments({
+  const authorExists =
+    (await Author.countDocuments({
       $or: { name: name },
       isDeleted: false,
     })) > 0;
-  if (genreExists) {
+  if (authorExists) {
     next(
       new ApiError(
-        "Genre with name exists!",
-        "GENRE_EXISTS",
+        "Author with name exists!",
+        "AUTHOR_EXISTS",
         statusCodes.BAD_REQUEST
       )
     );
     return;
   }
 
-  const genre = await Genre.create({
+  const author = await Author.create({
     name,
     description,
     createdBy: user._id,
   });
-  if (!genre) {
+  if (!author) {
     next(
       new ApiError(
-        "Failed to create genre!",
+        "Failed to create author!",
         "FAILED_CREATE",
         statusCodes.INTERNAL_ERROR
       )
@@ -88,41 +88,41 @@ const create = asyncHandler(async (request, response, next) => {
 
   response
     .status(statusCodes.CREATED)
-    .json({ success: true, data: { genre }, error: null });
+    .json({ success: true, data: { author }, error: null });
 });
 
 /**
- * @description Update one genre.
- * @route       PUT /api/genres/:genreId.
+ * @description Update one author.
+ * @route       PUT /api/authors/:authorId.
  * @access      Private, only roles [ADMIN].
  */
 const updateOne = asyncHandler(async (request, response, next) => {
   const user = request.user;
   const { name, description } = request.body;
-  const { genreId } = request.params;
+  const { authorId } = request.params;
 
-  const genreExists =
-    (await Genre.countDocuments({
-      _id: { $ne: genreId },
+  const authorExists =
+    (await Author.countDocuments({
+      _id: { $ne: authorId },
       $or: { name: name },
       isDeleted: false,
     })) > 0;
-  if (genreExists) {
+  if (authorExists) {
     next(
       new ApiError(
-        "Genre with name exists!",
-        "GENRE_EXISTS",
+        "Author with name exists!",
+        "AUTHOR_EXISTS",
         statusCodes.BAD_REQUEST
       )
     );
     return;
   }
 
-  const genre = await Genre.findOne({ _id: genreId, isDeleted: false });
-  if (!genre) {
+  const author = await Author.findOne({ _id: authorId, isDeleted: false });
+  if (!author) {
     next(
       new ApiError(
-        "Genre not found with id!",
+        "Author not found with id!",
         "RESOURCE_NOT_FOUND",
         statusCodes.NOT_FOUND
       )
@@ -130,8 +130,8 @@ const updateOne = asyncHandler(async (request, response, next) => {
     return;
   }
 
-  const updatedGenre = await Genre.findOneAndUpdate(
-    { _id: genreId, isDeleted: false },
+  const updatedAuthor = await Author.findOneAndUpdate(
+    { _id: authorId, isDeleted: false },
     {
       $set: {
         name,
@@ -142,10 +142,10 @@ const updateOne = asyncHandler(async (request, response, next) => {
     },
     { new: true }
   );
-  if (!updatedGenre) {
+  if (!updatedAuthor) {
     next(
       new ApiError(
-        "Failed to update genre!",
+        "Failed to update Author!",
         "FAILED_UPDATE",
         statusCodes.INTERNAL_ERROR
       )
@@ -155,23 +155,23 @@ const updateOne = asyncHandler(async (request, response, next) => {
 
   response
     .status(statusCodes.CREATED)
-    .json({ success: true, data: { genre: updatedGenre }, error: null });
+    .json({ success: true, data: { author: updatedAuthor }, error: null });
 });
 
 /**
- * @description Delete one genre.
- * @route       DELETE /api/genres/:genreId.
+ * @description Delete one author.
+ * @route       DELETE /api/authors/:authorId.
  * @access      Private, only roles [ADMIN].
  */
 const deleteOne = asyncHandler(async (request, response, next) => {
   const user = request.user;
-  const { genreId } = request.params;
+  const { authorId } = request.params;
 
-  const genre = await Genre.findOne({ _id: genreId, isDeleted: false });
-  if (!genre) {
+  const author = await Author.findOne({ _id: authorId, isDeleted: false });
+  if (!author) {
     next(
       new ApiError(
-        "Genre not found with id!",
+        "Author not found with id!",
         "RESOURCE_NOT_FOUND",
         statusCodes.NOT_FOUND
       )
@@ -179,8 +179,8 @@ const deleteOne = asyncHandler(async (request, response, next) => {
     return;
   }
 
-  const deletedGenre = await Genre.findOneAndUpdate(
-    { _id: genreId, isDeleted: false },
+  const deletedAuthor = await Author.findOneAndUpdate(
+    { _id: authorId, isDeleted: false },
     {
       $set: {
         isDeleted: true,
@@ -190,10 +190,10 @@ const deleteOne = asyncHandler(async (request, response, next) => {
     },
     { new: true }
   );
-  if (!deletedGenre) {
+  if (!deletedAuthor) {
     next(
       new ApiError(
-        "Failed to delete genre!",
+        "Failed to delete author!",
         "FAILED_DELETE",
         statusCodes.INTERNAL_ERROR
       )
@@ -203,7 +203,7 @@ const deleteOne = asyncHandler(async (request, response, next) => {
 
   response
     .status(statusCodes.OK)
-    .json({ success: true, data: { genre: deletedGenre }, error: null });
+    .json({ success: true, data: { author: deletedAuthor }, error: null });
 });
 
 // Exports of this file.

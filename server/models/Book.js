@@ -3,15 +3,34 @@ const mongoose = require("mongoose");
 const mongoosePaginate = require("mongoose-paginate-v2");
 const mongooseAggregatePaginate = require("mongoose-aggregate-paginate-v2");
 
-// Genre Schema that is used to represent single Genre in our API.
-const GenreSchema = new mongoose.Schema({
-  name: {
+// Book Schema that is used to represent single Book in our API.
+const BookSchema = new mongoose.Schema({
+  title: {
     type: String,
-    required: false,
+    required: true,
   },
-  description: {
+  content: {
+    type: String,
+    required: true,
+  },
+  credits: {
+    type: String,
+    required: true,
+  },
+  bookPhoto: {
     type: String,
     required: false,
+    default: null,
+  },
+  author: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Author",
+    required: true,
+  },
+  genre: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Genre",
+    required: true,
   },
   isActive: {
     type: Boolean,
@@ -48,8 +67,8 @@ const GenreSchema = new mongoose.Schema({
 });
 
 // PLugins.
-GenreSchema.plugin(mongoosePaginate);
-GenreSchema.plugin(mongooseAggregatePaginate);
+BookSchema.plugin(mongoosePaginate);
+BookSchema.plugin(mongooseAggregatePaginate);
 
 // Exports of this file.
-module.exports = mongoose.model("Genre", GenreSchema);
+module.exports = mongoose.model("Book", BookSchema);
