@@ -14,11 +14,11 @@ const createPublicFoldersIfNeeded = () => {
   const folders = ["books"];
 
   // Create public folder if missing.
-  const pathToPublicFolder = path.join(__dirname, `../../../public`);
+  const pathToPublicFolder = path.join(__dirname, `../../public`);
   if (!fs.existsSync(pathToPublicFolder)) fs.mkdirSync(pathToPublicFolder);
 
   folders.forEach((folder) => {
-    const pathToFolder = path.join(__dirname, `../../../public/${folder}`);
+    const pathToFolder = path.join(__dirname, `../../public/${folder}`);
     if (!fs.existsSync(pathToFolder)) fs.mkdirSync(pathToFolder);
   });
 };
