@@ -1,0 +1,20 @@
+[
+  {
+    "username": "florian",
+    "email": "florian@ebooks.com",
+    "password": "test1234",
+    "role": "admin"
+  },
+  {
+    "username": "lorik",
+    "email": "lorik@ebooks.com",
+    "password": "test1234",
+    "role": "admin"
+  },
+  {
+    "username": "albijon",
+    "email": "albijon@ebooks.com",
+    "password": "test1234",
+    "role": "admin"
+  }
+]
