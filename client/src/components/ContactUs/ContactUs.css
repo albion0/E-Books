@@ -1,0 +1,62 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap');
+.contact-Container{
+    font-family: 'Noto Sans', sans-serif;
+    /* background-image: url(../Images/background.png); */
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100vh;
+}
+.contact-Container p{
+    text-align: center;
+    font-size: 40px;
+    color: #C0AF9D;
+}
+
+.contact-form {
+    width: 600px;
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 40px;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.5);
+    margin-left: auto;
+    margin-right: auto;
+}
+.form-input,.form-textarea {
+    width: 500px;
+    margin-top: 30px;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 10px 0 10px 10px;
+}
+.form-input::placeholder, .form-textarea::placeholder, textarea:focus, input:focus{
+    color: #C0AF9D;
+}
+textarea {
+    resize: none !important;
+}
+.submit-button{
+    margin-top: 50px;
+    padding: 16px 42px;
+    line-height: 1.25;
+    background-color: rgba(0, 0, 0, 0.7);
+    text-decoration: none;
+    color: white;
+    font-size: 16px;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    position: relative;
+    transition: background-color .6s ease;
+    overflow: hidden;
+}
+
+@media screen and (max-width: 600px) {
+    .contact-form {
+        width: 100%;
+    }
+    .contact-form {
+        padding-top: 50px;
+    }
+    .form-input,.form-textarea {
+        width: 80%;
+    }
+}
