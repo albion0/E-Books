@@ -23,6 +23,9 @@ const Navbar = () => {
             <li className={classes.item}>
                 <NavLink to="/contact-us" className={classes.link} activeClassName={classes.active} exact>Contact Us</NavLink>
             </li>
+            <li className={classes.item}>
+                <NavLink to="/about" className={classes.link} activeClassName={classes.active} exact>About Us</NavLink>
+            </li>
         </ul>
     </nav>
   )

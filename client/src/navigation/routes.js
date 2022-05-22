@@ -37,6 +37,7 @@ const Payments = React.lazy(() => import('../components/Payments/Payments'));
 const Forum = React.lazy(() => import('../components/Forum/Forum'));
 const Topic = React.lazy(() => import('../components/Forum/Topic/Topic'));
 const ContactUs = React.lazy(() => import('../components/ContactUs/ContactUs'));
+const About = React.lazy(() => import('../components/About/About'));
 const Navbar = React.lazy(() => import('../components/Navbar/Navbar'));
 const ViewBook = React.lazy(() => import('../components/Books/ViewBook/ViewBook'));
 
@@ -138,6 +139,17 @@ const ROUTES = [
       <>
         <Navbar />
         <ContactUs {...props} />
+      </>
+    ),
+  },
+  {
+    path: '/about',
+    key: 'ROOT',
+    exact: true,
+    component: (props) => (
+      <>
+        <Navbar />
+        <About {...props} />
       </>
     ),
   },
