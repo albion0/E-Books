@@ -83,14 +83,14 @@ const UserAdminSchema = new mongoose.Schema({
 });
 
 // Static & instance methods.
-UserSchema.statics.comparePasswords = async (
+UserAdminSchema.statics.comparePasswords = async (
   candidatePassword,
   hashedPassword
 ) => {
   return await bcrypt.compare(candidatePassword, hashedPassword);
 };
 
-UserSchema.statics.passwordChangedAfter = (
+UserAdminSchema.statics.passwordChangedAfter = (
   passwordChangedAt,
   tokenIssuedAt
 ) => {

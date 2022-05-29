@@ -570,7 +570,6 @@ module.exports = {
   deleteOne,
   signup,
   login,
-  confirm,
   forgot,
   reset,
 };

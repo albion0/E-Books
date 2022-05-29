@@ -41,7 +41,7 @@ const initializeAdmins = async () => {
     const salt = await bcrypt.genSalt(10);
     const hash = await bcrypt.hash(admin.password, salt);
 
-    await User.create({ ...admin, password: hash });
+    await UserAdmin.create({ ...admin, password: hash });
   }
 };
 
