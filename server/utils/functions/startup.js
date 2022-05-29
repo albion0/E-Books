@@ -6,7 +6,7 @@ const fs = require("fs");
 const bcrypt = require("bcryptjs");
 
 // Imports: local files.
-const User = require("../../models/User");
+const UserAdmin = require("../../models/UserAdmin");
 const { Admin } = require("../../middlewares/roles");
 
 // Function that is used to create required folders inside the public folder if they dont exist.
@@ -31,7 +31,7 @@ const initializeAdmins = async () => {
   );
 
   for (const admin of admins) {
-    const adminExists = await User.countDocuments({
+    const adminExists = await UserAdmin.countDocuments({
       email: admin.email,
       role: Admin,
       isDeleted: false,

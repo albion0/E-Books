@@ -1,14 +1,14 @@
-import ApiConstants from './constants';
-import axios from 'axios';
+import ApiConstants from "./constants";
+import axios from "axios";
 
 export default async function api(path, method, params) {
   let options;
-  let token = localStorage.getItem('kgen-token');
+  let token = localStorage.getItem("eBook-token");
   options = {
     headers: {
-      Accept: 'application/json',
-      'Access-Control-Allow-Origin': '*',
-      'Content-Type': 'application/json',
+      Accept: "application/json",
+      "Access-Control-Allow-Origin": "*",
+      "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     },
     method: method,
