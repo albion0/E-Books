@@ -1,6 +1,6 @@
 // Imports: local files.
 import ApiClient from "../../services/ApiClient";
-import jwt from "jsonwebtoken";
+// import jwt from "jsonwebtoken";
 import Swal from "sweetalert2";
 
 // Action Types: Get All Users.
@@ -682,8 +682,8 @@ export const loginUser = (payload, options) => {
       });
       if (result.data?.success) {
         const { token } = result.data.data;
-        const { exp } = jwt.decode(token);
-        const expiresIn = new Date(exp * 1000).toISOString();
+        // const { exp } = jwt.decode(token);
+        // const expiresIn = new Date(exp * 1000).toISOString();
         dispatch({ type: "TOKEN", token });
         dispatch(
           loginUserSuccess({
@@ -695,7 +695,7 @@ export const loginUser = (payload, options) => {
           })
         );
         localStorage.setItem("eBook-token", token);
-        localStorage.setItem("expiresIn", expiresIn);
+        // localStorage.setItem("expiresIn", expiresIn);
         history.push(pathname);
         toastNotification("success", onSuccessMessage);
       } else {
@@ -855,8 +855,8 @@ export const resetPassUser = (payload, options) => {
       });
       if (result.data?.success) {
         const { token } = result.data.data;
-        const { exp } = jwt.decode(token);
-        const expiresIn = new Date(exp * 1000).toISOString();
+        // const { exp } = jwt.decode(token);
+        // const expiresIn = new Date(exp * 1000).toISOString();
         dispatch({ type: "TOKEN", token });
         dispatch(
           resetPassUserSuccess({
@@ -867,7 +867,7 @@ export const resetPassUser = (payload, options) => {
             errorMessage: null,
           })
         );
-        localStorage.setItem("expiresIn", expiresIn);
+        // localStorage.setItem("expiresIn", expiresIn);
         toastNotification("success", onSuccessMessage);
         history.push(pathname);
       } else {
