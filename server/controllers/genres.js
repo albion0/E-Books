@@ -56,7 +56,7 @@ const create = asyncHandler(async (request, response, next) => {
 
   const genreExists =
     (await Genre.countDocuments({
-      $or: { name: name },
+      name,
       isDeleted: false,
     })) > 0;
   if (genreExists) {
@@ -104,7 +104,7 @@ const updateOne = asyncHandler(async (request, response, next) => {
   const genreExists =
     (await Genre.countDocuments({
       _id: { $ne: genreId },
-      $or: { name: name },
+      name,
       isDeleted: false,
     })) > 0;
   if (genreExists) {

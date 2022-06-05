@@ -30,7 +30,7 @@ const GenreSchema = new mongoose.Schema({
   },
   createdBy: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
+    ref: "UserAdmin",
     required: false,
     default: null,
   },
@@ -41,7 +41,7 @@ const GenreSchema = new mongoose.Schema({
   },
   lastEditBy: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
+    ref: "UserAdmin",
     required: false,
     default: null,
   },

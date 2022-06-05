@@ -1,35 +1,35 @@
-@import '~antd/dist/antd.css';
-@import '~bootstrap/scss/bootstrap';
-@import 'theme';
+@import "~antd/dist/antd.css";
+@import "~bootstrap/scss/bootstrap";
+@import "theme";
 
 @font-face {
-  font-family: 'Open Sans';
+  font-family: "Open Sans";
   font-weight: 300;
-  src: url(../fonts/OpenSans-Light.ttf) format('truetype');
+  src: url(../fonts/OpenSans-Light.ttf) format("truetype");
 }
 
 @font-face {
-  font-family: 'Open Sans';
+  font-family: "Open Sans";
   font-weight: 400;
-  src: url(../fonts/OpenSans-Regular.ttf) format('truetype');
+  src: url(../fonts/OpenSans-Regular.ttf) format("truetype");
 }
 
 @font-face {
-  font-family: 'Open Sans';
+  font-family: "Open Sans";
   font-weight: 600;
-  src: url(../fonts/OpenSans-SemiBold.ttf) format('truetype');
+  src: url(../fonts/OpenSans-SemiBold.ttf) format("truetype");
 }
 
 @font-face {
-  font-family: 'Open Sans';
+  font-family: "Open Sans";
   font-weight: 700;
-  src: url(../fonts/OpenSans-Bold.ttf) format('truetype');
+  src: url(../fonts/OpenSans-Bold.ttf) format("truetype");
 }
 
 @font-face {
-  font-family: 'Open Sans';
+  font-family: "Open Sans";
   font-weight: 800;
-  src: url(../fonts/OpenSans-ExtraBold.ttf) format('truetype');
+  src: url(../fonts/OpenSans-ExtraBold.ttf) format("truetype");
 }
 .anticon {
   vertical-align: 2px !important;
@@ -92,22 +92,43 @@
 }
 
 .ant-layout-sider-children {
-  background-color: #003143 !important;
+  background-color: #eeeeee !important;
+}
+
+.ant-menu-item:hover {
+  background-color: #cbcbcb !important;
 }
 
 .ant-btn-primary {
-  background: #023142 !important;
-  border-color: #023142 !important;
+  background: #eeeeee !important;
+  border-color: #eeeeee !important;
+  color: #003143 !important;
 }
 
 .ant-menu.ant-menu-dark,
 .ant-menu-dark .ant-menu-sub,
 .ant-menu.ant-menu-dark .ant-menu-sub {
-  background: #003143 !important;
+  background: #eeeeee !important;
+}
+
+.ant-menu-item-selected {
+  background-color: #cbcbcb !important;
+  color: #003143 !important;
+}
+.ant-menu-item-selected .anticon {
+  color: #003143 !important;
 }
 
 .ant-btn-primary {
   background: #00aeef;
+}
+
+.ant-menu-item-icon {
+  color: #003143;
+}
+
+.ant-menu-title-content a {
+  color: #003143 !important;
 }
 
 .resume-loading {
@@ -122,7 +143,7 @@
 
 //OVERALL
 body {
-  font-family: 'Open Sans', sans-serif;
+  font-family: "Open Sans", sans-serif;
 }
 
 input,
@@ -268,7 +289,7 @@ section#articles {
 
 .centered h1 {
   margin: 0;
-  font-family: 'Open Sans';
+  font-family: "Open Sans";
   font-weight: 400;
   font-style: italic;
 }
@@ -281,7 +302,7 @@ section#articles {
   width: 65%;
 }
 .centered-quiz-name p {
-  font-family: 'Open Sans';
+  font-family: "Open Sans";
   font-weight: 300;
   color: #102935;
   font-size: 23.5px;
@@ -295,7 +316,7 @@ section#articles {
   transform: translate(-50%, -50%);
 }
 .centered-date p {
-  font-family: 'Open Sans';
+  font-family: "Open Sans";
   font-weight: 400;
   color: #102935;
   font-size: 11px;
@@ -309,7 +330,7 @@ section#articles {
   transform: translate(-50%, -50%);
 }
 .centered-mentor-name p {
-  font-family: 'Open Sans';
+  font-family: "Open Sans";
   font-weight: 400;
   color: #102935;
   font-size: 11px;
@@ -323,7 +344,7 @@ section#articles {
   transform: translate(-50%, -50%);
 }
 .centered-ctr-name p {
-  font-family: 'Open Sans';
+  font-family: "Open Sans";
   font-weight: 400;
   color: #102935;
   font-size: 11px;
@@ -388,7 +409,10 @@ button.ant-btn.ant-btn-text.ant-btn-sm.ant-btn-icon-only.ant-upload-list-item-ca
   color: #003143 !important;
 }
 
-.ant-collapse-ghost > .ant-collapse-item > .ant-collapse-content > .ant-collapse-content-box {
+.ant-collapse-ghost
+  > .ant-collapse-item
+  > .ant-collapse-content
+  > .ant-collapse-content-box {
   padding: 0;
 }
 .MuiPaper-elevation1 {

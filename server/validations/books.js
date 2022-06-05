@@ -12,8 +12,23 @@ const validator = {
   },
   createBook: {
     body: Joi.object({
-      name: Joi.string().required(),
-      description: Joi.string().required(),
+      title: Joi.string().required(),
+      content: Joi.string().required(),
+      authors: Joi.array()
+        .required()
+        .items(
+          Joi.string()
+            .regex(/^[0-9a-fA-F]{24}$/)
+            .required()
+        ),
+      genres: Joi.array()
+        .required()
+        .items(
+          Joi.string()
+            .regex(/^[0-9a-fA-F]{24}$/)
+            .required()
+        ),
+      credits: Joi.string().required(),
     }),
   },
   updateBook: {
@@ -23,8 +38,23 @@ const validator = {
         .required(),
     }),
     body: Joi.object({
-      name: Joi.string().required(),
-      description: Joi.string().required(),
+      title: Joi.string().required(),
+      content: Joi.string().required(),
+      authors: Joi.array()
+        .required()
+        .items(
+          Joi.string()
+            .regex(/^[0-9a-fA-F]{24}$/)
+            .required()
+        ),
+      genres: Joi.array()
+        .required()
+        .items(
+          Joi.string()
+            .regex(/^[0-9a-fA-F]{24}$/)
+            .required()
+        ),
+      credits: Joi.string().required(),
     }),
   },
   validateBookId: {

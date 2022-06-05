@@ -54,22 +54,6 @@ const create = asyncHandler(async (request, response, next) => {
   const user = request.user;
   const { name, description } = request.body;
 
-  const authorExists =
-    (await Author.countDocuments({
-      $or: { name: name },
-      isDeleted: false,
-    })) > 0;
-  if (authorExists) {
-    next(
-      new ApiError(
-        "Author with name exists!",
-        "AUTHOR_EXISTS",
-        statusCodes.BAD_REQUEST
-      )
-    );
-    return;
-  }
-
   const author = await Author.create({
     name,
     description,
@@ -100,23 +84,6 @@ const updateOne = asyncHandler(async (request, response, next) => {
   const user = request.user;
   const { name, description } = request.body;
   const { authorId } = request.params;
-
-  const authorExists =
-    (await Author.countDocuments({
-      _id: { $ne: authorId },
-      $or: { name: name },
-      isDeleted: false,
-    })) > 0;
-  if (authorExists) {
-    next(
-      new ApiError(
-        "Author with name exists!",
-        "AUTHOR_EXISTS",
-        statusCodes.BAD_REQUEST
-      )
-    );
-    return;
-  }
 
   const author = await Author.findOne({ _id: authorId, isDeleted: false });
   if (!author) {

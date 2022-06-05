@@ -258,8 +258,9 @@ export const createBook = (payload, options) => {
       })
     );
 
-    const { title, content, author, genre, credits } = payload;
+    const { title, content, authors, genres, credits } = payload;
     const {
+      showToast,
       toastNotification,
       history,
       pathname,
@@ -272,8 +273,8 @@ export const createBook = (payload, options) => {
       const result = await ApiClient.post("books", {
         title,
         content,
-        author,
-        genre,
+        authors,
+        genres,
         credits,
       });
       if (result.data?.success) {
@@ -287,7 +288,7 @@ export const createBook = (payload, options) => {
             errorMessage: null,
           })
         );
-        toastNotification("success", onSuccessMessage);
+        showToast && toastNotification("success", onSuccessMessage);
       } else {
         dispatch(
           createBookFailed({
@@ -427,7 +428,7 @@ export const updateOneBook = (payload, options) => {
       })
     );
 
-    const { bookId, title, content, author, genre, credits } = payload;
+    const { bookId, title, content, authors, genres, credits } = payload;
     const {
       toastNotification,
       history,
@@ -440,8 +441,8 @@ export const updateOneBook = (payload, options) => {
       const result = await ApiClient.put(`books/${bookId}`, {
         title,
         content,
-        author,
-        genre,
+        authors,
+        genres,
         credits,
       });
       if (result.data?.success) {

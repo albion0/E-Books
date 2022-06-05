@@ -1,5 +1,5 @@
 // Icons
-import React from 'react';
+import React from "react";
 import {
   UserOutlined,
   UsergroupDeleteOutlined,
@@ -18,33 +18,43 @@ import {
   UsergroupAddOutlined,
   PieChartOutlined,
   BarChartOutlined,
-} from '@ant-design/icons';
-import { Route, Switch } from 'react-router-dom';
+} from "@ant-design/icons";
+import { Route, Switch } from "react-router-dom";
 
-
-import { Loading } from '../components/Loading';
-import { PageNotFound } from '../components/PageNotFound';
+import { Loading } from "../components/Loading";
+import { PageNotFound } from "../components/PageNotFound";
 
 // Routes Lazy
-const Home = React.lazy(() => import('../components/Home/Home'));
-const Login = React.lazy(() => import('../components/Login/Login'));
-const Register = React.lazy(() => import('../components/Register/Register'));
-const ForgotPassword = React.lazy(() => import('../components/ForgotPassword/ForgotPassword'));
-const Dashboard = React.lazy(() => import('../views/Dashboard'));
-const Books = React.lazy(() => import('../components/Books/Books'));
-const MyBooks = React.lazy(() => import('../components/MyBooks/MyBooks'));
-const Payments = React.lazy(() => import('../components/Payments/Payments'));
-const Forum = React.lazy(() => import('../components/Forum/Forum'));
-const Topic = React.lazy(() => import('../components/Forum/Topic/Topic'));
-const ContactUs = React.lazy(() => import('../components/ContactUs/ContactUs'));
-const About = React.lazy(() => import('../components/About/About'));
-const Navbar = React.lazy(() => import('../components/Navbar/Navbar'));
-const ViewBook = React.lazy(() => import('../components/Books/ViewBook/ViewBook'));
+const UserContainer = React.lazy(() =>
+  import("../views/Dashboard/Users/UserContainer")
+);
+const Home = React.lazy(() => import("../components/Home/Home"));
+const Login = React.lazy(() => import("../components/Login/Login"));
+const Register = React.lazy(() => import("../components/Register/Register"));
+const ForgotPassword = React.lazy(() =>
+  import("../components/ForgotPassword/ForgotPassword")
+);
+const Dashboard = React.lazy(() => import("../views/Dashboard"));
+const Books = React.lazy(() => import("../components/Books/Books"));
+const MyBooks = React.lazy(() => import("../components/MyBooks/MyBooks"));
+const Payments = React.lazy(() => import("../components/Payments/Payments"));
+const Forum = React.lazy(() => import("../components/Forum/Forum"));
+const Topic = React.lazy(() => import("../components/Forum/Topic/Topic"));
+const ContactUs = React.lazy(() => import("../components/ContactUs/ContactUs"));
+const About = React.lazy(() => import("../components/About/About"));
+const Navbar = React.lazy(() => import("../components/Navbar/Navbar"));
+const ViewBook = React.lazy(() =>
+  import("../components/Books/ViewBook/ViewBook")
+);
+const Genres = React.lazy(() => import("../views/Dashboard/Genres"));
+const Authors = React.lazy(() => import("../views/Dashboard/Authors"));
+const BooksDashboard = React.lazy(() => import("../views/Dashboard/Books"));
+const StatisticPage = React.lazy(() => import("../views/Dashboard/Statistics"));
 
 const ROUTES = [
   {
-    path: '/',
-    key: 'ROOT',
+    path: "/",
+    key: "ROOT",
     exact: true,
     component: (props) => (
       <>
@@ -54,20 +64,20 @@ const ROUTES = [
     ),
   },
   {
-    path: '/login',
-    key: 'AUTH',
+    path: "/login",
+    key: "AUTH",
     exact: true,
     component: (props) => <Login {...props} />,
   },
   {
-    path: '/register',
-    key: 'AUTH',
+    path: "/register",
+    key: "AUTH",
     exact: true,
     component: (props) => <Register {...props} />,
   },
   {
-    path: '/books',
-    key: 'ROOT',
+    path: "/books",
+    key: "ROOT",
     exact: true,
     component: (props) => (
       <>
@@ -77,8 +87,8 @@ const ROUTES = [
     ),
   },
   {
-    path: '/books/:id',
-    key: 'ROOT',
+    path: "/books/:id",
+    key: "ROOT",
     exact: true,
     component: (props) => (
       <>
@@ -88,8 +98,8 @@ const ROUTES = [
     ),
   },
   {
-    path: '/my-books',
-    key: 'ROOT',
+    path: "/my-books",
+    key: "ROOT",
     exact: true,
     component: (props) => (
       <>
@@ -99,8 +109,8 @@ const ROUTES = [
     ),
   },
   {
-    path: '/payments',
-    key: 'ROOT',
+    path: "/payments",
+    key: "ROOT",
     exact: true,
     component: (props) => (
       <>
@@ -110,8 +120,8 @@ const ROUTES = [
     ),
   },
   {
-    path: '/forum',
-    key: 'ROOT',
+    path: "/forum",
+    key: "ROOT",
     exact: true,
     component: (props) => (
       <>
@@ -121,8 +131,8 @@ const ROUTES = [
     ),
   },
   {
-    path: '/forum/:id',
-    key: 'ROOT',
+    path: "/forum/:id",
+    key: "ROOT",
     exact: true,
     component: (props) => (
       <>
@@ -132,8 +142,8 @@ const ROUTES = [
     ),
   },
   {
-    path: '/contact-us',
-    key: 'ROOT',
+    path: "/contact-us",
+    key: "ROOT",
     exact: true,
     component: (props) => (
       <>
@@ -143,8 +153,8 @@ const ROUTES = [
     ),
   },
   {
-    path: '/about',
-    key: 'ROOT',
+    path: "/about",
+    key: "ROOT",
     exact: true,
     component: (props) => (
       <>
@@ -154,66 +164,66 @@ const ROUTES = [
     ),
   },
   {
-    path: '/dashboard',
-    key: 'Main',
+    path: "/dashboard",
+    key: "Main",
     component: (props) => <Dashboard {...props} />,
     routes: [
       {
-        path: '/dashboard',
-        key: 'dashboard',
+        path: "/dashboard",
+        key: "dashboard",
         exact: true,
-        role: 'admin',
-        categoryName: 'Dashboard',
+        role: "admin",
+        categoryName: "Dashboard",
         icon: DesktopOutlined,
         shouldShow: true,
-        // component: (props) => <StatisticPage {...props} />,
+        component: (props) => <StatisticPage {...props} />,
       },
       {
-        path: '/dashboard/users',
-        key: 'users',
+        path: "/dashboard/users",
+        key: "users",
         exact: true,
-        role: 'admin',
-        categoryName: 'Users',
+        role: "admin",
+        categoryName: "Users",
         icon: UsergroupDeleteOutlined,
         shouldShow: true,
-        // component: (props) => < {...props} />,
+        component: (props) => <UserContainer {...props} />,
       },
       {
-        path: '/dashboard/books',
-        key: 'books',
+        path: "/dashboard/books",
+        key: "books",
         exact: true,
-        role: 'admin',
-        categoryName: 'Books',
+        role: "admin",
+        categoryName: "Books",
         icon: BarChartOutlined,
         shouldShow: true,
-        // component: (props) => < {...props} />,
+        component: (props) => <BooksDashboard {...props} />,
       },
       {
-        path: '/dashboard/authors',
-        key: 'authors',
+        path: "/dashboard/authors",
+        key: "authors",
         exact: true,
-        role: 'admin',
-        categoryName: 'Authors',
+        role: "admin",
+        categoryName: "Authors",
         icon: ApartmentOutlined,
         shouldShow: true,
-        // component: (props) => < {...props} role="admin" />,
+        component: (props) => <Authors {...props} />,
       },
       {
-        path: '/dashboard/genres',
-        key: 'genres',
+        path: "/dashboard/genres",
+        key: "genres",
         exact: true,
-        role: 'admin',
-        categoryName: 'Genres',
+        role: "admin",
+        categoryName: "Genres",
         icon: DatabaseOutlined,
         shouldShow: true,
-        // component: (props) => < {...props} />,
+        component: (props) => <Genres {...props} />,
       },
     ],
   },
-  
+
   {
-    path: '/forgot-password',
-    key: 'AUTH',
+    path: "/forgot-password",
+    key: "AUTH",
     exact: true,
     component: (props) => <ForgotPassword {...props} />,
   },

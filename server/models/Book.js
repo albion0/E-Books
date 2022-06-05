@@ -22,15 +22,15 @@ const BookSchema = new mongoose.Schema({
     required: false,
     default: null,
   },
-  author: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Author",
-    required: true,
+  authors: {
+    type: [{ type: mongoose.Schema.Types.ObjectId, ref: "Author" }],
+    required: false,
+    default: [],
   },
-  genre: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Genre",
-    required: true,
+  genres: {
+    type: [{ type: mongoose.Schema.Types.ObjectId, ref: "Genre" }],
+    required: false,
+    default: [],
   },
   isActive: {
     type: Boolean,

@@ -1,6 +1,6 @@
 // Imports: local files.
-import ApiClient from "../../services/ApiClient";
-// import jwt from "jsonwebtoken";
+import APIClient from "../../services/ApiClient";
+import jwtDecode from "jwt-decode";
 import Swal from "sweetalert2";
 
 // Action Types: Get All Users.
@@ -228,7 +228,7 @@ export const getAllUsers = (payload) => {
 
     try {
       const { page, limit, pagination, sort } = payload;
-      const result = await ApiClient.get("auth", {
+      const result = await APIClient.get("auth", {
         params: {
           page,
           limit,
@@ -290,7 +290,7 @@ export const getAllAdmins = (payload) => {
 
     try {
       const { page, limit, pagination } = payload;
-      const result = await ApiClient.get("users", {
+      const result = await APIClient.get("auth", {
         params: {
           page,
           limit,
@@ -353,7 +353,7 @@ export const getOneUser = (payload) => {
     const { userId } = payload;
 
     try {
-      const result = await ApiClient.get(`auth/${userId}`);
+      const result = await APIClient.get(`auth/${userId}`);
       if (result.data?.success) {
         const { user } = result.data?.data;
         dispatch(
@@ -416,7 +416,7 @@ export const updateOneUser = (payload, options) => {
       onFailMessage,
     } = options;
     try {
-      const result = await ApiClient.put(`auth/${userId}`, {});
+      const result = await APIClient.put(`auth/${userId}`, {});
       if (result.data?.success) {
         const { user } = result.data.data;
         dispatch(
@@ -485,7 +485,7 @@ export const uploadLogoUser = (payload, options, showSwal = false) => {
     } = options;
     try {
       const { userId, formData } = payload;
-      const result = await ApiClient.put(`auth/${userId}/logo`, formData);
+      const result = await APIClient.put(`auth/${userId}/logo`, formData);
       if (result.data?.success) {
         const { user } = result.data?.data;
         dispatch(
@@ -559,7 +559,7 @@ export const deleteOneUser = (payload) => {
     );
     const { userId } = payload;
     try {
-      const result = await ApiClient.delete(`auth/${userId}`);
+      const result = await APIClient.delete(`auth/${userId}`);
       if (result.data?.success) {
       } else {
       }
@@ -593,7 +593,7 @@ export const signUpUser = (payload, options) => {
     } = options;
     const { email, password, passwordConfirm, username, credits } = payload;
     try {
-      const result = await ApiClient.post("auth/signup", {
+      const result = await APIClient.post("auth/signup", {
         email: email.toLowerCase(),
         password,
         passwordConfirm,
@@ -670,20 +670,19 @@ export const loginUser = (payload, options) => {
       pathname,
       onSuccessMessage,
       onFailMessage,
-      onFailConfirmMessage,
       onFailCredentialMessage,
     } = options;
     try {
       const { email, password, remember } = payload;
-      const result = await ApiClient.post("auth/login", {
+      const result = await APIClient.post("auth/login", {
         email: email.toLowerCase(),
         password,
         remember,
       });
       if (result.data?.success) {
         const { token } = result.data.data;
-        // const { exp } = jwt.decode(token);
-        // const expiresIn = new Date(exp * 1000).toISOString();
+        const { exp } = jwtDecode(token);
+        const expiresIn = new Date(exp * 1000).toISOString();
         dispatch({ type: "TOKEN", token });
         dispatch(
           loginUserSuccess({
@@ -695,7 +694,7 @@ export const loginUser = (payload, options) => {
           })
         );
         localStorage.setItem("eBook-token", token);
-        // localStorage.setItem("expiresIn", expiresIn);
+        localStorage.setItem("expiresIn", expiresIn);
         history.push(pathname);
         toastNotification("success", onSuccessMessage);
       } else {
@@ -720,16 +719,7 @@ export const loginUser = (payload, options) => {
           errorMessage: error.message || "Internal Server Error!",
         })
       );
-      const unconfirmedMessage = "UNCONFIRMED_ACCOUNT";
       if (
-        error &&
-        error.response &&
-        error.response.data &&
-        error.response.data.errorType &&
-        error.response.data.errorType === unconfirmedMessage
-      ) {
-        toastNotification("error", onFailConfirmMessage);
-      } else if (
         error &&
         error.response &&
         error.response.data &&
@@ -770,7 +760,7 @@ export const forgotPassUser = (payload, options) => {
     } = options;
     try {
       const { email, emailLanguage } = payload;
-      const result = await ApiClient.post("auth/forgot", {
+      const result = await APIClient.post("auth/forgot", {
         email: email.toLowerCase(),
         emailLanguage,
       });
@@ -848,15 +838,15 @@ export const resetPassUser = (payload, options) => {
 
     try {
       const { email, newPassword, passwordConfirm, resetToken } = payload;
-      const result = await ApiClient.post(`auth/reset/${resetToken}`, {
+      const result = await APIClient.post(`auth/reset/${resetToken}`, {
         email: email.toLowerCase(),
         newPassword,
         passwordConfirm,
       });
       if (result.data?.success) {
         const { token } = result.data.data;
-        // const { exp } = jwt.decode(token);
-        // const expiresIn = new Date(exp * 1000).toISOString();
+        const { exp } = jwtDecode(token);
+        const expiresIn = new Date(exp * 1000).toISOString();
         dispatch({ type: "TOKEN", token });
         dispatch(
           resetPassUserSuccess({
@@ -867,7 +857,7 @@ export const resetPassUser = (payload, options) => {
             errorMessage: null,
           })
         );
-        // localStorage.setItem("expiresIn", expiresIn);
+        localStorage.setItem("expiresIn", expiresIn);
         toastNotification("success", onSuccessMessage);
         history.push(pathname);
       } else {

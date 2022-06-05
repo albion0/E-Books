@@ -1,5 +1,6 @@
 // Imports: local files.
 const User = require("../models/User");
+const UserAdmin = require("../models/UserAdmin");
 const { Admin: adminRole, User: userRole } = require("./roles");
 const asyncHandler = require("./asyncHandler");
 const { statusCodes } = require("../config");
@@ -48,13 +49,13 @@ const authorize = asyncHandler(async (request, response, next) => {
   let user = null;
   switch (decoded.role) {
     case "admin":
-      user = await User.findOne({
+      user = await UserAdmin.findOne({
         _id: decoded.id,
         role: adminRole,
         isDeleted: false,
       });
       break;
-    case "userRole":
+    case "user":
       user = await User.findOne({
         _id: decoded.id,
         role: userRole,

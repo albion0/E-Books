@@ -16,7 +16,13 @@ const { ApiError } = require("../utils/classes");
  */
 const getAll = asyncHandler(async (request, response, next) => {
   const { page, limit, pagination } = request.query;
-  const options = { page, limit, pagination, sort: "-_id" };
+  const options = {
+    page,
+    limit,
+    pagination,
+    sort: "-_id",
+    populate: [{ path: "authors" }, { path: "genres" }],
+  };
   const query = { isDeleted: false, isActive: true };
 
   const books = await Book.paginate(query, options);
@@ -57,14 +63,14 @@ const getOne = asyncHandler(async (request, response, next) => {
  */
 const create = asyncHandler(async (request, response, next) => {
   const user = request.user;
-  const { title, content, credits, author, genre } = request.body;
+  const { title, content, credits, authors, genres } = request.body;
 
   const book = await Book.create({
     title,
     content,
     credits,
-    author,
-    genre,
+    authors,
+    genres,
     createdBy: user._id,
   });
   if (!book) {
@@ -78,12 +84,12 @@ const create = asyncHandler(async (request, response, next) => {
     return;
   }
 
-  const authorOfBook = await Author.findOne({ _id: author });
-  if (!authorOfBook) {
-    next(new ApiError("Author not found!", "NOT_FOUND", statusCodes.NOT_FOUND));
-  }
-  authorOfBook.books = [...authorOfBook.books, book._id];
-  await authorOfBook.save();
+  // const authorOfBook = await Author.find({ _id: author });
+  // if (!authorOfBook) {
+  //   next(new ApiError("Author not found!", "NOT_FOUND", statusCodes.NOT_FOUND));
+  // }
+  // authorOfBook.books = [...authorOfBook.books, book._id];
+  // await authorOfBook.save();
 
   response
     .status(statusCodes.CREATED)
@@ -107,7 +113,7 @@ const uploadPhoto = asyncHandler(async (request, response, next) => {
     return;
   }
 
-  const inputName = "photo";
+  const inputName = "bookPhoto";
   const file = request.files[inputName];
   if (!file) {
     next(
@@ -138,7 +144,6 @@ const uploadPhoto = asyncHandler(async (request, response, next) => {
   const { bookId } = request.params;
   const book = await Book.findOne({
     _id: bookId,
-    role: internRole,
     isDeleted: false,
   });
   if (!book) {
@@ -156,7 +161,7 @@ const uploadPhoto = asyncHandler(async (request, response, next) => {
     /\s/g,
     ""
   )}_${Date.now()}.${type}`;
-  const filePath = path.join(__dirname, `../../public/books/${fileName}`);
+  const filePath = path.join(__dirname, `../public/books/${fileName}`);
   fs.writeFile(filePath, data, { encoding: "utf-8" }, async (error) => {
     if (error) {
       next(
@@ -191,25 +196,8 @@ const uploadPhoto = asyncHandler(async (request, response, next) => {
  */
 const updateOne = asyncHandler(async (request, response, next) => {
   const user = request.user;
-  const { title, content, credits, author, genre } = request.body;
+  const { title, content, credits, authors, genres } = request.body;
   const { bookId } = request.params;
-
-  const bookExists =
-    (await Book.countDocuments({
-      _id: { $ne: bookId },
-      $or: { name: name },
-      isDeleted: false,
-    })) > 0;
-  if (bookExists) {
-    next(
-      new ApiError(
-        "Book with name exists!",
-        "BOOK_EXISTS",
-        statusCodes.BAD_REQUEST
-      )
-    );
-    return;
-  }
 
   const book = await Book.findOne({ _id: bookId, isDeleted: false });
   if (!book) {
@@ -230,8 +218,8 @@ const updateOne = asyncHandler(async (request, response, next) => {
         title,
         content,
         credits,
-        author,
-        genre,
+        authors,
+        genres,
         lastEditBy: user._id,
         lastEditAt: new Date(Date.now()).toISOString(),
       },
@@ -263,7 +251,7 @@ const deleteOne = asyncHandler(async (request, response, next) => {
   const user = request.user;
   const { bookId } = request.params;
 
-  const book = await Book.findOne({ _id: authorId, isDeleted: false });
+  const book = await Book.findOne({ _id: bookId, isDeleted: false });
   if (!book) {
     next(
       new ApiError(
