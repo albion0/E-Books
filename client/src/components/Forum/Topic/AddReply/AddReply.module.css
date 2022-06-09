@@ -1,0 +1,16 @@
+.addReply {
+    margin: 20px 0;
+}
+
+.submitBtn, .clearBtn {
+    border: 0;
+    padding: 8px 20px;
+    border-radius: 5px;
+    margin: 10px;
+    background-color: rgb(228, 228, 228);
+    transition: all 0.2s ease;
+}
+
+.submitBtn:hover, .clearBtn:hover {
+    background-color: rgb(189, 189, 189);
+}

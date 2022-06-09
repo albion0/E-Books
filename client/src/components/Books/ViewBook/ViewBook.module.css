@@ -66,11 +66,56 @@
     height: max-content;
 }
 
-.costumer {
+.constumer {
     display: grid;
     grid-template-columns: 0.3fr 1fr;
     gap: 20px;
     margin-top: 50px;
+}
+
+.addReply {
+    margin-top: 40px;
+}
+
+.buttons {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-top: 50px;
+}
+
+.submitBtn, .clearBtn {
+    border: 0;
+    padding: 8px 20px;
+    border-radius: 5px;
+    margin: 10px;
+    background-color: rgb(228, 228, 228);
+    transition: all 0.2s ease;
+}
+
+.submitBtn:hover, .clearBtn:hover {
+    background-color: rgb(189, 189, 189);
+}
+
+.addFeedback {
+    border: 0;
+    padding: 8px 15px;
+    border-radius: 8px;
+    margin-top: 14px;
+}
+
+.rating {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.ratingText {
+    margin: 0;
+}
+
+.options {
+    margin-left: 10px;
 }
 
 .btn {

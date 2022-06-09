@@ -1,9 +1,14 @@
+import { NavLink } from "react-router-dom";
+import Filters from "./Filters/Filters";
+
 import classes from "./Forum.module.css";
 import personImg from "../../assets/images/person.jpg";
 
 const Forum = () => {
   return (
     <div className={classes.wrapper}>
+      <Filters />
+      <NavLink to="/forum/add-topic" className={classes.addBtn}>Add Topic</NavLink>
       <table className={classes.table}>
         <thead>
           <tr>
@@ -18,7 +23,8 @@ const Forum = () => {
             <td className={classes.user}>
               <img src={personImg} alt="Person img" className={classes.img} />
               <div>
-                <p className={classes.title}>Lorem ipsum dolor sit</p>
+                <NavLink to="/forum/id" className={classes.title}>Lorem ipsum dolor sit</NavLink>
+                {/* <p className={classes.title}>Lorem ipsum dolor sit</p> */}
                 <p className={classes.username}>John</p>
               </div>
             </td>

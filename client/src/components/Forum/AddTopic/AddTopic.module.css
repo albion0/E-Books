@@ -1,0 +1,30 @@
+.wrapper {
+    max-width: 1200px;
+    margin: 10px auto;
+}
+
+.fieldTitle, .fieldName, .fieldCategory {
+    margin-top: 12px;
+    margin-bottom: 0;
+}
+
+.input {
+    width: 100%;
+    border: 1px solid rgb(175, 175, 175);
+    outline: none;
+    padding: 5px 10px;
+}
+
+.btn {
+    display: flex;
+    align-items: center;
+    justify-self: flex-end;
+    padding: 5px 10px;
+    border: none;
+    margin: 30px 0;
+    transition: all 0.3s ease;
+}
+
+.btn:hover {
+    background-color: rgb(209, 209, 209);
+}

@@ -3,10 +3,24 @@
     margin: 0 auto;
 }
 
+.addBtn {
+    display: inline-block;
+    margin: 20px 0;
+    border: none;
+    padding: 8px 10px;
+    border-radius: 5px;
+    transition: all 0.2s ease;
+    color: #000;
+    background-color: #eee;
+}
+
+.addBtn:hover {
+    background-color: rgb(226, 226, 226);
+}
+
 .table {
     border-collapse: collapse;
     width: 100%;
-    margin-top: 30px;
 }
 
 .table thead tr td {
@@ -33,6 +47,7 @@
 
 .title {
     font-size: 14px;
+    color: #000;
 }
 
 .text {

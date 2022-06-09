@@ -23,6 +23,7 @@ import { Route, Switch } from "react-router-dom";
 
 import { Loading } from "../components/Loading";
 import { PageNotFound } from "../components/PageNotFound";
+import AddTopic from "../components/Forum/AddTopic/AddTopic";
 
 // Routes Lazy
 const UserContainer = React.lazy(() =>
@@ -131,6 +132,17 @@ const ROUTES = [
     ),
   },
   {
+    path: "/forum/add-topic",
+    key: "ROOT",
+    exact: true,
+    component: (props) => (
+      <>
+        <Navbar />
+        <AddTopic {...props} />
+      </>
+    ),
+  },
+  {
     path: "/forum/:id",
     key: "ROOT",
     exact: true,
@@ -220,13 +232,13 @@ const ROUTES = [
       },
     ],
   },
-
   {
     path: "/forgot-password",
     key: "AUTH",
     exact: true,
     component: (props) => <ForgotPassword {...props} />,
   },
+
 ];
 export default ROUTES;
 

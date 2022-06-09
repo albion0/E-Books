@@ -8,7 +8,14 @@ const connect = () => {
       const host = process.env.MONGO_HOST;
       const port = process.env.MONGO_PORT;
       const name = process.env.MONGO_NAME;
-      const MONGO_URI = `mongodb://${host}:${port}/${name}`;
+      let MONGO_URI;
+
+      if(!host && !port && !name) {
+        MONGO_URI = process.env.DATABASE_URL;
+      } else {
+        MONGO_URI = `mongodb://${host}:${port}/${name}`;
+      }
+
       mongoose.connect(MONGO_URI, (error) => {
         if (error) {
           console.log(

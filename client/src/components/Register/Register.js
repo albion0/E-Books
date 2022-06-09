@@ -53,7 +53,7 @@ const Register = () => {
     const formValidity = usernameValidity && passwordValidity && confirmPasswordValidity && emailValidity;
 
     if(formValidity) {
-      fetch("http://localhost:5000/api/auth/register", {
+      fetch("http://localhost:5000/api/auth/signup", {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -61,8 +61,9 @@ const Register = () => {
         body: JSON.stringify({
           username: usernameValue,
           password: passwordValue,
-          confirmPassword: confirmPasswordValue,
-          email: emailValue
+          passwordConfirm: confirmPasswordValue,
+          email: emailValue,
+          credits: "0"
         })
       })
       .then(response => response.json())

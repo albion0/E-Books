@@ -1,10 +1,30 @@
+import { useState } from "react";
+
 import Reviews from "./Reviews/Reviews";
 import Ratings from "./Ratings/Ratings";
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 
 import classes from "./ViewBook.module.css";
 import bookImg from "../../../assets/images/book.png";
 
+import { toastNotification } from "../../../utils/toastNotification";
+
 const ViewBook = () => {
+  const [showFeedback, setShowFeedback] = useState(false);
+  const [value, setValue] = useState('');
+
+  const submitHandler = () => {
+    if(!value) {
+      toastNotification("error", "Form can't be empty.");
+    }
+  }
+
+  const cancelHandler = () => {
+    setValue("");
+    setShowFeedback(false);
+  }
+
   return (
     <div className={classes.wrapper}>
         <main className={classes.main}>
@@ -27,9 +47,38 @@ const ViewBook = () => {
             </div>
         </main>
 
-        <section className={classes.costumer}>
-          <Ratings />
-          <Reviews />
+        <section>
+          <div className={classes.addReply} style={{display: showFeedback ? 'block' : 'none'}}>
+            <div className={classes.addReply}>
+              <div className={classes.rating}>
+                <p className={classes.ratingText}>Choose your Rating:</p>
+                <select name="" id="" className={classes.options}>
+                  <option value="">1</option>
+                  <option value="">2</option>
+                  <option value="">3</option>
+                  <option value="">4</option>
+                  <option value="">5</option>
+                </select>
+              </div>
+
+              <ReactQuill
+                theme="snow"
+                value={value}
+                onChange={setValue}
+                style={{height: "150px"}}
+              />
+            </div>
+            <div className={classes.buttons}>
+              <button className={classes.submitBtn} onClick={submitHandler}>Submit</button>
+              <button className={classes.clearBtn} onClick={cancelHandler}>Cancel</button>
+            </div>
+          </div>
+          {!showFeedback && <button className={classes.addFeedback} onClick={() => setShowFeedback(true)}>Add Feedback</button>}
+
+          <div className={classes.constumer}>
+            <Ratings />
+            <Reviews />
+          </div>
         </section>
     </div>
   )

@@ -1,3 +1,4 @@
+import { NavLink } from "react-router-dom";
 import classes from "./Card.module.css";
 
 const Card = (props) => {
@@ -9,7 +10,7 @@ const Card = (props) => {
         <p className={classes.description}>{props.desc}</p>
         <div className={classes.bottom}>
           <p className={classes.price}>{props.price} Credits</p>
-          <button className={classes.btn}>View More</button>
+          <NavLink to="/books/1" className={classes.btn}>View More</NavLink>
         </div>
       </div>
     </div>
