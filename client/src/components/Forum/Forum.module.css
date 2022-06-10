@@ -58,3 +58,13 @@
     font-size: 13px;
     color: rgb(151, 151, 151);
 }
+
+.pagination {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.table p {
+    margin-bottom: 0;
+}

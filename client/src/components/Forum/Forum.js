@@ -1,10 +1,26 @@
+import { useState } from 'react';
+import { TablePagination } from '@mui/material';
 import { NavLink } from "react-router-dom";
+
 import Filters from "./Filters/Filters";
 
 import classes from "./Forum.module.css";
 import personImg from "../../assets/images/person.jpg";
 
 const Forum = () => {
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalItems, setTotalItems] = useState(100);
+  
+  const handleChangePage = (event, newPage) => {
+    setCurrentPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setCurrentPage(0);
+  };
+
   return (
     <div className={classes.wrapper}>
       <Filters />
@@ -117,6 +133,19 @@ const Forum = () => {
           </tr>
         </tbody>
       </table>
+
+      <div className={classes.pagination}>
+          <TablePagination
+            component="div"
+            count={totalItems}
+            page={currentPage}
+            onPageChange={handleChangePage}
+            rowsPerPage={rowsPerPage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+            style={{ marginBottom: '20px' }}
+            className={classes.table}
+          />
+      </div>
     </div>
   )
 }

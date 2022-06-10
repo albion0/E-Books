@@ -1,3 +1,6 @@
+import { useState } from 'react';
+import { TablePagination } from '@mui/material';
+
 import MyBook from "./MyBook/MyBook";
 import Filters from "../Books/Filters/Filters";
 
@@ -18,6 +21,19 @@ for(let i = 1; i <= 10; i++) {
 }
 
 const MyBooks = () => {
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalItems, setTotalItems] = useState(100);
+
+  const handleChangePage = (event, newPage) => {
+    setCurrentPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setCurrentPage(0);
+  };
+
   return (
     <div className={classes.wrapper}>
       <Filters />
@@ -33,6 +49,19 @@ const MyBooks = () => {
               date={item.date} 
             />
           ))}
+      </div>
+
+      <div className={classes.pagination}>
+          <TablePagination
+            component="div"
+            count={totalItems}
+            page={currentPage}
+            onPageChange={handleChangePage}
+            rowsPerPage={rowsPerPage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+            style={{ marginBottom: '20px' }}
+            className={classes.table}
+          />
       </div>
     </div>
   )

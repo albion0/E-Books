@@ -36,3 +36,13 @@
     margin-bottom: 5px;
     color: rgb(128, 128, 128);
 }
+
+.pagination {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.table p {
+    margin-bottom: 0;
+}

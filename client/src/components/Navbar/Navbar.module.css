@@ -1,5 +1,7 @@
 .wrapper {
     background-color: #eee;
+    position: sticky;
+    top: 0;
 }
 
 .list {

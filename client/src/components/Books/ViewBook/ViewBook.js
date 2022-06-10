@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { TablePagination } from '@mui/material';
 
 import Reviews from "./Reviews/Reviews";
 import Ratings from "./Ratings/Ratings";
@@ -7,10 +8,14 @@ import 'react-quill/dist/quill.snow.css';
 
 import classes from "./ViewBook.module.css";
 import bookImg from "../../../assets/images/book.png";
+import ConfirmModal from "../ConfirmModal/ConfirmModal";
 
 import { toastNotification } from "../../../utils/toastNotification";
 
 const ViewBook = () => {
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalItems, setTotalItems] = useState(100);
   const [showFeedback, setShowFeedback] = useState(false);
   const [value, setValue] = useState('');
 
@@ -25,6 +30,15 @@ const ViewBook = () => {
     setShowFeedback(false);
   }
 
+  const handleChangePage = (event, newPage) => {
+    setCurrentPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setCurrentPage(0);
+  };
+
   return (
     <div className={classes.wrapper}>
         <main className={classes.main}>
@@ -37,7 +51,8 @@ const ViewBook = () => {
                     <p className={classes.price}>Price: 20 Credits</p>
                     <p className={classes.date}>Date: 4/15/2022</p>
                     <p className={classes.reviews}>Total Reviews: 10</p>
-                    <button className={classes.btn}>Buy Now</button>
+                    {/* <button className={classes.btn}>Buy Now</button> */}
+                    <ConfirmModal />
                 </div>
             </div>
             <div className={classes.info}>
@@ -80,6 +95,19 @@ const ViewBook = () => {
             <Reviews />
           </div>
         </section>
+
+        <div className={classes.pagination}>
+          <TablePagination
+            component="div"
+            count={totalItems}
+            page={currentPage}
+            onPageChange={handleChangePage}
+            rowsPerPage={rowsPerPage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+            style={{ marginBottom: '20px' }}
+            className={classes.table}
+          />
+        </div>
     </div>
   )
 }

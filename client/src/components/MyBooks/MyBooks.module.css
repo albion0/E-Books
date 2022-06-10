@@ -9,3 +9,13 @@
     gap: 20px;
     margin-bottom: 50px;
 }
+
+.pagination {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.table p {
+    margin-bottom: 0;
+}
