@@ -454,8 +454,28 @@ export const CreateBook = ({ visible, recallAllBooks, handleModal }) => {
               )}
             </div>
           </Row>
-          <Row style={{ marginTop: "25px" }}>
-            <Upload
+          <Row style={{ marginTop: "25px" }} xs={24} sm={24} md={24} lg={24}>
+            <Form.Item
+              name="bookPhoto"
+              style={{
+                paddingTop: "20px",
+                display: "flex",
+                flexDirection: "column",
+                width: "100%",
+              }}
+            >
+              <Upload
+                accept=".png, .jpeg, .jpg"
+                beforeUpload={() => false}
+                name="image"
+                maxCount={1}
+                listType="picture"
+                onChange={handleUploadChange}
+              >
+                <Button icon={<UploadOutlined />}>Book Photo</Button>
+              </Upload>
+            </Form.Item>
+            {/* <Upload
               accept=".png, .jpeg, .jpg"
               beforeUpload={() => false}
               name="image"
@@ -464,7 +484,7 @@ export const CreateBook = ({ visible, recallAllBooks, handleModal }) => {
               onChange={handleUploadChange}
             >
               <Button icon={<UploadOutlined />}>Book Photo</Button>
-            </Upload>
+            </Upload> */}
           </Row>
         </Form>
       </Drawer>

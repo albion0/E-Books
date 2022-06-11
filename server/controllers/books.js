@@ -39,7 +39,9 @@ const getAll = asyncHandler(async (request, response, next) => {
 const getOne = asyncHandler(async (request, response, next) => {
   const { bookId } = request.params;
 
-  const book = await Book.findOne({ _id: bookId, isDeleted: false });
+  const book = await Book.findOne({ _id: bookId, isDeleted: false })
+    .populate("authors")
+    .populate("genres");
   if (!book) {
     next(
       new ApiError(
@@ -84,12 +86,16 @@ const create = asyncHandler(async (request, response, next) => {
     return;
   }
 
-  // const authorOfBook = await Author.find({ _id: author });
-  // if (!authorOfBook) {
-  //   next(new ApiError("Author not found!", "NOT_FOUND", statusCodes.NOT_FOUND));
-  // }
-  // authorOfBook.books = [...authorOfBook.books, book._id];
-  // await authorOfBook.save();
+  for (const author of authors) {
+    const authorOfBook = await Author.findOne({ _id: author });
+    if (!authorOfBook) {
+      next(
+        new ApiError("Author not found!", "NOT_FOUND", statusCodes.NOT_FOUND)
+      );
+    }
+    authorOfBook.books = [...authorOfBook.books, book._id];
+    await authorOfBook.save();
+  }
 
   response
     .status(statusCodes.CREATED)

@@ -430,6 +430,7 @@ export const updateOneBook = (payload, options) => {
 
     const { bookId, title, content, authors, genres, credits } = payload;
     const {
+      showToast,
       toastNotification,
       history,
       pathname,
@@ -456,7 +457,7 @@ export const updateOneBook = (payload, options) => {
             errorMessage: null,
           })
         );
-        toastNotification("success", onSuccessMessage);
+        showToast && toastNotification("success", onSuccessMessage);
       } else {
         dispatch(
           updateOneBookFailed({

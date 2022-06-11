@@ -19,7 +19,7 @@ const bookRoutes = require("./routes/books.js");
 const app = express();
 app.use(fileUpload());
 app.use(cors());
-app.use(express.static(path.join(__dirname, "../public")));
+app.use(express.static(path.join(__dirname, "./public")));
 
 app.use(bodyParser.json({ extended: true }));
 app.use(bodyParser.urlencoded({ extended: true }));

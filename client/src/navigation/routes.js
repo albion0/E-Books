@@ -110,17 +110,6 @@ const ROUTES = [
     ),
   },
   {
-    path: "/payments",
-    key: "ROOT",
-    exact: true,
-    component: (props) => (
-      <>
-        <Navbar />
-        <Payments {...props} />
-      </>
-    ),
-  },
-  {
     path: "/forum",
     key: "ROOT",
     exact: true,
@@ -238,7 +227,17 @@ const ROUTES = [
     exact: true,
     component: (props) => <ForgotPassword {...props} />,
   },
-
+  {
+    path: "/payments",
+    key: "ROOT",
+    exact: true,
+    component: (props) => (
+      <>
+        <Navbar />
+        <Payments {...props} />
+      </>
+    ),
+  },
 ];
 export default ROUTES;
 
