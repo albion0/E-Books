@@ -32,6 +32,7 @@ const Dashboard = (props) => {
     props.history.push("/");
   };
 
+  if (!token || (token && role === "user")) return <Redirect to="/" />;
   return (
     <Layout>
       <Sider
@@ -44,7 +45,7 @@ const Dashboard = (props) => {
           <img src="" width={"50%"} />
         </div>
         <Menu theme="dark" mode="inline" defaultSelectedKeys={["dashboard"]}>
-          {displayRouteMenu(ROUTES[role === "admin" ? 11 : 0].routes)}
+          {displayRouteMenu(ROUTES[11].routes)}
         </Menu>
       </Sider>
       <Layout className="site-layout">
@@ -69,7 +70,7 @@ const Dashboard = (props) => {
             padding: 24,
           }}
         >
-          <RenderRoutes routes={ROUTES[role === "admin" ? 11 : 0].routes} />
+          <RenderRoutes routes={ROUTES[11].routes} />
         </Content>
       </Layout>
     </Layout>

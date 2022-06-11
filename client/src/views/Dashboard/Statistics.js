@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from "react";
 
-export const StatisticPage = () => {
-  return <>Hello Admin</>;
+const StatisticPage = () => {
+  return (
+    <>
+      <h1>Hello Admin</h1>
+    </>
+  );
 };
+
+export default StatisticPage;
