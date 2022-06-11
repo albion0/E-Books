@@ -1,149 +1,221 @@
-import { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { NavLink, useHistory } from "react-router-dom";
 import { IconContext } from "react-icons";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 
 import useInput from "../../hooks/useInput";
 import classes from "./Register.module.css";
-import { validateUsername, validatePassword, validateEmail } from "../../helpers/helpers";
+import {
+  validateUsername,
+  validatePassword,
+  validateEmail,
+} from "../../helpers/helpers";
+import { useForm } from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
+import { Form, Button, Row, Upload, Spin, Switch, DatePicker } from "antd";
+import {
+  UploadOutlined,
+  PlusOutlined,
+  MinusOutlined,
+  LoadingOutlined,
+} from "@ant-design/icons";
+import { toastNotification } from "../../utils/toastNotification";
+import { signUpUser, clearSignUpUser } from "../../store/actions/auth";
 
 const Register = () => {
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    getValues,
+    formState: { errors },
+  } = useForm();
+
+  const dispatch = useDispatch();
+  const history = useHistory();
+
+  const [loading, setLoading] = useState(false);
   const [iconPassword, setIconPassword] = useState(false);
   const [iconConfirmPassword, setIconConfirmPassword] = useState(false);
-  const {
-    value: usernameValue,
-    validity: usernameValidity,
-    focusOut: usernameFocusOut,
-    error: usernameError,
-    changeHandler: usernameChangeHandler,
-    focusHandler: usernameFocusHandler,
-    blurHandler: usernameBlurHandler
-  } = useInput(validateUsername);
-  const {
-    value: emailValue,
-    validity: emailValidity,
-    focusOut: emailFocusOut,
-    error: emailError,
-    changeHandler: emailChangeHandler,
-    focusHandler: emailFocusHandler,
-    blurHandler: emailBlurHandler
-  } = useInput(validateEmail);
-  const {
-    value: passwordValue,
-    validity: passwordValidity,
-    focusOut: passwordFocusOut,
-    error: passwordError,
-    changeHandler: passwordChangeHandler,
-    focusHandler: passwordFocusHandler,
-    blurHandler: passwordBlurHandler
-  } = useInput(validatePassword);
-  const {
-    value: confirmPasswordValue,
-    validity: confirmPasswordValidity,
-    focusOut: confirmPasswordFocusOut,
-    error: confirmPasswordError,
-    changeHandler: confirmPasswordChangeHandler,
-    focusHandler: confirmPasswordFocusHandler,
-    blurHandler: confirmPasswordBlurHandler
-  } = useInput(validatePassword);
 
-  const submitHandler = (e) => {
-    e.preventDefault();
+  const singupResponse = useSelector(({ auth }) => auth.signup);
 
-    const formValidity = usernameValidity && passwordValidity && confirmPasswordValidity && emailValidity;
+  useEffect(() => {
+    register("username", { required: true });
+    register("email", { required: true });
+    register("password", {
+      required: true,
+      validate: (val) => val && val.length > 8,
+    });
+    register("passwordConfirm", {
+      required: true,
+      validate: (val) => val && val.length > 8,
+    });
+    register("credits", {
+      required: false,
+    });
+  }, [register]);
 
-    if(formValidity) {
-      fetch("http://localhost:5000/api/auth/signup", {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          username: usernameValue,
-          password: passwordValue,
-          passwordConfirm: confirmPasswordValue,
-          email: emailValue,
-          credits: "0"
-        })
-      })
-      .then(response => response.json())
-      .then(data => console.log(data))
+  useEffect(() => {
+    return () => {
+      dispatch(clearSignUpUser());
+    };
+  }, []);
+
+  useEffect(() => {
+    if (singupResponse) {
+      switch (true) {
+        case singupResponse.loading:
+          setLoading(true);
+          break;
+        case singupResponse.success:
+          setLoading(false);
+          break;
+        case singupResponse.error:
+          setLoading(false);
+          break;
+      }
     }
-  }
+  }, [singupResponse]);
+
+  const onSubmit = (data) => {
+    const { username, email, password, passwordConfirm } = data;
+    dispatch(
+      signUpUser(
+        { username, email, password, passwordConfirm, credits: "0" },
+        {
+          toastNotification,
+          history,
+          pathname: "/login",
+          onSuccessMessage: "Signed up successfully!",
+          onFailMessage: "Failed to sign up",
+          onFailCredentialMessage: "Invalid Credentials",
+        }
+      )
+    );
+  };
 
   return (
     <div className={classes.wrapper}>
       <div className={classes.register}>
         <h2 className={classes.heading}>Sign up</h2>
-        <p className={classes.title}>Lorem ipsum dolor sit amet, consectetur adipiscing<br/> elit anta vis admonitionis inest.</p>
-        
-        <form className={classes.form} onSubmit={submitHandler}>
-          <div className={classes.inputBox}>
-            <input
-              type="text"
-              placeholder="Username"
-              className={classes.input}
-              onChange={usernameChangeHandler}
-              onBlur={usernameBlurHandler}
-              onFocus={usernameFocusHandler}
-            />
-            {!usernameValidity && usernameFocusOut && <p className={classes.error}>{usernameError}</p>}
-          </div>
-          <div className={classes.inputBox}>
-            <input
-              type="email"
-              placeholder="Email address"
-              className={classes.input}
-              onChange={emailChangeHandler}
-              onBlur={emailBlurHandler}
-              onFocus={emailFocusHandler}
-            />
-            {!emailValidity && emailFocusOut && <p className={classes.error}>{emailError}</p>}
-          </div>
-          <div className={classes.inputBox}>
-            <div className={classes.passwordBox}>
+        <p className={classes.title}>
+          Lorem ipsum dolor sit amet, consectetur adipiscing
+          <br /> elit anta vis admonitionis inest.
+        </p>
+
+        {loading ? (
+          <Spin
+            indicator={<LoadingOutlined style={{ fontSize: 100 }} spin />}
+          />
+        ) : (
+          <form
+            className={classes.form}
+            onSubmit={handleSubmit(onSubmit)}
+            id="org-form"
+            layout="vertical"
+            name="basic"
+          >
+            <div className={classes.inputBox}>
               <input
-                type={iconPassword ? 'text' : 'password'}
-                placeholder="Password"
-                onChange={passwordChangeHandler}
-                onBlur={passwordBlurHandler}
-                onFocus={passwordFocusHandler}
+                type="text"
+                name="username"
+                placeholder="Username"
+                className={classes.input}
+                onChange={(e) => setValue("username", e.target.value)}
               />
-
-              <IconContext.Provider value={{ className: classes.icon }}>
-                {iconPassword && <AiOutlineEye onClick={() => setIconPassword(state => !state)} />}
-                {!iconPassword && <AiOutlineEyeInvisible onClick={() => setIconPassword(state => !state)} />}
-              </IconContext.Provider>
+              {errors.username && (
+                <span style={{ color: "red" }}>
+                  Please provide a valid username!
+                </span>
+              )}
             </div>
-            {!passwordValidity && passwordFocusOut && <p className={classes.error}>{passwordError}</p>}
-          </div>
-          <div className={classes.inputBox}>
-            <div className={classes.passwordBox}>
+            <div className={classes.inputBox}>
               <input
-                type={iconConfirmPassword ? 'text' : 'password'}
-                placeholder="Confirm Password"
-                onChange={confirmPasswordChangeHandler}
-                onBlur={confirmPasswordBlurHandler}
-                onFocus={confirmPasswordFocusHandler}
+                type="email"
+                name="email"
+                placeholder="Email address"
+                className={classes.input}
+                onChange={(e) => setValue("email", e.target.value)}
               />
-
-              <IconContext.Provider value={{ className: classes.icon }}>
-                {iconConfirmPassword && <AiOutlineEye onClick={() => setIconConfirmPassword(state => !state)} />}
-                {!iconConfirmPassword && <AiOutlineEyeInvisible onClick={() => setIconConfirmPassword(state => !state)} />}
-              </IconContext.Provider>
+              {errors.email && (
+                <span style={{ color: "red" }}>
+                  Please provide a valid email!
+                </span>
+              )}
             </div>
-            {!confirmPasswordValidity && confirmPasswordFocusOut && <p className={classes.error}>{confirmPasswordError}</p>}
-          </div>
+            <div className={classes.inputBox}>
+              <div className={classes.passwordBox}>
+                <input
+                  name="password"
+                  type={iconPassword ? "text" : "password"}
+                  placeholder="Password"
+                  onChange={(e) => setValue("password", e.target.value)}
+                />
 
-          <button className={classes.btn}>Sign up</button>
-        </form>
+                <IconContext.Provider value={{ className: classes.icon }}>
+                  {iconPassword && (
+                    <AiOutlineEye
+                      onClick={() => setIconPassword((state) => !state)}
+                    />
+                  )}
+                  {!iconPassword && (
+                    <AiOutlineEyeInvisible
+                      onClick={() => setIconPassword((state) => !state)}
+                    />
+                  )}
+                </IconContext.Provider>
+              </div>
+              {errors.password && (
+                <span style={{ color: "red" }}>
+                  Password must contain at least 8 characters!
+                </span>
+              )}
+            </div>
+            <div className={classes.inputBox}>
+              <div className={classes.passwordBox}>
+                <input
+                  type={iconConfirmPassword ? "text" : "password"}
+                  placeholder="Confirm Password"
+                  name="passwordConfirm"
+                  onChange={(e) => setValue("passwordConfirm", e.target.value)}
+                />
+
+                <IconContext.Provider value={{ className: classes.icon }}>
+                  {iconConfirmPassword && (
+                    <AiOutlineEye
+                      onClick={() => setIconConfirmPassword((state) => !state)}
+                    />
+                  )}
+                  {!iconConfirmPassword && (
+                    <AiOutlineEyeInvisible
+                      onClick={() => setIconConfirmPassword((state) => !state)}
+                    />
+                  )}
+                </IconContext.Provider>
+              </div>
+              {errors.passwordConfirm && (
+                <span style={{ color: "red" }}>
+                  Password must contain at least 8 characters!
+                </span>
+              )}
+            </div>
+
+            <button className={classes.btn}>Sign up</button>
+          </form>
+        )}
 
         <div className={classes.bottom}>
-          <p className={classes.text}>Already have an account? <NavLink to="/login" className={classes.highlighted}>Login</NavLink></p>
+          <p className={classes.text}>
+            Already have an account?{" "}
+            <NavLink to="/login" className={classes.highlighted}>
+              Login
+            </NavLink>
+          </p>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Register
+export default Register;

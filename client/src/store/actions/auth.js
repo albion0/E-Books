@@ -611,6 +611,8 @@ export const signUpUser = (payload, options) => {
             errorMessage: null,
           })
         );
+        toastNotification("success", onSuccessMessage);
+        history.push(pathname);
       } else {
         dispatch(
           signUpUserFailed({
@@ -621,6 +623,8 @@ export const signUpUser = (payload, options) => {
             errorMessage: result.data?.error || "Internal Server Error!",
           })
         );
+
+        toastNotification("error", onFailMessage);
       }
     } catch (error) {
       dispatch(

@@ -26,10 +26,6 @@ const Login = () => {
     formState: { errors },
   } = useForm();
 
-  useEffect(() => {
-    dispatch(getAllUsers());
-  }, []);
-
   const dispatch = useDispatch();
   const history = useHistory();
 
