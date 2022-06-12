@@ -100,8 +100,7 @@ const Register = () => {
       <div className={classes.register}>
         <h2 className={classes.heading}>Sign up</h2>
         <p className={classes.title}>
-          Lorem ipsum dolor sit amet, consectetur adipiscing
-          <br /> elit anta vis admonitionis inest.
+          Please complete the below steps to register!
         </p>
 
         {loading ? (

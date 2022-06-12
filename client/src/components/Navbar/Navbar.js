@@ -26,6 +26,12 @@ const Navbar = () => {
             <li className={classes.item}>
                 <NavLink to="/about" className={classes.link} activeClassName={classes.active} exact>About Us</NavLink>
             </li>
+            <li className={classes.item}>
+                <NavLink to="/login" className={classes.link} activeClassName={classes.active} exact>Login</NavLink>
+            </li>
+            <li className={classes.item}>
+                <NavLink to="/register" className={classes.link} activeClassName={classes.active} exact>Register</NavLink>
+            </li>
         </ul>
     </nav>
   )

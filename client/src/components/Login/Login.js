@@ -89,8 +89,7 @@ const Login = () => {
       <div className={classes.login}>
         <h2 className={classes.heading}>Sign in</h2>
         <p className={classes.title}>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit anta vis
-          admonitionis inest.
+          Welcome back. Please login to continue!
         </p>
 
         {loading ? (
