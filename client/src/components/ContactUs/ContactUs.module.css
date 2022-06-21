@@ -5,7 +5,7 @@
     background-attachment: fixed;
     background-size: cover;
 }
-.contact-Container{
+.contactcontainer{
     font-family: 'Noto Sans', sans-serif;
     /* background-image: url(../Images/background.png); */
     background-repeat: no-repeat;
@@ -13,13 +13,13 @@
     height: 100vh;
 }
 
-.contact-Container p{
+.contactcontainer p{
     text-align: center;
     font-size: 25px;
     color: #C0AF9D;
 } 
 
-.contact-form {
+.contactform {
     position: relative;
     width: 600px;
     display: flex;
@@ -30,19 +30,19 @@
     margin-left: auto;
     margin-right: auto;
 }
-.form-input,.form-textarea {
+.forminput,.form-textarea {
     width: 500px;
     margin-top: 30px;
     background-color: rgba(0, 0, 0, 0.5);
     padding: 10px 0 10px 10px;
 }
-.form-input::placeholder, .form-textarea::placeholder, textarea:focus, input:focus{
+.forminput::placeholder, .form-textarea::placeholder, textarea:focus, input:focus{
     color: #C0AF9D;
 }
 textarea {
     resize: none !important;
 }
-.submit-button{
+.submitbutton{
     margin-top: 50px;
     padding: 16px 42px;
     line-height: 1.25;
@@ -58,13 +58,13 @@ textarea {
 }
 
 @media screen and (max-width: 600px) {
-    .contact-form {
+    .contactform {
         width: 100%;
     }
-    .contact-form {
+    .contactform {
         padding-top: 50px;
     }
-    .form-input,.form-textarea {
+    .forminput,.form-textarea {
         width: 80%;
     }
 }

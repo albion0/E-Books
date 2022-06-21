@@ -2,7 +2,42 @@ import { NavLink } from "react-router-dom";
 import classes from "./Navbar.module.css";
 
 const Navbar = () => {
-  return (
+  return ( 
+    <header className={classes.header}>
+        <h1 className={classes.logo}>
+            <NavLink to="/" exact>E-Books</NavLink>
+        </h1>
+        <ul className={classes.mainnav}>
+            <li>
+                <NavLink to="/" exact>Home</NavLink>
+            </li>
+            <li>
+                <NavLink to="/books" exact>Books</NavLink>
+            </li>
+            <li>
+                <NavLink to="/my-books" exact>My Books</NavLink>
+            </li>
+            <li>
+                <NavLink to="/payments" exact>Payments</NavLink>
+            </li>
+            <li>
+                <NavLink to="/forum" exact>Forum</NavLink>
+            </li>
+            <li>
+                <NavLink to="/contact-us" exact>Contact Us</NavLink>
+            </li>
+            <li>
+                <NavLink to="/about" exact>About Us</NavLink>
+            </li>
+            <li>
+                <NavLink to="/login" exact>Login</NavLink>
+            </li>
+            <li>
+                <NavLink to="/register" exact>Register</NavLink>
+            </li>
+        </ul>
+    </header> 
+    /* 
     <nav className={classes.wrapper}>
         <ul className={classes.list}>
             <li className={classes.item}>
@@ -34,6 +69,8 @@ const Navbar = () => {
             </li>
         </ul>
     </nav>
+    */
+    
   )
 }
 

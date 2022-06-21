@@ -1,6 +1,8 @@
-import 'bootstrap/dist/css/bootstrap.css';
+//import 'bootstrap/dist/css/bootstrap.css';
   const About = () => {
      return (
+        <div>Test</div>
+        /*
         <div class="about">
             <div className="container text-center">
                 <br/>
@@ -42,6 +44,7 @@ import 'bootstrap/dist/css/bootstrap.css';
                 </div>
             </div>
         </div>
+    */
     )
 }
 
