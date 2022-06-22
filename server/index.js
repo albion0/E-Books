@@ -15,6 +15,8 @@ const authRoutes = require("./routes/auth.js");
 const genreRoutes = require("./routes/genres.js");
 const authorRoutes = require("./routes/authors.js");
 const bookRoutes = require("./routes/books.js");
+const forumTopicRoutes = require("./routes/forumTopics");
+const forumCommentRoutes = require("./routes/forumComments");
 
 const app = express();
 app.use(fileUpload());
@@ -28,6 +30,8 @@ app.use("/api/auth", authRoutes);
 app.use("/api/genres", genreRoutes);
 app.use("/api/authors", authorRoutes);
 app.use("/api/books", bookRoutes);
+app.use("/api/forumTopics", forumTopicRoutes);
+app.use("/api/forumComments", forumCommentRoutes);
 
 // User error handling middleware.
 app.use(errorHandler);
