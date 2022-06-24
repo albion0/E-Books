@@ -1,37 +1,68 @@
+const { statusCodes } = require("../config");
 const forumTopicService = require("./forumTopics.services");
 
 function getAll(req, res, next) {
   forumTopicService
     .getAll()
-    .then((forumTopics) => res.json(forumTopics))
+    .then((forumTopics) =>
+      res.status(statusCodes.OK).json({
+        success: true,
+        data: { forumTopics },
+        error: null,
+      })
+    )
     .catch(next);
 }
 
 function getOne(req, res, next) {
   forumTopicService
     .getById(req.params.id)
-    .then((forumTopic) => res.json(forumTopic))
+    .then((forumTopic) =>
+      res.status(statusCodes.OK).json({
+        success: true,
+        data: { forumTopic },
+        error: null,
+      })
+    )
     .catch(next);
 }
 
 function create(req, res, next) {
   forumTopicService
-    .create(req.body)
-    .then(() => res.json({ message: "Forum Topic created" }))
+    .create(req.body, req.user)
+    .then((forumTopic) =>
+      res.status(statusCodes.OK).json({
+        success: true,
+        data: { forumTopic },
+        error: null,
+      })
+    )
     .catch(next);
 }
 
 function updateOne(req, res, next) {
   forumTopicService
     .update(req.params.id, req.body)
-    .then(() => res.json({ message: "Forum Topic updated" }))
+    .then((forumTopic) =>
+      res.status(statusCodes.OK).json({
+        success: true,
+        data: { forumTopic },
+        error: null,
+      })
+    )
     .catch(next);
 }
 
 function deleteOne(req, res, next) {
   forumTopicService
     .delete(req.params.id)
-    .then(() => res.json({ message: "Forum Topic deleted" }))
+    .then(() =>
+      res.status(statusCodes.OK).json({
+        success: true,
+        data: { message: "Forum Topic deleted" },
+        error: null,
+      })
+    )
     .catch(next);
 }
 

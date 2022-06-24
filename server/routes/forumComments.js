@@ -8,12 +8,14 @@ const protect = require("../middlewares/protect");
 const { Admin } = require("../middlewares/roles");
 const {
   getAll,
+  getTopicComments,
   getOne,
   create,
   updateOne,
   deleteOne,
 } = require("../controllers/forumComments");
 const {
+  topicComments,
   createForumComment,
   updateForumComment,
   validateForumCommentId,
@@ -22,6 +24,7 @@ const { validate } = require("../utils/functions");
 
 // Mount routes accordingly.
 router.route("/").get(getAll);
+router.route("/comments").get(validate(topicComments), getTopicComments);
 router
   .route("/")
   .post(authorize, protect(Admin), validate(createForumComment), create);

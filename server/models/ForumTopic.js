@@ -7,6 +7,7 @@ function model(sequelize) {
   const attributes = {
     topic: { type: DataTypes.STRING, allowNull: false },
     content: { type: DataTypes.STRING, allowNull: false },
+    user: { type: DataTypes.JSON, allowNull: false },
   };
 
   return sequelize.define("ForumTopic", attributes);

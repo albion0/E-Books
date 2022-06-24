@@ -1,39 +1,90 @@
+const { statusCodes } = require("../config");
 const forumCommentService = require("./forumComments.services");
 
 function getAll(req, res, next) {
   forumCommentService
     .getAll()
-    .then((forumComments) => res.json(forumComments))
+    .then((forumComments) =>
+      res.status(statusCodes.OK).json({
+        success: true,
+        data: { forumComments },
+        error: null,
+      })
+    )
+    .catch(next);
+}
+
+function getTopicComments(req, res, next) {
+  forumCommentService
+    .getAllByTopic(req.query)
+    .then((forumComments) =>
+      res.status(statusCodes.OK).json({
+        success: true,
+        data: { forumComments },
+        error: null,
+      })
+    )
     .catch(next);
 }
 
 function getOne(req, res, next) {
   forumCommentService
     .getById(req.params.id)
-    .then((forumComment) => res.json(forumComment))
+    .then((forumComment) =>
+      res.status(statusCodes.OK).json({
+        success: true,
+        data: { forumComment },
+        error: null,
+      })
+    )
     .catch(next);
 }
 
 function create(req, res, next) {
   forumCommentService
-    .create(req.body)
-    .then(() => res.json({ message: "Forum Comment created" }))
+    .create(req.body, req.user)
+    .then((forumComment) =>
+      res.status(statusCodes.OK).json({
+        success: true,
+        data: { forumComment },
+        error: null,
+      })
+    )
     .catch(next);
 }
 
 function updateOne(req, res, next) {
   forumCommentService
     .update(req.params.id, req.body)
-    .then(() => res.json({ message: "Forum Comment updated" }))
+    .then((forumComment) =>
+      res.status(statusCodes.OK).json({
+        success: true,
+        data: { forumComment },
+        error: null,
+      })
+    )
     .catch(next);
 }
 
 function deleteOne(req, res, next) {
   forumCommentService
     .delete(req.params.id)
-    .then(() => res.json({ message: "Forum Comment deleted" }))
+    .then(() =>
+      res.status(statusCodes.OK).json({
+        success: true,
+        data: { message: "Forum Comment deleted" },
+        error: null,
+      })
+    )
     .catch(next);
 }
 
 // Exports of this file.
-module.exports = { getAll, getOne, create, updateOne, deleteOne };
+module.exports = {
+  getAll,
+  getTopicComments,
+  getOne,
+  create,
+  updateOne,
+  deleteOne,
+};

@@ -16,11 +16,13 @@ async function getById(id) {
   return await getForumTopic(id);
 }
 
-async function create(params) {
-  const forumTopic = new db.ForumTopic(params);
+async function create(params, user) {
+  const payload = { ...params, user };
+  const forumTopic = new db.ForumTopic(payload);
 
   // save forumTopic
   await forumTopic.save();
+  return forumTopic;
 }
 
 async function update(id, params) {
@@ -29,6 +31,7 @@ async function update(id, params) {
   // copy params to forumTopic and save
   Object.assign(forumTopic, params);
   await forumTopic.save();
+  return forumTopic;
 }
 
 async function _delete(id) {
