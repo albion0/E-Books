@@ -51,6 +51,7 @@ const Genres = React.lazy(() => import("../views/Dashboard/Genres"));
 const Authors = React.lazy(() => import("../views/Dashboard/Authors"));
 const BooksDashboard = React.lazy(() => import("../views/Dashboard/Books"));
 const StatisticPage = React.lazy(() => import("../views/Dashboard/Statistics"));
+const PaypalPayment = React.lazy(() => import("../views/Home/Paypal"));
 
 const ROUTES = [
   {
@@ -234,7 +235,7 @@ const ROUTES = [
     component: (props) => (
       <>
         <Navbar />
-        <Payments {...props} />
+        <PaypalPayment {...props} />
       </>
     ),
   },
