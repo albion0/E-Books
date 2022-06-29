@@ -50,7 +50,7 @@ const getOne = asyncHandler(async (request, response, next) => {
   const { userId } = request.params;
   const user = await User.findOne({
     _id: userId,
-    role: businessRole,
+    role: userRole,
     isDeleted: false,
   }).select("-password");
   if (!user) {
@@ -66,7 +66,7 @@ const getOne = asyncHandler(async (request, response, next) => {
 
   response
     .status(statusCodes.OK)
-    .json({ success: true, data: { business }, error: null });
+    .json({ success: true, data: { user }, error: null });
 });
 
 /**

@@ -2,15 +2,23 @@ import { NavLink } from "react-router-dom";
 import classes from "./Navbar.module.css";
 import jwtDecode from "jwt-decode";
 import logo from "../../assets/images/potentiallogo.png";
-import { useHistory } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { Button } from "antd";
+import { useHistory, Redirect } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Button, Spin } from "antd";
 import { LogoutOutlined } from "@ant-design/icons";
+import { useEffect, useState } from "react";
+import { clearGetOneUser, getOneUser } from "../../store/actions/auth";
+import { LoadingOutlined, UserOutlined } from "@ant-design/icons";
 
 const Navbar = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const token = localStorage.getItem("eBook-token");
+
+  const [loading, setLoading] = useState(true);
+
+  const userResponse = useSelector(({ auth }) => auth.getOne);
+
   let userId;
   let userRole;
   if (token) {
@@ -19,11 +27,42 @@ const Navbar = () => {
     userRole = role;
   }
 
+  useEffect(() => {
+    return () => {
+      dispatch(clearGetOneUser());
+    };
+  }, []);
+
+  useEffect(() => {
+    if (userId) {
+      dispatch(getOneUser({ userId }));
+    }
+  }, []);
+
   const handleLogout = () => {
     localStorage.clear();
     history.push("/");
   };
 
+  useEffect(() => {
+    if (userResponse) {
+      switch (true) {
+        case userResponse.loading:
+          setLoading(true);
+          break;
+        case userResponse.success:
+          setLoading(false);
+          break;
+        case userResponse.error:
+          setLoading(false);
+          break;
+        default:
+          break;
+      }
+    }
+  }, [userResponse]);
+
+  if (userRole === "admin") return <Redirect to="/dashboard" />;
   return (
     <header className={classes.header}>
       <h1 className={classes.logo}>
@@ -71,9 +110,22 @@ const Navbar = () => {
               </NavLink>
             </li>
             <li>
-              {/* <NavLink to="/forum" exact>
-                Log out
-              </NavLink> */}
+              <NavLink to="/profile" exact>
+                <UserOutlined style={{ paddingRight: "5px" }} />
+                {loading ? (
+                  <Spin
+                    indicator={
+                      <LoadingOutlined style={{ fontSize: 15 }} spin />
+                    }
+                  />
+                ) : userResponse.data?.user ? (
+                  userResponse.data.user.username
+                ) : (
+                  "NA"
+                )}
+              </NavLink>
+            </li>
+            <li>
               <Button
                 className="pb-1"
                 onClick={handleLogout}

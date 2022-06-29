@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
-import { Col, Row, Timeline, Card, Button, Result } from "antd";
+import { Col, Row, Timeline, Card, Button, Result, Spin } from "antd";
+import { useDispatch, useSelector } from "react-redux";
+import { toastNotification } from "../../../utils/toastNotification";
+import { clearUpdateOneUser, updateOneUser } from "../../../store/actions/auth";
+import { LoadingOutlined } from "@ant-design/icons";
 
 const { Meta } = Card;
 
@@ -9,6 +13,19 @@ export default function App() {
   const [success, setSuccess] = useState(false);
   const [ErrorMessage, setErrorMessage] = useState("");
   const [orderID, setOrderID] = useState(false);
+  const [paymentSuccess, setPaymentSuccess] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const dispatch = useDispatch();
+
+  const userResponse = useSelector(({ auth }) => auth.getOne);
+  const updateResponse = useSelector(({ auth }) => auth.updateOne);
+
+  useEffect(() => {
+    return () => {
+      dispatch(clearUpdateOneUser());
+    };
+  }, []);
 
   // creates a paypal order
   const createOrder = (data, actions) => {
@@ -48,9 +65,46 @@ export default function App() {
 
   useEffect(() => {
     if (success) {
-      alert("Payment successful!!");
+      const oldCredits = parseInt(userResponse?.data?.user?.credits);
+      const newCredits = oldCredits + 20;
+      const creditsToUpdate = newCredits.toString();
+      const payload = {
+        userId: userResponse?.data?.user?._id,
+        username: userResponse?.data?.user?.username,
+        email: userResponse?.data?.user?.email,
+        credits: creditsToUpdate,
+      };
+      dispatch(
+        updateOneUser(payload, {
+          toastNotification,
+          showToast: true,
+          onSuccessMessage: "Credits purchased successfully!",
+          onFailMessage: "Failed to purchase credits",
+        })
+      );
     }
   }, [success]);
+
+  useEffect(() => {
+    if (updateResponse) {
+      switch (true) {
+        case updateResponse.loading:
+          setPaymentSuccess(false);
+          setLoading(true);
+          break;
+        case updateResponse.success:
+          setPaymentSuccess(true);
+          setLoading(false);
+          break;
+        case updateResponse.error:
+          setPaymentSuccess(false);
+          setLoading(false);
+          break;
+        default:
+          break;
+      }
+    }
+  }, [updateResponse]);
   return (
     <PayPalScriptProvider
       options={{
@@ -102,7 +156,13 @@ export default function App() {
             </Timeline>
           </Col>
           <Col xs={24} sm={24} md={12} lg={12}>
-            {success ? (
+            {loading ? (
+              <div style={{ margin: "50 auto" }}>
+                <Spin
+                  indicator={<LoadingOutlined style={{ fontSize: 100 }} spin />}
+                />
+              </div>
+            ) : success && paymentSuccess ? (
               <Result
                 status="success"
                 title="Successfully Purchased 20 Credits!"

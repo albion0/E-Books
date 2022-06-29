@@ -406,7 +406,7 @@ export const updateOneUser = (payload, options) => {
       })
     );
 
-    const { userId } = payload;
+    const { userId, email, username, credits } = payload;
     const {
       showToast,
       toastNotification,
@@ -416,7 +416,7 @@ export const updateOneUser = (payload, options) => {
       onFailMessage,
     } = options;
     try {
-      const result = await APIClient.put(`auth/${userId}`, {});
+      const result = await APIClient.put(`auth/${userId}`, {email, username, credits});
       if (result.data?.success) {
         const { user } = result.data.data;
         dispatch(

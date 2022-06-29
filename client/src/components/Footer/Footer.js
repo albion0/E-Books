@@ -1,73 +1,87 @@
 import { NavLink } from "react-router-dom";
-import './Footer.css';
+import "./Footer.css";
 
 const Footer = () => {
-    return (
-        <footer class="footer-distributed">
+  return (
+    <footer className="footer-distributed">
+      <div className="footer-left">
+        <h3>
+          e<span>Books</span>
+        </h3>
 
-			<div class="footer-left">
+        <p className="footer-links">
+          <a href="#" className="link-1">
+            <NavLink to="/" exact>
+              Home
+            </NavLink>
+          </a>
 
-				<h3>e<span>Books</span></h3>
+          <a href="#">
+            <NavLink to="/books" exact>
+              Books
+            </NavLink>
+          </a>
 
-				<p class="footer-links">
-					<a href="#" class="link-1">
-                        <NavLink to="/" exact>Home</NavLink>
-                    </a>
-					
-					<a href="#">
-                        <NavLink to="/books" exact>Books</NavLink>
-                    </a>
-				
-					<a href="#">
-                        <NavLink to="/payments" exact>Payments</NavLink>
-                    </a>
-				
-					<a href="#">
-                        <NavLink to="/forum" exact>Forum</NavLink>
-                    </a>
-					
-					<a href="#">
-                        <NavLink to="/contact-us" exact>Contact Us</NavLink>
-                    </a>
-					
-					<a href="#">
-                        <NavLink to="/about" exact>About Us</NavLink>
-                    </a>
-				</p>
+          <a href="#">
+            <NavLink to="/payments" exact>
+              Payments
+            </NavLink>
+          </a>
 
-				<p class="footer-company-name">All copyrights reserved © 2022</p>
-			</div>
+          <a href="#">
+            <NavLink to="/forum" exact>
+              Forum
+            </NavLink>
+          </a>
 
-			<div class="footer-center">
+          <a href="#">
+            <NavLink to="/contact-us" exact>
+              Contact Us
+            </NavLink>
+          </a>
 
-				<div>
-					<i class="fa fa-map-marker"></i>
-					<p><span>Road 66 Boulevard Bill Clinton</span> Pristina, Republic of Kosovo</p>
-				</div>
+          <a href="#">
+            <NavLink to="/about" exact>
+              About Us
+            </NavLink>
+          </a>
+        </p>
 
-				<div>
-					<i class="fa fa-phone"></i>
-					<p>+383-44-123-456</p>
-				</div>
+        <p className="footer-company-name">All copyrights reserved © 2022</p>
+      </div>
 
-				<div>
-					<i class="fa fa-envelope"></i>
-					<p><a href="mailto:support@company.com">support@ebooks.com</a></p>
-				</div>
+      <div className="footer-center">
+        <div>
+          <i className="fa fa-map-marker"></i>
+          <p>
+            <span>Road 66 Boulevard Bill Clinton</span> Pristina, Republic of
+            Kosovo
+          </p>
+        </div>
 
-			</div>
+        <div>
+          <i className="fa fa-phone"></i>
+          <p>+383-44-123-456</p>
+        </div>
 
-			<div class="footer-right">
+        <div>
+          <i className="fa fa-envelope"></i>
+          <p>
+            <a href="mailto:support@company.com">support@ebooks.com</a>
+          </p>
+        </div>
+      </div>
 
-				<p class="footer-company-about">
-					<span>About the website</span>
-                        eBooks is a reading website where all enthusiasts of books can explore and expand their mind curiosities by buying and reading books of their wishes and connecting with like-minded people!
-				</p>
+      <div className="footer-right">
+        <p className="footer-company-about">
+          <span>About the website</span>
+          eBooks is a reading website where all enthusiasts of books can explore
+          and expand their mind curiosities by buying and reading books of their
+          wishes and connecting with like-minded people!
+        </p>
+      </div>
+    </footer>
+  );
+};
 
-			</div>
-
-		</footer>
-    )
-}
-
-export default Footer
+export default Footer;
