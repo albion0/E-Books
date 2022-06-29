@@ -1,42 +1,110 @@
 import { NavLink } from "react-router-dom";
 import classes from "./Navbar.module.css";
+import jwtDecode from "jwt-decode";
+import logo from "../../assets/images/potentiallogo.png";
+import { useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { Button } from "antd";
+import { LogoutOutlined } from "@ant-design/icons";
 
 const Navbar = () => {
-  return ( 
+  const history = useHistory();
+  const dispatch = useDispatch();
+  const token = localStorage.getItem("eBook-token");
+  let userId;
+  let userRole;
+  if (token) {
+    const { id, role } = jwtDecode(token);
+    userId = id;
+    userRole = role;
+  }
+
+  const handleLogout = () => {
+    localStorage.clear();
+    history.push("/");
+  };
+
+  return (
     <header className={classes.header}>
-        <h1 className={classes.logo}>
-            <NavLink to="/" exact>E-Books</NavLink>
-        </h1>
-        <ul className={classes.mainnav}>
+      <h1 className={classes.logo}>
+        <NavLink to="/" exact>
+          {/* E-Books */}
+          <img className={classes.photo} src={logo} />
+        </NavLink>
+      </h1>
+      <ul className={classes.mainnav}>
+        <li>
+          <NavLink to="/" exact>
+            Home
+          </NavLink>
+        </li>
+        <li>
+          <NavLink to="/books" exact>
+            Books
+          </NavLink>
+        </li>
+        <li>
+          <NavLink to="/contact-us" exact>
+            Contact Us
+          </NavLink>
+        </li>
+        <li>
+          <NavLink to="/about" exact>
+            About Us
+          </NavLink>
+        </li>
+        {token ? (
+          <>
             <li>
-                <NavLink to="/" exact>Home</NavLink>
+              <NavLink to="/my-books" exact>
+                My Books
+              </NavLink>
             </li>
             <li>
-                <NavLink to="/books" exact>Books</NavLink>
+              <NavLink to="/payments" exact>
+                Payments
+              </NavLink>
             </li>
             <li>
-                <NavLink to="/my-books" exact>My Books</NavLink>
+              <NavLink to="/forum" exact>
+                Forum
+              </NavLink>
             </li>
             <li>
-                <NavLink to="/payments" exact>Payments</NavLink>
+              {/* <NavLink to="/forum" exact>
+                Log out
+              </NavLink> */}
+              <Button
+                className="pb-1"
+                onClick={handleLogout}
+                style={{
+                  border: "none",
+                  backgroundColor: "transparent",
+                  height: "26px",
+                }}
+              >
+                <LogoutOutlined
+                  style={{ fontSize: "15px", marginBottom: "3px" }}
+                />
+              </Button>
+            </li>
+          </>
+        ) : (
+          <>
+            <li>
+              <NavLink to="/login" exact>
+                Login
+              </NavLink>
             </li>
             <li>
-                <NavLink to="/forum" exact>Forum</NavLink>
+              <NavLink to="/register" exact>
+                Register
+              </NavLink>
             </li>
-            <li>
-                <NavLink to="/contact-us" exact>Contact Us</NavLink>
-            </li>
-            <li>
-                <NavLink to="/about" exact>About Us</NavLink>
-            </li>
-            <li>
-                <NavLink to="/login" exact>Login</NavLink>
-            </li>
-            <li>
-                <NavLink to="/register" exact>Register</NavLink>
-            </li>
-        </ul>
-    </header> 
+          </>
+        )}
+      </ul>
+    </header>
     /* 
     <nav className={classes.wrapper}>
         <ul className={classes.list}>
@@ -70,8 +138,7 @@ const Navbar = () => {
         </ul>
     </nav>
     */
-    
-  )
-}
+  );
+};
 
-export default Navbar
+export default Navbar;

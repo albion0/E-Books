@@ -35,6 +35,9 @@ const Register = React.lazy(() => import("../components/Register/Register"));
 const ForgotPassword = React.lazy(() =>
   import("../components/ForgotPassword/ForgotPassword")
 );
+const ResetPassword = React.lazy(() =>
+  import("../components/ResetPassword/ResetPassword")
+);
 const Dashboard = React.lazy(() => import("../views/Dashboard"));
 const Books = React.lazy(() => import("../components/Books/Books"));
 const MyBooks = React.lazy(() => import("../components/MyBooks/MyBooks"));
@@ -227,6 +230,12 @@ const ROUTES = [
     key: "AUTH",
     exact: true,
     component: (props) => <ForgotPassword {...props} />,
+  },
+  {
+    path: "/resetUserPassword",
+    key: "AUTH",
+    exact: true,
+    component: (props) => <ResetPassword {...props} />,
   },
   {
     path: "/payments",

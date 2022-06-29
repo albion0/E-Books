@@ -73,8 +73,8 @@ export default function App() {
           style={{
             display: "flex",
             flexWrap: "wrap",
-            marginTop: "150px",
-            marginBottom: "150px",
+            marginTop: "80px",
+            marginBottom: "80px",
           }}
         >
           <Col

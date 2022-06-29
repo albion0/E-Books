@@ -10,6 +10,7 @@ import ROUTES, { RenderRoutes } from "../../navigation/routes";
 import { displayRouteMenu } from "../../utils/displayRouteMenu";
 import { Redirect, useLocation, useHistory } from "react-router-dom";
 import jwtDecode from "jwt-decode";
+import logo from "../../assets/images/potentiallogo.png";
 
 const { Header, Content, Sider } = Layout;
 
@@ -42,7 +43,7 @@ const Dashboard = (props) => {
         style={{ minHeight: "100vh" }}
       >
         <div className="logo">
-          <img src="" width={"50%"} />
+          <img src={logo} width={"50%"} />
         </div>
         <Menu theme="dark" mode="inline" defaultSelectedKeys={["dashboard"]}>
           {displayRouteMenu(ROUTES[11].routes)}
