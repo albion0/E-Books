@@ -3,7 +3,7 @@ import { TablePagination } from '@mui/material';
 
 import MyBook from "./MyBook/MyBook";
 import Filters from "../Books/Filters/Filters";
-
+import Footer from "../Footer/Footer";
 import classes from "./MyBooks.module.css";
 import bookImg from "../../assets/images/book.png";
 
@@ -63,6 +63,7 @@ const MyBooks = () => {
             className={classes.table}
           />
       </div>
+      <Footer/>
     </div>
   )
 }

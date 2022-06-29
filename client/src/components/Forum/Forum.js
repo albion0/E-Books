@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { TablePagination } from '@mui/material';
 import { NavLink } from "react-router-dom";
-
+import Footer from "../Footer/Footer";
 import Filters from "./Filters/Filters";
 
 import classes from "./Forum.module.css";
@@ -146,6 +146,7 @@ const Forum = () => {
             className={classes.table}
           />
       </div>
+      <Footer/>
     </div>
   )
 }

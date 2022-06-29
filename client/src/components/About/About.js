@@ -1,7 +1,10 @@
 //import 'bootstrap/dist/css/bootstrap.css';
+import Footer from "../Footer/Footer";
   const About = () => {
      return (
-        <div>Test</div>
+        <div>Test
+            <Footer/>
+        </div>
         /*
         <div class="about">
             <div className="container text-center">

@@ -1,8 +1,7 @@
 import { useState } from 'react';
 import { TablePagination } from '@mui/material';
-
+import Footer from "../Footer/Footer";
 import Book from "./Book/Book";
-
 import classes from "./Books.module.css";
 import bookImg from "../../assets/images/book.png";
 import Filters from "./Filters/Filters";
@@ -63,6 +62,7 @@ const Books = () => {
             className={classes.table}
           />
       </div>
+      <Footer/>
     </div>
   )
 }

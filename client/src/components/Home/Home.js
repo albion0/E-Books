@@ -9,6 +9,7 @@ import book4 from "./image/book-4.png";
 import book5 from "./image/book-5.png";
 import book6 from "./image/book-6.png";
 import stand from "./image/stand.png";
+import Footer from "../Footer/Footer";
 // import Swiper JS
 import Swiper from 'swiper';
 // import Swiper styles
@@ -40,9 +41,9 @@ const Home = () => {
     <section className="home" id="home">
       <div className="row">
           <div className="content">
-              <h3>upto 75% off</h3>
-              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam deserunt nostrum accusamus. Nam alias sit necessitatibus, aliquid ex minima at!</p>
-              <a href="#" className="btn">shop now</a>
+              <h3>Welcome to eBooks</h3>
+              <p>~ Board in and let your imagination take off and reach impeccable heights meant to open new doors and opportunities to enhance your lifes! ~</p>
+              <a href="/books" className="btn">click me to see more books</a>
           </div>
 
           <div className="swiper books-slider">
@@ -57,6 +58,7 @@ const Home = () => {
               <img src={stand} className="stand" alt=""/>
           </div>
       </div>
+      <Footer/>
     </section>
   )
 }

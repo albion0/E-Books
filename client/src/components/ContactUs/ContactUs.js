@@ -1,3 +1,4 @@
+import Footer from "../Footer/Footer";
 import classes from "./ContactUs.module.css";
 //import "./ContactUs.css";
 
@@ -12,9 +13,10 @@ const ContactUs = () => {
                         <input type="text"  placeholder="Name" name="name"  className={classes.forminput} />
                         <input type="text"  placeholder="Email" name="email" className={classes.forminput} />
                         <textarea name="description" id="" cols="30" rows="10" placeholder="Message"  className={classes.forminput}></textarea>
-                        <input type="submit" name="submit" className={classes.submitbutton} value="SUBMIT"/>
+                        <input type="submit" name="submit" className={classes.submitbutton} value="Send Message"/>
                 </form>
             </div>
+      <Footer/>
    </div>
   )
 }
