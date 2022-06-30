@@ -20,7 +20,7 @@ import {
   LoadingOutlined,
 } from "@ant-design/icons";
 import { toastNotification } from "../../utils/toastNotification";
-import { signUpUser, clearSignUpUser } from "../../store/actions/auth";
+import { signUpUser, clearSignUpUser } from "../../store/actions/actions";
 
 const Register = () => {
   const {

@@ -3,7 +3,12 @@ import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import { Col, Row, Timeline, Card, Button, Result, Spin } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { toastNotification } from "../../../utils/toastNotification";
-import { clearUpdateOneUser, updateOneUser } from "../../../store/actions/auth";
+import {
+  clearUpdateOneUser,
+  updateOneUser,
+  createPayment,
+  clearCreateNewPayment,
+} from "../../../store/actions/actions";
 import { LoadingOutlined } from "@ant-design/icons";
 
 const { Meta } = Card;
@@ -20,10 +25,12 @@ export default function App() {
 
   const userResponse = useSelector(({ auth }) => auth.getOne);
   const updateResponse = useSelector(({ auth }) => auth.updateOne);
+  const createResponse = useSelector(({ payments }) => payments.create);
 
   useEffect(() => {
     return () => {
       dispatch(clearUpdateOneUser());
+      dispatch(clearCreateNewPayment());
     };
   }, []);
 
@@ -65,6 +72,9 @@ export default function App() {
 
   useEffect(() => {
     if (success) {
+      dispatch(
+        createPayment({ amount: 20, user: userResponse?.data?.user?._id }, {})
+      );
       const oldCredits = parseInt(userResponse?.data?.user?.credits);
       const newCredits = oldCredits + 20;
       const creditsToUpdate = newCredits.toString();

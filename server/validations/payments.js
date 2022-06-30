@@ -1,35 +1,39 @@
 // Imports: third-party packages.
 const { Joi } = require("express-validation");
 
-// Object that holds validation for all controllers methods inside Genres controller.
+// Object that holds validation for all controllers methods inside Payments controller.
 const validator = {
-  getAllGenres: {
+  getAllPayments: {
     query: Joi.object({
       page: Joi.number().optional().default(1),
       limit: Joi.number().optional().default(10),
       pagination: Joi.boolean().optional().default(true),
     }),
   },
-  createGenre: {
+  createPayment: {
     body: Joi.object({
-      name: Joi.string().required(),
-      description: Joi.string().required(),
+      amount: Joi.number().required(),
+      user: Joi.string()
+        .regex(/^[0-9a-fA-F]{24}$/)
+        .required(),
     }),
   },
-  updateGenre: {
+  updatePayment: {
     params: Joi.object({
-      genreId: Joi.string()
+      paymentId: Joi.string()
         .regex(/^[0-9a-fA-F]{24}$/)
         .required(),
     }),
     body: Joi.object({
-      name: Joi.string().required(),
-      description: Joi.string().required(),
+      amount: Joi.number().required(),
+      user: Joi.string()
+        .regex(/^[0-9a-fA-F]{24}$/)
+        .required(),
     }),
   },
-  validateGenreId: {
+  validatePaymentId: {
     params: Joi.object({
-      genreId: Joi.string()
+      paymentId: Joi.string()
         .regex(/^[0-9a-fA-F]{24}$/)
         .required(),
     }),

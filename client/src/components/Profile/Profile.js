@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Button, Spin } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import { toastNotification } from "../../utils/toastNotification";
-import { updateOneUser, clearUpdateOneUser } from "../../store/actions/auth";
+import { updateOneUser, clearUpdateOneUser } from "../../store/actions/actions";
 
 const Profile = () => {
   const {

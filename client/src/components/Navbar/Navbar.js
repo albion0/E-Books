@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Button, Spin } from "antd";
 import { LogoutOutlined } from "@ant-design/icons";
 import { useEffect, useState } from "react";
-import { clearGetOneUser, getOneUser } from "../../store/actions/auth";
+import { clearGetOneUser, getOneUser } from "../../store/actions/actions";
 import { LoadingOutlined, UserOutlined } from "@ant-design/icons";
 
 const Navbar = () => {

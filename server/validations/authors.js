@@ -1,7 +1,7 @@
 // Imports: third-party packages.
 const { Joi } = require("express-validation");
 
-// Object that holds validation for all controllers methods inside Business Type controller.
+// Object that holds validation for all controllers methods inside Author controller.
 const validator = {
   getAllAuthors: {
     query: Joi.object({
