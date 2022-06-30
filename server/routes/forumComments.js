@@ -5,7 +5,7 @@ const router = express.Router();
 // Imports: local files.
 const authorize = require("../middlewares/authorizeUser");
 const protect = require("../middlewares/protect");
-const { Admin } = require("../middlewares/roles");
+const { Admin, User } = require("../middlewares/roles");
 const {
   getAll,
   getTopicComments,
@@ -27,12 +27,17 @@ router.route("/").get(getAll);
 router.route("/comments").get(validate(topicComments), getTopicComments);
 router
   .route("/")
-  .post(authorize, protect(Admin), validate(createForumComment), create);
+  .post(authorize, protect(Admin, User), validate(createForumComment), create);
 
 router.route("/:forumCommentId").get(validate(validateForumCommentId), getOne);
 router
   .route("/:forumCommentId")
-  .put(authorize, protect(Admin), validate(updateForumComment), updateOne);
+  .put(
+    authorize,
+    protect(Admin, User),
+    validate(updateForumComment),
+    updateOne
+  );
 router
   .route("/:forumCommentId")
   .delete(

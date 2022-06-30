@@ -15,7 +15,7 @@ import {
   LoadingOutlined,
 } from "@ant-design/icons";
 import { toastNotification } from "../../utils/toastNotification";
-import { getAllUsers, loginUser } from "../../store/actions/auth";
+import { getAllUsers, loginUser } from "../../store/actions/actions";
 
 const Login = () => {
   const {
@@ -88,9 +88,7 @@ const Login = () => {
     <div className={classes.wrapper}>
       <div className={classes.login}>
         <h2 className={classes.heading}>Sign in</h2>
-        <p className={classes.title}>
-          Welcome back. Please login to continue!
-        </p>
+        <p className={classes.title}>Welcome back. Please login to continue!</p>
 
         {loading ? (
           <Spin

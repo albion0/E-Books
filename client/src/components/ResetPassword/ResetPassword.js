@@ -19,7 +19,7 @@ import {
   getAllUsers,
   loginUser,
   resetPassUser,
-} from "../../store/actions/auth";
+} from "../../store/actions/actions";
 import { Buffer } from "buffer";
 
 const ResetPassword = () => {

@@ -8,7 +8,7 @@ import useInput from "../../hooks/useInput";
 import { validateEmail } from "../../helpers/helpers";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { forgotPassUser } from "../../store/actions/auth";
+import { forgotPassUser } from "../../store/actions/actions";
 import { toastNotification } from "../../utils/toastNotification";
 import { Spin } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";

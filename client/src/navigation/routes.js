@@ -1,23 +1,14 @@
 // Icons
 import React from "react";
 import {
-  UserOutlined,
   UsergroupDeleteOutlined,
   DesktopOutlined,
   ApartmentOutlined,
-  BlockOutlined,
-  BookOutlined,
-  PicCenterOutlined,
-  SlidersOutlined,
-  BankOutlined,
-  OrderedListOutlined,
-  UnorderedListOutlined,
-  ReadOutlined,
   DatabaseOutlined,
-  CalendarOutlined,
-  UsergroupAddOutlined,
-  PieChartOutlined,
   BarChartOutlined,
+  QuestionOutlined,
+  DollarCircleOutlined,
+  BookOutlined,
 } from "@ant-design/icons";
 import { Route, Switch } from "react-router-dom";
 
@@ -56,6 +47,10 @@ const Authors = React.lazy(() => import("../views/Dashboard/Authors"));
 const BooksDashboard = React.lazy(() => import("../views/Dashboard/Books"));
 const StatisticPage = React.lazy(() => import("../views/Dashboard/Statistics"));
 const PaypalPayment = React.lazy(() => import("../views/Home/Paypal"));
+const ForumTopics = React.lazy(() => import("../views/Dashboard/Forum"));
+const DashboardPayments = React.lazy(() =>
+  import("../views/Dashboard/Payments")
+);
 
 const ROUTES = [
   {
@@ -200,7 +195,7 @@ const ROUTES = [
         exact: true,
         role: "admin",
         categoryName: "Books",
-        icon: BarChartOutlined,
+        icon: BookOutlined,
         shouldShow: true,
         component: (props) => <BooksDashboard {...props} />,
       },
@@ -223,6 +218,26 @@ const ROUTES = [
         icon: DatabaseOutlined,
         shouldShow: true,
         component: (props) => <Genres {...props} />,
+      },
+      {
+        path: "/dashboard/forum",
+        key: "forum",
+        exact: true,
+        role: "admin",
+        categoryName: "Forum",
+        icon: QuestionOutlined,
+        shouldShow: true,
+        component: (props) => <ForumTopics {...props} />,
+      },
+      {
+        path: "/dashboard/payments",
+        key: "payments",
+        exact: true,
+        role: "admin",
+        categoryName: "Payments",
+        icon: DollarCircleOutlined,
+        shouldShow: true,
+        component: (props) => <DashboardPayments {...props} />,
       },
     ],
   },
