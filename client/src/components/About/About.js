@@ -1,5 +1,4 @@
 import classes from "./About.module.css";
-//import 'bootstrap/dist/css/bootstrap.css';
 import Footer from "../Footer/Footer";
   const About = () => {
      return (
