@@ -23,18 +23,6 @@ const Footer = () => {
           </a>
 
           <a href="#">
-            <NavLink to="/payments" exact>
-              Payments
-            </NavLink>
-          </a>
-
-          <a href="#">
-            <NavLink to="/forum" exact>
-              Forum
-            </NavLink>
-          </a>
-
-          <a href="#">
             <NavLink to="/contact-us" exact>
               Contact Us
             </NavLink>
@@ -45,6 +33,18 @@ const Footer = () => {
               About Us
             </NavLink>
           </a>
+
+          <a href="#">
+            <NavLink to="/login" exact>
+              Login
+            </NavLink>
+          </a>
+
+          <a href="#">
+            <NavLink to="/register" exact>
+              Register
+            </NavLink>
+          </a>
         </p>
 
         <p className="footer-company-name">All copyrights reserved © 2022</p>
@@ -52,7 +52,7 @@ const Footer = () => {
 
       <div className="footer-center">
         <div>
-          <i className="fa fa-map-marker"></i>
+          <i className=""></i>
           <p>
             <span>Road 66 Boulevard Bill Clinton</span> Pristina, Republic of
             Kosovo
@@ -60,12 +60,12 @@ const Footer = () => {
         </div>
 
         <div>
-          <i className="fa fa-phone"></i>
+          <i className=""></i>
           <p>+383-44-123-456</p>
         </div>
 
         <div>
-          <i className="fa fa-envelope"></i>
+          <i className=""></i>
           <p>
             <a href="mailto:support@company.com">support@ebooks.com</a>
           </p>

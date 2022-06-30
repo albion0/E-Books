@@ -1,8 +1,29 @@
+import classes from "./About.module.css";
 //import 'bootstrap/dist/css/bootstrap.css';
 import Footer from "../Footer/Footer";
   const About = () => {
      return (
-        <div>Test
+        <div>
+            <body className={classes.ourcompany}>
+                <div className={classes.aboutsection}>
+                    <div className={classes.innercontainer}>
+                        <h1>What is this website all about?</h1>
+                        <p className={classes.text}>
+                            We've began our mission by creating this company with the hope to re-spread awareness about the importance
+                            of reading books and being in touch with "knowledge" in overall because as we know the world has made a huge
+                            shift towards technology and people have kinda lost touch with reading so we've seen fit to integrate technology and
+                            reality by creating an internet application in ever-service for all those who want and love reading books by doing so, all online. With
+                            the hope that we can remind you of the importance of reading books, we invite you to use our community as an escape
+                            from the daily challenges into the fantasy of reading!
+                        </p>
+                        <div className={classes.skills}>
+                            <span>How many books have you read this month?</span>
+                            <span>Which books have you been putting off?</span>
+                            <span></span>
+                        </div>
+                    </div>
+                </div>
+            </body>
             <Footer/>
         </div>
         /*

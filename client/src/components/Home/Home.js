@@ -41,9 +41,10 @@ const Home = () => {
     <section className="home" id="home">
       <div className="row">
           <div className="content">
-              <h3>Welcome to eBooks</h3>
-              <p>~ Board in and let your imagination take off and reach impeccable heights meant to open new doors and opportunities to enhance your lifes! ~</p>
-              <a href="/books" className="btn">click me to see more books</a>
+              <h3>Reading Paradise</h3>
+              <p>~ Board in and let your imagination take off and reach impeccable heights meant to open new doors and opportunities to 
+                   enhance your lifes! ~
+              </p>
           </div>
 
           <div className="swiper books-slider">
