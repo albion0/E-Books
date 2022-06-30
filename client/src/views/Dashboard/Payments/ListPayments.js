@@ -40,7 +40,6 @@ const getMUIOptions = (
 const getMUIColumns = () => ["User", "Amount", "Created At"];
 
 const getMUIData = (docs) => {
-  console.log(docs);
   return docs.map((payment) => {
     return [
       payment.user ? payment.user.username : "NA",

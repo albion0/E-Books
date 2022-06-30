@@ -224,9 +224,7 @@ export const clearGetOnePayment = () => getOnePaymentReset();
 
 // Actions: Create New Payment.
 export const createPayment = (payload, options) => {
-  console.log("test1");
   return async (dispatch) => {
-    console.log("test2");
     dispatch(
       createPaymentStart({
         loading: true,
@@ -245,14 +243,12 @@ export const createPayment = (payload, options) => {
       onSuccessMessage,
       onFailMessage,
     } = options;
-    console.log(payload, "test3");
 
     try {
       const result = await ApiClient.post("payments", {
         amount,
         user,
       });
-      console.log(result, "test4");
       if (result.data?.success) {
         const { payment } = result.data.data;
         dispatch(

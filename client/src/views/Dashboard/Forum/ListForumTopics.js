@@ -46,7 +46,6 @@ const getMUIOptions = (
 const getMUIColumns = () => ["Topic", "Created By", "Created At", "Actions"];
 
 const getMUIData = (docs, toggleViewModal, onForumTopicDelete, swalOptions) => {
-  console.log(docs);
   return docs.map((forumTopic) => {
     return [
       forumTopic.topic,
