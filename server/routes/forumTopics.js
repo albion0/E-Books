@@ -26,12 +26,12 @@ router
   .route("/")
   .post(authorize, protect(Admin, User), validate(createForumTopic), create);
 
-router.route("/:forumTopicId").get(validate(validateForumTopicId), getOne);
+router.route("/:id").get(validate(validateForumTopicId), getOne);
 router
-  .route("/:forumTopicId")
+  .route("/:id")
   .put(authorize, protect(Admin, User), validate(updateForumTopic), updateOne);
 router
-  .route("/:forumTopicId")
+  .route("/:id")
   .delete(authorize, protect(Admin), validate(validateForumTopicId), deleteOne);
 
 // Exports of this file.

@@ -29,9 +29,9 @@ router
   .route("/")
   .post(authorize, protect(Admin, User), validate(createForumComment), create);
 
-router.route("/:forumCommentId").get(validate(validateForumCommentId), getOne);
+router.route("/:id").get(validate(validateForumCommentId), getOne);
 router
-  .route("/:forumCommentId")
+  .route("/:id")
   .put(
     authorize,
     protect(Admin, User),
@@ -39,7 +39,7 @@ router
     updateOne
   );
 router
-  .route("/:forumCommentId")
+  .route("/:id")
   .delete(
     authorize,
     protect(Admin),

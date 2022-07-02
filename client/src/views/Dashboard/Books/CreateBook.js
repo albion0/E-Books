@@ -16,8 +16,6 @@ import {
 } from "../../../store/actions/actions";
 import { Chip } from "@mui/material";
 import { PlusOutlined, MinusOutlined, UploadOutlined } from "@ant-design/icons";
-import { v4 as uuidv4 } from "uuid";
-
 export const CreateBook = ({ visible, recallAllBooks, handleModal }) => {
   const {
     register,

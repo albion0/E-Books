@@ -220,7 +220,7 @@ export const getOneForumTopic = (payload) => {
 };
 
 // Actions: Clear Get One Forum Topic.
-export const clearGetOnForumTopicr = () => getOneForumTopicReset();
+export const clearGetOneForumTopic = () => getOneForumTopicReset();
 
 // Actions: Create New Forum Topic.
 export const createForumTopic = (payload, options) => {
@@ -261,6 +261,7 @@ export const createForumTopic = (payload, options) => {
           })
         );
         toastNotification("success", onSuccessMessage);
+        history.push(pathname);
       } else {
         dispatch(
           createForumTopicFailed({

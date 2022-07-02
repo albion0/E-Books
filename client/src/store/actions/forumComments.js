@@ -302,7 +302,7 @@ export const getOneForumComment = (payload) => {
 };
 
 // Actions: Clear Get One Forum Comment.
-export const clearGetOnForumCommentr = () => getOneForumCommentReset();
+export const clearGetOneForumComment = () => getOneForumCommentReset();
 
 // Actions: Create New Forum Comment.
 export const createForumComment = (payload, options) => {

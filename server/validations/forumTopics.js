@@ -11,9 +11,7 @@ const validator = {
   },
   updateForumTopic: {
     params: Joi.object({
-      id: Joi.string()
-        .regex(/^[0-9a-fA-F]{24}$/)
-        .required(),
+      id: Joi.string().required(),
     }),
     body: Joi.object({
       topic: Joi.string().required(),
@@ -22,9 +20,7 @@ const validator = {
   },
   validateForumTopicId: {
     params: Joi.object({
-      id: Joi.string()
-        .regex(/^[0-9a-fA-F]{24}$/)
-        .required(),
+      id: Joi.string().required(),
     }),
   },
 };

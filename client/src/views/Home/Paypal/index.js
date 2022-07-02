@@ -10,10 +10,13 @@ import {
   clearCreateNewPayment,
 } from "../../../store/actions/actions";
 import { LoadingOutlined } from "@ant-design/icons";
+import { Redirect } from "react-router-dom";
 
 const { Meta } = Card;
 
 export default function App() {
+  const token = localStorage.getItem("eBook-token");
+
   const [show, setShow] = useState(false);
   const [success, setSuccess] = useState(false);
   const [ErrorMessage, setErrorMessage] = useState("");
@@ -115,6 +118,8 @@ export default function App() {
       }
     }
   }, [updateResponse]);
+
+  if (!token) return <Redirect to="/" />;
   return (
     <PayPalScriptProvider
       options={{
