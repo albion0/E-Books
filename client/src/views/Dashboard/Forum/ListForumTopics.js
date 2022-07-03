@@ -209,7 +209,7 @@ export const ListForumTopics = ({}) => {
         >
           <p style={{ fontSize: "25px" }}>{viewData.topic}</p>
           <br></br>
-          <p>{viewData.content}</p>
+          <p dangerouslySetInnerHTML={{ __html: viewData.content }}></p>
         </Modal>
       )}
       <MUIDataTable

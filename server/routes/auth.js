@@ -16,6 +16,7 @@ const {
   login,
   forgot,
   reset,
+  sendContactEmail,
 } = require("../controllers/auth");
 const {
   getAllUsers,
@@ -43,6 +44,7 @@ router.route("/signup").post(validate(signupUser), signup);
 router.route("/login").post(validate(loginUser), login);
 router.route("/forgot").post(validate(forgotPassword), forgot);
 router.route("/reset/:resetToken").post(validate(resetPassword), reset);
+router.post("/sendEmail", sendContactEmail);
 
 // Exports of this file.
 module.exports = router;

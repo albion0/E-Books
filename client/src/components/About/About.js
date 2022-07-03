@@ -1,44 +1,76 @@
 import classes from "./About.module.css";
 import Footer from "../Footer/Footer";
-  const About = () => {
-     return (
-        <div>
-            <body className={classes.ourcompany}>
-                <div className={classes.aboutsection}>
-                    <div className={classes.innercontainer}>
-                        <h1>What is this website all about?</h1>
-                        <p className={classes.text}>
-                            We've began our mission by creating this company with the hope to re-spread awareness about the importance
-                            of reading books and being in touch with "knowledge" in overall because as we know the world has made a huge
-                            shift towards technology and people have kinda lost touch with reading so we've seen fit to integrate technology and
-                            reality by creating an internet application in ever-service for all those who want and love reading books by doing so, all online. With
-                            the hope that we can remind you of the importance of reading books, we invite you to use our community as an escape
-                            from the daily challenges into the fantasy of reading!
-                        </p>
-                        <div className={classes.skills}>
-                            <span>How many books have you read this month?</span>
-                            <span>Which books have you been putting off?</span>
-                            <span></span>
-                        </div>
-                    </div>
-                </div>
-            </body>
-            <div className={classes.bodyp1p2}>
-                <div className={classes.contactcontainer}>
-                    <form className={classes.contactform}>
-                        <p classname={classes.p1}>Contact Us</p>
-                        <p classname={classes.p2}>Please ask/suggest us whatever you wish to know and we'll return shortly with an answer.
-                        <br/>Thank you for your cooperation!</p>
-                        <input type="text"  placeholder="Name" name="name"  className={classes.forminput} />
-                        <input type="text"  placeholder="Email" name="email" className={classes.forminput} />
-                        <textarea name="description" id="" cols="30" rows="10" placeholder="Message"  className={classes.forminput}></textarea>
-                        <input type="submit" name="submit" className={classes.submitbutton} value="Send Message"/>
-                    </form>
-                </div>
+import ContactUs from "../ContactUs/ContactUs";
+const About = () => {
+  return (
+    <div>
+      <body className={classes.ourcompany}>
+        <div className={classes.aboutsection}>
+          <div className={classes.innercontainer}>
+            <h1>What is this website all about?</h1>
+            <p className={classes.text}>
+              We've began our mission by creating this company with the hope to
+              re-spread awareness about the importance of reading books and
+              being in touch with "knowledge" in overall because as we know the
+              world has made a huge shift towards technology and people have
+              kinda lost touch with reading so we've seen fit to integrate
+              technology and reality by creating an internet application in
+              ever-service for all those who want and love reading books by
+              doing so, all online. With the hope that we can remind you of the
+              importance of reading books, we invite you to use our community as
+              an escape from the daily challenges into the fantasy of reading!
+            </p>
+            <div className={classes.skills}>
+              <span>How many books have you read this month?</span>
+              <span>Which books have you been putting off?</span>
+              <span></span>
             </div>
-            <Footer/>
+          </div>
         </div>
-        /*
+      </body>
+      <ContactUs />
+      {/* <div className={classes.bodyp1p2}>
+        <div className={classes.contactcontainer}>
+          <form className={classes.contactform}>
+            <p classname={classes.p1}>Contact Us</p>
+            <p classname={classes.p2}>
+              Please ask/suggest us whatever you wish to know and we'll return
+              shortly with an answer.
+              <br />
+              Thank you for your cooperation!
+            </p>
+            <input
+              type="text"
+              placeholder="Name"
+              name="name"
+              className={classes.forminput}
+            />
+            <input
+              type="text"
+              placeholder="Email"
+              name="email"
+              className={classes.forminput}
+            />
+            <textarea
+              name="description"
+              id=""
+              cols="30"
+              rows="10"
+              placeholder="Message"
+              className={classes.forminput}
+            ></textarea>
+            <input
+              type="submit"
+              name="submit"
+              className={classes.submitbutton}
+              value="Send Message"
+            />
+          </form>
+        </div>
+      </div> */}
+      <Footer />
+    </div>
+    /*
         <div class="about">
             <div className="container text-center">
                 <br/>
@@ -81,8 +113,7 @@ import Footer from "../Footer/Footer";
             </div>
         </div>
     */
-    )
-}
+  );
+};
 
 export default About;
-
