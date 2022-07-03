@@ -1,5 +1,3 @@
-
-
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@1,300&display=swap');
 
 .event{
@@ -11,13 +9,13 @@
 
 .sec {
     width: 100%;
-    height: 80vh;
+    height: 100vh;
     background-size: cover;
 }
 
 .sec .leftBox {
     width: 60%;
-    height: 129%;
+    height: 100%;
     float: left;
     padding: 50px;
     box-sizing: border-box;
@@ -144,4 +142,71 @@
     background: #e91e63;
     color: #fff;
     border-color: #e91e63;
+}
+
+@media (max-width: 991px) {
+    .sec{
+        height: 100%;
+        background-position: center;
+    }
+
+    .sec .leftBox {
+        width: 100%;
+        height: auto;
+        float: none;
+        padding: 20px;
+    }
+
+    .sec .events {
+        width: 100%;
+        height: auto;
+        background: transparent;
+        float: none;
+    }
+
+    .sec .leftBox .content {
+        padding: 20px;
+
+    }
+
+    .sec .leftBox .content .title {
+        font-size: 30px;
+    }
+
+    .sec .events .uls {
+        position: relative;
+        transform: translateY(0px);
+        padding: 0 20px 20px;
+    }
+
+    .sec .events .uls .lis {
+        height: auto;
+        background: rgba(255, 255, 255, .9);
+    }
+
+    .sec .events .uls .lis .time {
+        width: 80px;
+        height: 80px;
+        padding: 0;
+    }
+
+    .sec .events .uls .lis .time .h2 {
+        font-size: 30px;
+        line-height: 24px;
+    }
+
+    .sec .events .uls .lis .time .h2 .span {
+        font-size: 20px;
+    }
+
+    .sec .events .uls .lis .details {
+        width: 100%;
+        float: none;
+        padding-left: 100px;
+        background: transparent;
+    }
+
+    .sec .events .uls .lis .details .a {
+        padding: 5px 10px;
+    }
 }
