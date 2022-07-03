@@ -1,0 +1,64 @@
+.cotainer-contact-us {
+  background: #fff;
+  color: #333;
+  padding: 95px 0 85px;
+  background: url(../Home/image/banner-bg.jpg) no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+
+  .sec-heading {
+    margin: 0 0 50px;
+    .contactTitle {
+      color: #aaaaaa;
+      text-transform: uppercase;
+      font-weight: 600;
+      font-size: 12px;
+    }
+    h6 {
+      color: #aaaaaa;
+      text-transform: uppercase;
+      font-weight: 600;
+      font-size: 12px;
+    }
+    h2 {
+      color: #3c6382;
+      font-weight: 800;
+      text-transform: capitalize;
+      font-size: 50px;
+      line-height: 60px;
+    }
+    p {
+      font-family: "Barlow", sans-serif;
+      font-size: 18px;
+      line-height: 30px;
+      font-weight: 400;
+      color: #3c6382;
+    }
+  }
+  .contact-form {
+    input {
+      height: 50px;
+      font-size: 15px;
+      border-color: #daecfd;
+    }
+    button {
+      background-color: #aaaaaa;
+      padding: 15px 30px;
+      color: #fff;
+      border-radius: 4px;
+      font-weight: 600;
+      border: 0;
+      font-family: "Barlow", sans-serif;
+    }
+  }
+  .form-group {
+    margin-bottom: 1rem;
+  }
+
+  .cont-info {
+    margin: 30px 0 0 30px;
+    .cont-info-single {
+      margin: 0 0 40px;
+    }
+  }
+}

@@ -561,6 +561,35 @@ const reset = asyncHandler(async (request, response, next) => {
     .json({ success: true, data: { token }, error: null });
 });
 
+const sendContactEmail = asyncHandler(async (request, response, next) => {
+  const { name, email, description } = request.body;
+
+  const mailBody = emails.contactForm["en"](name, email, description);
+  const mailOptions = {
+    from: {
+      name: "eBooks",
+      address: process.env.FROM_EMAIL,
+    },
+    to: process.env.INFO_EMAIL,
+    ...mailBody,
+  };
+  const mailResult = await mail(mailOptions);
+  if (!mailResult.success) {
+    next(
+      new ApiError(
+        "Failed to send mail!",
+        "FAILED_MAIL",
+        statusCodes.INTERNAL_ERROR
+      )
+    );
+    return;
+  }
+
+  response
+    .status(statusCodes.OK)
+    .json({ success: true, data: {}, error: null });
+});
+
 // Exports of this file.
 module.exports = {
   getAll,
@@ -572,4 +601,5 @@ module.exports = {
   login,
   forgot,
   reset,
+  sendContactEmail,
 };

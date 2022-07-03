@@ -46,7 +46,7 @@ const Dashboard = (props) => {
           <img src={logo} width={"50%"} />
         </div>
         <Menu theme="dark" mode="inline" defaultSelectedKeys={["dashboard"]}>
-          {displayRouteMenu(ROUTES[11].routes)}
+          {displayRouteMenu(ROUTES[1].routes)}
         </Menu>
       </Sider>
       <Layout className="site-layout">
@@ -71,7 +71,7 @@ const Dashboard = (props) => {
             padding: 24,
           }}
         >
-          <RenderRoutes routes={ROUTES[11].routes} />
+          <RenderRoutes routes={ROUTES[1].routes} />
         </Content>
       </Layout>
     </Layout>
