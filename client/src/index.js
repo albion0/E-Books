@@ -5,7 +5,7 @@ import reportWebVitals from "./reportWebVitals";
 import "normalize.css";
 // Import style
 import "./style/main.scss";
-
+import 'font-awesome/css/font-awesome.min.css';
 import { Provider } from "react-redux";
 
 // Import routes

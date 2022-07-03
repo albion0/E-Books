@@ -22,11 +22,11 @@
     margin-top: 2rem;
 }
 
-.home .row .books-slider a img{
+.home .row .books-slider #book img{
     height: 25rem;
 }
 
-.home .row .books-slider a:hover img{
+.home .row .books-slider #book:hover img{
     transform: scale(.9);
 }
 
@@ -35,16 +35,14 @@
     margin-top: -2rem;
 }
 
-.home .row .content h3{
+.home .row .content .read{
     color:var(--black);
     font-size: 4.5rem;
 }
 
-.home .row .content p{
+.home .row .content .sometext{
     color:var(--light-color);
     font-size: 1.4rem;
     line-height: 2;
     padding:1rem 0;
 }
-
-

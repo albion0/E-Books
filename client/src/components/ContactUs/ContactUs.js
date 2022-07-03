@@ -7,8 +7,8 @@ const ContactUs = () => {
    <div className={classes.bodyp1p2}>
        <div className={classes.contactcontainer}>
                 <form className={classes.contactform}>
-                        <p classname={classes.p1}>Contact Us</p>
-                        <p classname={classes.p2}>Please ask/suggest us whatever you wish to know and we'll return shortly with an answer.
+                        <p className={classes.p1}>Contact Us</p>
+                        <p className={classes.p2}>Please ask/suggest us whatever you wish to know and we'll return shortly with an answer.
                         <br/>Thank you for your cooperation!</p>
                         <input type="text"  placeholder="Name" name="name"  className={classes.forminput} />
                         <input type="text"  placeholder="Email" name="email" className={classes.forminput} />
@@ -16,8 +16,8 @@ const ContactUs = () => {
                         <input type="submit" name="submit" className={classes.submitbutton} value="Send Message"/>
                 </form>
             </div>
-      <Footer/>
-   </div>
+        <Footer/>
+    </div>
   )
 }
 

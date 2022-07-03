@@ -83,13 +83,8 @@ const Navbar = () => {
           </NavLink>
         </li>
         <li>
-          <NavLink to="/contact-us" exact>
-            Contact Us
-          </NavLink>
-        </li>
-        <li>
           <NavLink to="/about" exact>
-            About Us
+            About & Contact Us
           </NavLink>
         </li>
         {token ? (

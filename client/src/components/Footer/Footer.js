@@ -23,14 +23,8 @@ const Footer = () => {
           </a>
 
           <a href="#">
-            <NavLink to="/contact-us" exact>
-              Contact Us
-            </NavLink>
-          </a>
-
-          <a href="#">
             <NavLink to="/about" exact>
-              About Us
+              About & Contact Us
             </NavLink>
           </a>
 
@@ -52,7 +46,7 @@ const Footer = () => {
 
       <div className="footer-center">
         <div>
-          <i className=""></i>
+          <i className="fa fa-map-marker"></i>
           <p>
             <span>Road 66 Boulevard Bill Clinton</span> Pristina, Republic of
             Kosovo
@@ -60,12 +54,12 @@ const Footer = () => {
         </div>
 
         <div>
-          <i className=""></i>
-          <p>+383-44-123-456</p>
+          <i className="fa fa-phone"></i>
+          <p>+383 44 123 456</p>
         </div>
 
         <div>
-          <i className=""></i>
+          <i className="fa fa-envelope"></i>
           <p>
             <a href="mailto:support@company.com">support@ebooks.com</a>
           </p>

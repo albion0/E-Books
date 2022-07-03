@@ -17,6 +17,7 @@
     "axios": "^0.26.1",
     "bootstrap": "^5.1.3",
     "buffer": "^6.0.3",
+    "font-awesome": "^4.7.0",
     "jsonwebtoken": "^8.5.1",
     "jwa": "^2.0.0",
     "jws": "^4.0.0",
