@@ -11,24 +11,11 @@ import bookImg from "../../assets/images/book.png";
 import Filters from "./Filters/Filters";
 import { getAllBooks } from "../../store/actions/books";
 
-// const booksData = [];
-
 const defaultPage = 0;
 const defaultLimit = 10;
 
-// for (let i = 1; i <= 10; i++) {
-//   booksData.push({
-//     id: "key" + i,
-//     img: bookImg,
-//     title: "Book " + i,
-//     desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-//     price: 20,
-//     date: "4/15/2022",
-//   });
-// }
-
 const Books = () => {
-  const [rowsPerPage, setRowsPerPage] = useState(10);
+  // const [rowsPerPage, setRowsPerPage] = useState(10);
   const [currentPage, setCurrentPage] = useState(defaultPage);
   const [currentLimit, setCurrentLimit] = useState(defaultLimit);
   const [currentBooks, setCurrentBooks] = useState([]);
@@ -40,8 +27,13 @@ const Books = () => {
   console.log(getAllBooksResponse);
 
   useEffect(() => {
-    dispatch(getAllBooks({ page: defaultPage + 1, limit: defaultLimit , pagination: true }));
+    dispatch(getAllBooks({ page: currentPage + 1, limit: currentLimit, pagination: true }));
   }, []);
+
+  useEffect(() => {
+    console.log(currentLimit, currentPage)
+    dispatch(getAllBooks({ page: currentPage + 1, limit: currentLimit, pagination: true }));
+  }, [currentLimit, currentPage]);
 
   useEffect(() => {
     if (getAllBooksResponse && getAllBooksResponse.loading) {
@@ -50,9 +42,9 @@ const Books = () => {
       setIsLoading(false);
 
       const { docs, totalDocs }  = getAllBooksResponse.data.books;
-      console.log(docs);
 
       setCurrentBooks(docs);
+      setTotalItems(totalDocs);
     } else if (getAllBooksResponse && getAllBooksResponse.error) {
       setIsLoading(false);
     }
@@ -63,7 +55,7 @@ const Books = () => {
   };
   
   const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
+    setCurrentLimit(parseInt(event.target.value, 10));
     setCurrentPage(0);
   };
 
@@ -102,7 +94,7 @@ const Books = () => {
             count={totalItems}
             page={currentPage}
             onPageChange={handleChangePage}
-            rowsPerPage={rowsPerPage}
+            rowsPerPage={currentLimit}
             onRowsPerPageChange={handleChangeRowsPerPage}
             style={{ marginBottom: "20px" }}
             className={classes.table}
