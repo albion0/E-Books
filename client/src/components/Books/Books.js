@@ -1,37 +1,81 @@
-import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
 import { TablePagination } from "@mui/material";
+import { Spin } from "antd";
+import { LoadingOutlined } from "@ant-design/icons";
+
 import Footer from "../Footer/Footer";
 import Book from "./Book/Book";
 import classes from "./Books.module.css";
 import bookImg from "../../assets/images/book.png";
 import Filters from "./Filters/Filters";
+import { getAllBooks } from "../../store/actions/books";
 
-const booksData = [];
+// const booksData = [];
 
-for (let i = 1; i <= 10; i++) {
-  booksData.push({
-    id: "key" + i,
-    img: bookImg,
-    title: "Book " + i,
-    desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-    price: 20,
-    date: "4/15/2022",
-  });
-}
+const defaultPage = 0;
+const defaultLimit = 10;
+
+// for (let i = 1; i <= 10; i++) {
+//   booksData.push({
+//     id: "key" + i,
+//     img: bookImg,
+//     title: "Book " + i,
+//     desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+//     price: 20,
+//     date: "4/15/2022",
+//   });
+// }
 
 const Books = () => {
   const [rowsPerPage, setRowsPerPage] = useState(10);
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(defaultPage);
+  const [currentLimit, setCurrentLimit] = useState(defaultLimit);
+  const [currentBooks, setCurrentBooks] = useState([]);
   const [totalItems, setTotalItems] = useState(100);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const dispatch = useDispatch();
+  const getAllBooksResponse = useSelector(({ books }) => books.getAll);
+  console.log(getAllBooksResponse);
+
+  useEffect(() => {
+    dispatch(getAllBooks({ page: defaultPage + 1, limit: defaultLimit , pagination: true }));
+  }, []);
+
+  useEffect(() => {
+    if (getAllBooksResponse && getAllBooksResponse.loading) {
+      setIsLoading(true);
+    } else if (getAllBooksResponse && getAllBooksResponse.success) {
+      setIsLoading(false);
+
+      const { docs, totalDocs }  = getAllBooksResponse.data.books;
+      console.log(docs);
+
+      setCurrentBooks(docs);
+    } else if (getAllBooksResponse && getAllBooksResponse.error) {
+      setIsLoading(false);
+    }
+  }, [getAllBooksResponse]);
 
   const handleChangePage = (event, newPage) => {
     setCurrentPage(newPage);
   };
-
+  
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setCurrentPage(0);
   };
+
+  if (isLoading)
+    return (
+      <div
+        className="d-flex justify-content-center"
+        style={{ marginTop: "300px" }}
+      >
+        <Spin indicator={<LoadingOutlined style={{ fontSize: 100 }} spin />} />
+      </div>
+    );
 
   return (
     <>
@@ -39,14 +83,15 @@ const Books = () => {
         <Filters />
 
         <div className={classes.books}>
-          {booksData.map((item) => (
+          {currentBooks.map((item) => (
             <Book
-              key={item.id}
-              img={item.img}
+              key={item._id}
+              id={item._id}
+              img={item.bookPhoto}
               title={item.title}
-              desc={item.desc}
+              desc={item.content}
               price={item.price}
-              date={item.date}
+              date={item.createdAt}
             />
           ))}
         </div>

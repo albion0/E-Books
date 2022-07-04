@@ -33,6 +33,7 @@ const initialLoadingState = {
   error: false,
   errorMessage: null,
 };
+
 const initialState = {
   getAll: initialLoadingState,
   getOne: initialLoadingState,

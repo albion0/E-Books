@@ -10,11 +10,11 @@ const Book = (props) => {
         <p className={classes.description}>{props.desc}</p>
         <div className={classes.bottom}>
             <p className={classes.price}>{props.price} Credits</p>
-            <NavLink to="/books/id" className={classes.btn}>View More</NavLink>
+            <NavLink to={`/books/${props.id}`} className={classes.btn}>View More</NavLink>
         </div>
       </div>
     </div>
   )
 }
 
-export default Book
+export default Book;
