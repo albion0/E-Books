@@ -144,6 +144,8 @@
     border-color: #e91e63;
 }
 
+/* Media queries for best-selling books */
+
 @media (max-width: 991px) {
     .sec{
         height: 100%;
