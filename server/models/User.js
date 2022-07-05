@@ -20,6 +20,11 @@ const UserSchema = new mongoose.Schema({
     required: false,
     default: null,
   },
+  books: {
+    type: [{ type: mongoose.Schema.Types.ObjectId, ref: "Book" }],
+    required: false,
+    default: [],
+  },
 });
 
 // Static & instance methods.

@@ -24,6 +24,10 @@ import {
   DELETE_ONE_BOOK_SUCCESS,
   DELETE_ONE_BOOK_FAILED,
   DELETE_ONE_BOOK_RESET,
+  GET_USER_BOOKS_START,
+  GET_USER_BOOKS_SUCCESS,
+  GET_USER_BOOKS_FAILED,
+  GET_USER_BOOKS_RESET
 } from "../actions/actions";
 
 const initialLoadingState = {
@@ -41,6 +45,7 @@ const initialState = {
   uploadPhoto: initialLoadingState,
   updateOne: initialLoadingState,
   deleteOne: initialLoadingState,
+  getUserBooks: initialLoadingState
 };
 
 const booksReducer = (state = initialState, action) => {
@@ -123,8 +128,22 @@ const booksReducer = (state = initialState, action) => {
       return { ...state, deleteOne: { ...action.payload } };
     case DELETE_ONE_BOOK_RESET:
       return { ...state, deleteOne: { ...initialLoadingState } };
+
+          /**
+     * =======================================================================
+     * GET USER BOOKS
+     * =======================================================================
+     */
+    case GET_USER_BOOKS_START:
+      return { ...state, getUserBooks: { ...action.payload } };
+    case GET_USER_BOOKS_SUCCESS:
+      return { ...state, getUserBooks: { ...action.payload } };
+    case GET_USER_BOOKS_FAILED:
+      return { ...state, getUserBooks: { ...action.payload } };
+    case GET_USER_BOOKS_RESET:
+      return { ...state, getUserBooks: { ...initialLoadingState } };
     default:
-      return state;
+    return state;
   }
 };
 

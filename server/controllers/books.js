@@ -4,6 +4,7 @@ const fs = require("fs");
 
 // Imports: local files.
 const Book = require("../models/Book");
+const User = require("../models/User");
 const Author = require("../models/Author");
 const asyncHandler = require("../middlewares/asyncHandler");
 const { statusCodes } = require("../config");
@@ -296,5 +297,79 @@ const deleteOne = asyncHandler(async (request, response, next) => {
     .json({ success: true, data: { book: deletedBook }, error: null });
 });
 
+/**
+ * @description Buy a book.
+ * @route       POST /api/books/:bookId/:userId.
+ * @access      Public
+ */
+const buyBook = asyncHandler(async(request, response, next) => {
+  const { bookId, userId } = request.params;
+  console.log('HELLOOO ', userId, bookId);
+
+  const book = await Book.findOne({ _id: bookId, isDeleted: false });
+  if (!book) {
+    next(
+      new ApiError(
+        "Book not found with id!",
+        "RESOURCE_NOT_FOUND",
+        statusCodes.NOT_FOUND
+      )
+    );
+    return;
+  }
+
+  const user = await User.findOne({ _id: userId });
+  if (!user) {
+    next(
+      new ApiError(
+        "User not found with id!",
+        "RESOURCE_NOT_FOUND",
+        statusCodes.NOT_FOUND
+      )
+    );
+    return;
+  }
+
+  if(user.credits >= +book.credits) {
+    user.credits -= book.credits;
+    console.log(user);
+    user.books = [...user.books, book];
+    await user.save();
+  } else {
+    next(
+      new ApiError(
+        "User doesn't have enough credits!",
+        "RESOURCE_NOT_FOUND",
+        statusCodes.NOT_FOUND
+      )
+    );
+    return;
+  }
+
+  response.status(statusCodes.OK).json({ success: true });
+})
+
+const userBooks = asyncHandler(async(request, response, next) => {
+  const { userId, page, limit } = request.params;
+  console.log(`page ${page} limit ${limit} userId ${userId}`)
+  const user = await User.findOne({ _id: userId });
+  if (!user) {
+    next(
+      new ApiError(
+        "User not found with id!",
+        "RESOURCE_NOT_FOUND",
+        statusCodes.NOT_FOUND
+      )
+    );
+    return;
+  }
+
+  const populatedBooks = await User.find().populate("books").exec();
+
+  response
+    .status(statusCodes.OK)
+    .json({ success: true, data: { book: populatedBooks }, error: null });
+})
+
 // Exports of this file.
-module.exports = { getAll, getOne, create, uploadPhoto, updateOne, deleteOne };
+module.exports = { getAll, getOne, create, uploadPhoto, updateOne, deleteOne, buyBook, userBooks };

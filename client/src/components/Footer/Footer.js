@@ -10,35 +10,25 @@ const Footer = () => {
         </h3>
 
         <p className="footer-links">
-          <a href="#" className="link-1">
-            <NavLink to="/" exact>
+            <NavLink to="/" exact className="link-1">
               Home
             </NavLink>
-          </a>
 
-          <a href="#">
             <NavLink to="/books" exact>
               Books
             </NavLink>
-          </a>
 
-          <a href="#">
             <NavLink to="/about" exact>
               About & Contact Us
             </NavLink>
-          </a>
 
-          <a href="#">
             <NavLink to="/login" exact>
               Login
             </NavLink>
-          </a>
 
-          <a href="#">
             <NavLink to="/register" exact>
               Register
             </NavLink>
-          </a>
         </p>
 
         <p className="footer-company-name">All copyrights reserved © 2022</p>

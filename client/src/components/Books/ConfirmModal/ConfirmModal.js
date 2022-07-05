@@ -1,8 +1,13 @@
-import * as React from 'react';
+import { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { toastNotification } from "../../../utils/toastNotification";
+
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
+
+import { buyBook } from "../../../store/actions/books";
 
 const style = {
   position: 'absolute',
@@ -16,13 +21,28 @@ const style = {
   p: 4,
 };
 
-export default function ConfirmModal() {
-  const [open, setOpen] = React.useState(false);
+export default function ConfirmModal({ price, bookId }) {
+  const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
+  const dispatch = useDispatch();
+
+  const userResponse = useSelector(({ auth }) => auth.getOne);
+  const booksResponse = useSelector(({ books }) => books.getOne);
+
   const handleConfirm = () => {
-    setOpen(false);
+    const userId = userResponse.data.user._id;
+    const userBalance = +userResponse.data.user.credits;
+
+    if(userBalance >= price) {
+      dispatch(buyBook({ bookId, userId }));
+      setOpen(false);
+      toastNotification("success", "You've bought the book");
+    } else {
+      toastNotification("error", "You don't have enough credits!");
+      setOpen(false);
+    }
   }
 
   return (

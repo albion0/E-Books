@@ -37,6 +37,18 @@ export const DELETE_ONE_BOOK_SUCCESS = "DELETE_ONE_BOOK_SUCCESS";
 export const DELETE_ONE_BOOK_FAILED = "DELETE_ONE_BOOK_FAILED";
 export const DELETE_ONE_BOOK_RESET = "DELETE_ONE_BOOK_RESET";
 
+// Action Types: Buy One Book.
+export const BUY_ONE_BOOK_START = "BUY_ONE_BOOK_START";
+export const BUY_ONE_BOOK_SUCCESS = "BUY_ONE_BOOK_SUCCESS";
+export const BUY_ONE_BOOK_FAILED = "BUY_ONE_BOOK_FAILED";
+export const BUY_ONE_BOOK_RESET = "DELETE_ONE_BOOK_RESET";
+
+// Action Types: Users Books.
+export const GET_USER_BOOKS_START = "GET_USER_BOOKS_START";
+export const GET_USER_BOOKS_SUCCESS = "GET_USER_BOOKS_SUCCESS";
+export const GET_USER_BOOKS_FAILED = "GET_USER_BOOKS_FAILED";
+export const GET_USER_BOOKS_RESET = "DELETE_USER_BOOKS_RESET";
+
 // Action Creators: Get All Books.
 const getAllBooksStart = (payload) => ({
   type: GET_ALL_BOOKS_START,
@@ -131,6 +143,46 @@ const deleteOneBookFailed = (payload) => ({
 });
 const deleteOneBookReset = () => ({
   type: DELETE_ONE_BOOK_RESET,
+});
+
+// Action Creators: Buy One Book.
+const buyOneBookStart = (payload) => ({
+  type: BUY_ONE_BOOK_START,
+  payload,
+});
+
+const buyOneBookSuccess = (payload) => ({
+  type: BUY_ONE_BOOK_SUCCESS,
+  payload,
+});
+
+const buyOneBookFailed = (payload) => ({
+  type: BUY_ONE_BOOK_FAILED,
+  payload,
+});
+
+const buyOneBookReset = () => ({
+  type: BUY_ONE_BOOK_RESET,
+});
+
+// Action Creators: User books.
+const getUserBooksStart = (payload) => ({
+  type: GET_USER_BOOKS_START,
+  payload,
+});
+
+const getUserBooksSuccess = (payload) => ({
+  type: GET_USER_BOOKS_SUCCESS,
+  payload,
+});
+
+const getUserBooksFailed = (payload) => ({
+  type: GET_USER_BOOKS_FAILED,
+  payload,
+});
+
+const getUserBooksReset = () => ({
+  type: GET_USER_BOOKS_RESET,
 });
 
 // Actions: Get All Books.
@@ -542,3 +594,105 @@ export const deleteOneBook = (payload) => {
 
 // Actions: Clear Delete One Book.
 export const cleareDeleteOneBook = () => deleteOneBookReset();
+
+// Actions: Buy one Book
+export const buyBook = (payload) => {
+  return async (dispatch) => {
+    dispatch(
+      buyOneBookStart({
+        loading: true,
+        success: false,
+        data: null,
+        error: false,
+        errorMessage: null,
+      })
+    );
+
+    try {
+      const { bookId, userId } = payload;
+      console.log(bookId);
+      console.log(userId);
+      const result = await ApiClient.post(`books/${bookId}/${userId}`);
+
+      if (result.data?.success) {
+        dispatch(
+          buyOneBookSuccess({
+            loading: false,
+            success: true,
+            data: { book: true },
+            error: false,
+            errorMessage: null,
+          })
+        );
+
+      } else {
+        dispatch(
+          buyOneBookFailed({
+            loading: false,
+            success: false,
+            data: null,
+            error: true,
+            errorMessage: result.data?.error || "Internal Server Error!",
+          })
+        );
+      }
+    } catch (error) {
+      dispatch(
+        buyOneBookFailed({
+          loading: false,
+          success: false,
+          data: null,
+          error: true,
+          errorMessage: error.message || "Internal Server Error!",
+        })
+      );
+    }
+  }
+}
+
+// Actions: User Books
+export const getUserBooks = (payload) => {
+  return async (dispatch) => {
+    try {
+      const { userId, page, limit } = payload;
+      console.log(page, limit)
+
+      const result = await ApiClient.post(`books/${userId}/${page}/${limit}`, {
+        params: { page, limit }
+      });
+      console.log(result.data.data.book[0].books);
+
+      if (result.data?.success) {
+        dispatch(
+          getUserBooksSuccess({
+            loading: false,
+            success: true,
+            data: { books: result.data.data.book[0].books },
+            error: false,
+            errorMessage: null,
+          })
+        );
+      } else {
+        dispatch(
+          getUserBooksFailed({
+            loading: false,
+            success: false,
+            data: null,
+            error: true,
+            errorMessage: result.data?.error || "Internal Server Error!",
+          })
+        );
+      }
+    } catch (error) {
+      dispatch(
+        getUserBooksFailed({
+          loading: false,
+          success: false,
+          data: null,
+          error: true,
+          errorMessage: error.message || "Internal Server Error!",
+        })
+      );
+    }
+  }
+}

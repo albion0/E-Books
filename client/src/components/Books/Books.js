@@ -82,7 +82,7 @@ const Books = () => {
               img={item.bookPhoto}
               title={item.title}
               desc={item.content}
-              price={item.price}
+              price={item.credits}
               date={item.createdAt}
             />
           ))}

@@ -13,6 +13,8 @@ const {
   uploadPhoto,
   updateOne,
   deleteOne,
+  buyBook,
+  userBooks
 } = require("../controllers/books");
 const {
   getAllBooks,
@@ -34,6 +36,12 @@ router
 router
   .route("/:bookId")
   .delete(authorize, protect(Admin), validate(validateBookId), deleteOne);
+router
+  .route("/:bookId/:userId")
+  .post(authorize, buyBook)
+router
+  .route("/:userId/:page/:limit")
+  .post(authorize, userBooks)
 
 // Exports of this file.
 module.exports = router;

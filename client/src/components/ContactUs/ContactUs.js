@@ -30,7 +30,7 @@ const ContactUs = () => {
         <div className="row">
           <div className="col-md-8">
             <div className="sec-heading">
-              <h6 class="contactTitle">eBooks</h6>
+              <h6 className="contactTitle">eBooks</h6>
               <h2>CONTACT</h2>
               <p>You can email us, or use the form below to reach us faster</p>
             </div>
