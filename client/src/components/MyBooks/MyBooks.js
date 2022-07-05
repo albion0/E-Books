@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { TablePagination } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
+import { Spin } from "antd";
+import { LoadingOutlined } from "@ant-design/icons";
 
 import MyBook from "./MyBook/MyBook";
 import Filters from "../Books/Filters/Filters";
@@ -32,16 +34,22 @@ const MyBooks = () => {
   const [currentLimit, setCurrentLimit] = useState(defaultLimit);
   const [currentBooks, setCurrentBooks] = useState([]);
   const [totalItems, setTotalItems] = useState(100);
+  const [isLoading, setIsLoading] = useState(false);
 
   const dispatch = useDispatch();
   const userResponse = useSelector(({ auth }) => auth.getOne);
   const booksBought = useSelector(({ books }) => books.getUserBooks);
-  console.log(currentBooks);
+
+  useEffect(() => {
+    if(userResponse.success) {
+      dispatch(getUserBooks({ page: currentPage + 1, limit: currentLimit, userId: userResponse.data.user._id }));
+    }
+  }, [userResponse.success]);
 
   useEffect(() => {
     if(booksBought.success) {
       setCurrentBooks(booksBought.data.books);
-      setTotalItems(booksBought.data.books.length);
+      setTotalItems(booksBought.data.totalItems);
     }
   }, [booksBought]);
 
@@ -50,14 +58,15 @@ const MyBooks = () => {
     dispatch(getUserBooks({ page: currentPage + 1, limit: currentLimit, userId: userResponse.data?.user._id }));
   }, [currentLimit, currentPage]);
 
-  // if(currentBooks?.length === 0) setCurrentBooks(booksBought.data?.books);
-
-  // console.log(currentBooks);
-
-  if(userResponse.data && !booksBought.success) {
-    dispatch(getUserBooks({ page: currentPage + 1, limit: currentLimit, userId: userResponse.data?.user._id }));
-    // dispatch(getUserBooks({ userId: userResponse.data?.user._id }));
-  }
+  useEffect(() => {
+    if (booksBought && booksBought.loading) {
+      setIsLoading(true);
+    } else if (booksBought && booksBought.success) {
+      setIsLoading(false);
+    } else if (booksBought && booksBought.error) {
+      setIsLoading(false);
+    }
+  }, [booksBought]);
 
   const handleChangePage = (event, newPage) => {
     setCurrentPage(newPage);
@@ -69,6 +78,16 @@ const MyBooks = () => {
   };
 
   if (!token) return <Redirect to="/" />;
+
+  if (isLoading)
+    return (
+      <div
+        className="d-flex justify-content-center"
+        style={{ marginTop: "300px" }}
+      >
+        <Spin indicator={<LoadingOutlined style={{ fontSize: 100 }} spin />} />
+      </div>
+    );
 
   return (
     <>

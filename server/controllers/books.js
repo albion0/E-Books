@@ -332,7 +332,6 @@ const buyBook = asyncHandler(async(request, response, next) => {
 
   if(user.credits >= +book.credits) {
     user.credits -= book.credits;
-    console.log(user);
     user.books = [...user.books, book];
     await user.save();
   } else {
@@ -349,9 +348,14 @@ const buyBook = asyncHandler(async(request, response, next) => {
   response.status(statusCodes.OK).json({ success: true });
 })
 
+/**
+ * @description User books.
+ * @route       GET /api/books/:userId/:page/:limit
+ * @access      Public
+ */
 const userBooks = asyncHandler(async(request, response, next) => {
   const { userId, page, limit } = request.params;
-  console.log(`page ${page} limit ${limit} userId ${userId}`)
+
   const user = await User.findOne({ _id: userId });
   if (!user) {
     next(
@@ -364,11 +368,16 @@ const userBooks = asyncHandler(async(request, response, next) => {
     return;
   }
 
-  const populatedBooks = await User.find().populate("books").exec();
+  const books = [];
+  for(let i = (page - 1) * limit; i < limit * page; i++) {
+    const book = await Book.findOne({ _id: user.books[i]})
+    if(!book) break;
+    books.push(book);
+  }
 
   response
     .status(statusCodes.OK)
-    .json({ success: true, data: { book: populatedBooks }, error: null });
+    .json({ success: true, data: { books: books, totalItems: user.books.length }, error: null });
 })
 
 // Exports of this file.

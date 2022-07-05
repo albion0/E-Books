@@ -653,21 +653,25 @@ export const buyBook = (payload) => {
 // Actions: User Books
 export const getUserBooks = (payload) => {
   return async (dispatch) => {
+    dispatch(getUserBooksStart({
+      loading: true,
+      success: false,
+      data: null,
+      error: false,
+      errorMessage: null,
+    }))
+
     try {
       const { userId, page, limit } = payload;
-      console.log(page, limit)
 
-      const result = await ApiClient.post(`books/${userId}/${page}/${limit}`, {
-        params: { page, limit }
-      });
-      console.log(result.data.data.book[0].books);
+      const result = await ApiClient.get(`books/${userId}/${page}/${limit}`);
 
       if (result.data?.success) {
         dispatch(
           getUserBooksSuccess({
             loading: false,
             success: true,
-            data: { books: result.data.data.book[0].books },
+            data: { books: result.data.data.books, totalItems:  result.data.data.totalItems },
             error: false,
             errorMessage: null,
           })

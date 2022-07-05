@@ -41,7 +41,7 @@ router
   .post(authorize, buyBook)
 router
   .route("/:userId/:page/:limit")
-  .post(authorize, userBooks)
+  .get(authorize, userBooks)
 
 // Exports of this file.
 module.exports = router;
