@@ -6,6 +6,7 @@ import genresReducer from "./genres";
 import forumTopicsReducer from "./forumTopics";
 import forumCommentsReducer from "./forumComments";
 import paymentsReducer from "./payments";
+import bookPurchasesReducer from "./bookPurchases";
 
 export default combineReducers({
   auth: authReducer,
@@ -15,4 +16,5 @@ export default combineReducers({
   forumTopics: forumTopicsReducer,
   forumComments: forumCommentsReducer,
   payments: paymentsReducer,
+  bookPurchases: bookPurchasesReducer,
 });

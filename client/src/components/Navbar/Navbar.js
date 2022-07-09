@@ -8,7 +8,11 @@ import { Button, Spin } from "antd";
 import { LogoutOutlined } from "@ant-design/icons";
 import { useEffect, useState } from "react";
 import { clearGetOneUser, getOneUser } from "../../store/actions/actions";
-import { LoadingOutlined, UserOutlined } from "@ant-design/icons";
+import {
+  LoadingOutlined,
+  UserOutlined,
+  DollarCircleOutlined,
+} from "@ant-design/icons";
 
 const Navbar = () => {
   const history = useHistory();
@@ -115,6 +119,22 @@ const Navbar = () => {
                   />
                 ) : userResponse.data?.user ? (
                   userResponse.data.user.username
+                ) : (
+                  "NA"
+                )}
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to="/payments" exact>
+                <DollarCircleOutlined style={{ paddingRight: "5px" }} />
+                {loading ? (
+                  <Spin
+                    indicator={
+                      <LoadingOutlined style={{ fontSize: 15 }} spin />
+                    }
+                  />
+                ) : userResponse.data?.user ? (
+                  userResponse.data.user.credits
                 ) : (
                   "NA"
                 )}

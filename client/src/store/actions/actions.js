@@ -6,3 +6,4 @@ export * from "./genres";
 export * from "./forumTopics";
 export * from "./forumComments";
 export * from "./payments";
+export * from "./bookPurchases";

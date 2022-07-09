@@ -13,11 +13,13 @@
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.2",
     "cors": "^2.8.5",
+    "docxtemplater": "^3.31.1",
     "dotenv": "^16.0.0",
     "express": "^4.17.3",
     "express-fileupload": "^1.4.0",
     "express-validation": "^3.0.8",
     "jsonwebtoken": "^8.5.1",
+    "libreoffice-convert": "^1.4.1",
     "mongoose": "^6.2.9",
     "mongoose-aggregate-paginate-v2": "^1.0.5",
     "mongoose-paginate-v2": "^1.4.2",
@@ -25,6 +27,7 @@
     "mysql2": "^2.3.3",
     "nodemailer": "^6.7.5",
     "nodemon": "^2.0.15",
+    "pizzip": "^3.1.1",
     "sequelize": "^6.21.0"
   }
 }

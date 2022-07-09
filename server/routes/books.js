@@ -14,13 +14,15 @@ const {
   updateOne,
   deleteOne,
   buyBook,
-  userBooks
+  userBooks,
+  downloadBook,
 } = require("../controllers/books");
 const {
   getAllBooks,
   createBook,
   updateBook,
   validateBookId,
+  download,
 } = require("../validations/books");
 const { validate } = require("../utils/functions");
 
@@ -36,12 +38,10 @@ router
 router
   .route("/:bookId")
   .delete(authorize, protect(Admin), validate(validateBookId), deleteOne);
-router
-  .route("/:bookId/:userId")
-  .post(authorize, buyBook)
-router
-  .route("/:userId/:page/:limit")
-  .get(authorize, userBooks)
+router.route("/:bookId/:userId").post(authorize, buyBook);
+router.route("/:userId/:page/:limit").get(authorize, userBooks);
+
+router.route("/:bookId/generate").get(validate(download), downloadBook);
 
 // Exports of this file.
 module.exports = router;

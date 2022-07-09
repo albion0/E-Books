@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { NavLink, useHistory } from "react-router-dom";
+import { NavLink, useHistory, Redirect } from "react-router-dom";
 
 import classes from "../Register/Register.module.css";
 import { useForm } from "react-hook-form";
@@ -10,6 +10,7 @@ import { toastNotification } from "../../utils/toastNotification";
 import { updateOneUser, clearUpdateOneUser } from "../../store/actions/actions";
 
 const Profile = () => {
+  const token = localStorage.getItem("eBook-token");
   const {
     register,
     handleSubmit,
@@ -100,6 +101,7 @@ const Profile = () => {
     );
   };
 
+  if (!token) return <Redirect to="/" />;
   return (
     <div className={classes.wrapper}>
       <div className={classes.register}>

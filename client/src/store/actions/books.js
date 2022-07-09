@@ -610,8 +610,6 @@ export const buyBook = (payload) => {
 
     try {
       const { bookId, userId } = payload;
-      console.log(bookId);
-      console.log(userId);
       const result = await ApiClient.post(`books/${bookId}/${userId}`);
 
       if (result.data?.success) {
@@ -624,7 +622,6 @@ export const buyBook = (payload) => {
             errorMessage: null,
           })
         );
-
       } else {
         dispatch(
           buyOneBookFailed({
@@ -647,19 +644,21 @@ export const buyBook = (payload) => {
         })
       );
     }
-  }
-}
+  };
+};
 
 // Actions: User Books
 export const getUserBooks = (payload) => {
   return async (dispatch) => {
-    dispatch(getUserBooksStart({
-      loading: true,
-      success: false,
-      data: null,
-      error: false,
-      errorMessage: null,
-    }))
+    dispatch(
+      getUserBooksStart({
+        loading: true,
+        success: false,
+        data: null,
+        error: false,
+        errorMessage: null,
+      })
+    );
 
     try {
       const { userId, page, limit } = payload;
@@ -671,7 +670,10 @@ export const getUserBooks = (payload) => {
           getUserBooksSuccess({
             loading: false,
             success: true,
-            data: { books: result.data.data.books, totalItems:  result.data.data.totalItems },
+            data: {
+              books: result.data.data.books,
+              totalItems: result.data.data.totalItems,
+            },
             error: false,
             errorMessage: null,
           })
@@ -698,5 +700,5 @@ export const getUserBooks = (payload) => {
         })
       );
     }
-  }
-}
+  };
+};

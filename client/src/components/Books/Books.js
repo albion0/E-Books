@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { TablePagination } from "@mui/material";
-import { Spin } from "antd";
+import { Spin, Row, Col } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 
 import Footer from "../Footer/Footer";
@@ -24,15 +24,25 @@ const Books = () => {
 
   const dispatch = useDispatch();
   const getAllBooksResponse = useSelector(({ books }) => books.getAll);
-  console.log(getAllBooksResponse);
 
   useEffect(() => {
-    dispatch(getAllBooks({ page: currentPage + 1, limit: currentLimit, pagination: true }));
+    dispatch(
+      getAllBooks({
+        page: currentPage + 1,
+        limit: currentLimit,
+        pagination: true,
+      })
+    );
   }, []);
 
   useEffect(() => {
-    console.log(currentLimit, currentPage)
-    dispatch(getAllBooks({ page: currentPage + 1, limit: currentLimit, pagination: true }));
+    dispatch(
+      getAllBooks({
+        page: currentPage + 1,
+        limit: currentLimit,
+        pagination: true,
+      })
+    );
   }, [currentLimit, currentPage]);
 
   useEffect(() => {
@@ -41,7 +51,7 @@ const Books = () => {
     } else if (getAllBooksResponse && getAllBooksResponse.success) {
       setIsLoading(false);
 
-      const { docs, totalDocs }  = getAllBooksResponse.data.books;
+      const { docs, totalDocs } = getAllBooksResponse.data.books;
 
       setCurrentBooks(docs);
       setTotalItems(totalDocs);
@@ -53,7 +63,7 @@ const Books = () => {
   const handleChangePage = (event, newPage) => {
     setCurrentPage(newPage);
   };
-  
+
   const handleChangeRowsPerPage = (event) => {
     setCurrentLimit(parseInt(event.target.value, 10));
     setCurrentPage(0);
@@ -74,19 +84,24 @@ const Books = () => {
       <div className={classes.wrapper}>
         <Filters />
 
-        <div className={classes.books}>
+        {/* <div className={classes.books}> */}
+        <Row xs={24} sm={24} md={24} lg={24}>
           {currentBooks.map((item) => (
-            <Book
-              key={item._id}
-              id={item._id}
-              img={item.bookPhoto}
-              title={item.title}
-              desc={item.content}
-              price={item.credits}
-              date={item.createdAt}
-            />
+            <Col xs={24} sm={12} md={5} lg={5} className="m-4">
+              <Book
+                key={item._id}
+                id={item._id}
+                img={item.bookPhoto}
+                title={item.title}
+                desc={item.content}
+                price={item.credits}
+                date={item.createdAt}
+              />
+            </Col>
           ))}
-        </div>
+        </Row>
+
+        {/* </div> */}
 
         <div className={classes.pagination}>
           <TablePagination

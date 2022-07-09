@@ -9,6 +9,9 @@ const Author = require("../models/Author");
 const asyncHandler = require("../middlewares/asyncHandler");
 const { statusCodes } = require("../config");
 const { ApiError } = require("../utils/classes");
+const libre = require("libreoffice-convert");
+const Docxtemplater = require("docxtemplater");
+const PizZip = require("pizzip");
 
 /**
  * @description Get all books.
@@ -302,9 +305,8 @@ const deleteOne = asyncHandler(async (request, response, next) => {
  * @route       POST /api/books/:bookId/:userId.
  * @access      Public
  */
-const buyBook = asyncHandler(async(request, response, next) => {
+const buyBook = asyncHandler(async (request, response, next) => {
   const { bookId, userId } = request.params;
-  console.log('HELLOOO ', userId, bookId);
 
   const book = await Book.findOne({ _id: bookId, isDeleted: false });
   if (!book) {
@@ -330,7 +332,7 @@ const buyBook = asyncHandler(async(request, response, next) => {
     return;
   }
 
-  if(user.credits >= +book.credits) {
+  if (user.credits >= +book.credits) {
     user.credits -= book.credits;
     user.books = [...user.books, book];
     await user.save();
@@ -346,14 +348,14 @@ const buyBook = asyncHandler(async(request, response, next) => {
   }
 
   response.status(statusCodes.OK).json({ success: true });
-})
+});
 
 /**
  * @description User books.
  * @route       GET /api/books/:userId/:page/:limit
  * @access      Public
  */
-const userBooks = asyncHandler(async(request, response, next) => {
+const userBooks = asyncHandler(async (request, response, next) => {
   const { userId, page, limit } = request.params;
 
   const user = await User.findOne({ _id: userId });
@@ -369,16 +371,114 @@ const userBooks = asyncHandler(async(request, response, next) => {
   }
 
   const books = [];
-  for(let i = (page - 1) * limit; i < limit * page; i++) {
-    const book = await Book.findOne({ _id: user.books[i]})
-    if(!book) break;
+  for (let i = (page - 1) * limit; i < limit * page; i++) {
+    const book = await Book.findOne({ _id: user.books[i] });
+    if (!book) break;
     books.push(book);
   }
 
-  response
-    .status(statusCodes.OK)
-    .json({ success: true, data: { books: books, totalItems: user.books.length }, error: null });
-})
+  response.status(statusCodes.OK).json({
+    success: true,
+    data: { books: books, totalItems: user.books.length },
+    error: null,
+  });
+});
+
+const downloadBook = asyncHandler(async (request, response, next) => {
+  const { bookId } = request.params;
+
+  const book = await Book.findOne({
+    _id: bookId,
+  })
+    .populate("authors")
+    .populate("genres");
+
+  if (!book) {
+    response
+      .status(statusCodes.NOT_FOUND)
+      .send("<h1>Completion is not found or it has not been completed!</h1>");
+    return;
+  }
+
+  const filename = "Book_Template.docx";
+  const pathToFile = path.join(__dirname, `../templates/${filename}`);
+  const content = fs.readFileSync(pathToFile, "binary");
+
+  const zip = new PizZip(content);
+  const doc = new Docxtemplater(zip);
+
+  const authorNames = book.authors
+    ? book.authors.map((e) => {
+        return e.name + ", ";
+      })
+    : "";
+  const genreNames = book.genres
+    ? book.genres.map((e) => {
+        return e.name + ", ";
+      })
+    : "";
+
+  const removeTags = (string) => {
+    return string
+      .replace(/<[^>]*>/g, " ")
+      .replace(/\s{2,}/g, " ")
+      .trim();
+  };
+
+  doc.setData({
+    title: book && book.title ? book.title : "",
+    content: removeTags(book.content),
+    authors: authorNames,
+    genres: genreNames,
+  });
+
+  try {
+    doc.render();
+  } catch (e) {
+    next(
+      new ApiError(
+        "Renderimi i dokumentit ka dështuar!",
+        statusCodes.INTERNAL_ERROR
+      )
+    );
+    return;
+  }
+
+  const extension = ".pdf";
+  const filledDocBuffer = doc.getZip().generate({ type: "nodebuffer" });
+  const fileToDownload =
+    "Book_" + (book.title ? book.title : "") + "" + extension;
+  libre.convert(filledDocBuffer, extension, undefined, (err, done) => {
+    if (err) {
+      next(
+        new ApiError(
+          "Gjenerimi i PDF dokumentit ka dështuar!",
+          statusCodes.INTERNAL_ERROR
+        )
+      );
+      return;
+    }
+
+    // Here in done you have pdf file which you can save or transfer in another stream
+    response.set("Access-Control-Expose-Headers", "Content-Disposition");
+    response.writeHead(200, {
+      "Content-Type": "application/pdf",
+      "Content-Disposition": "attachment;filename=" + fileToDownload,
+      "Content-Length": done.length,
+    });
+    response.end(done);
+  });
+});
 
 // Exports of this file.
-module.exports = { getAll, getOne, create, uploadPhoto, updateOne, deleteOne, buyBook, userBooks };
+module.exports = {
+  getAll,
+  getOne,
+  create,
+  uploadPhoto,
+  updateOne,
+  deleteOne,
+  buyBook,
+  userBooks,
+  downloadBook,
+};

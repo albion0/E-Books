@@ -52,7 +52,9 @@ const getOne = asyncHandler(async (request, response, next) => {
     _id: userId,
     role: userRole,
     isDeleted: false,
-  }).select("-password");
+  })
+    .select("-password")
+    .populate("books");
   if (!user) {
     next(
       new ApiError(

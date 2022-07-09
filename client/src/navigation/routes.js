@@ -42,6 +42,9 @@ const Navbar = React.lazy(() => import("../components/Navbar/Navbar"));
 const ViewBook = React.lazy(() =>
   import("../components/Books/ViewBook/ViewBook")
 );
+const ViewMyBook = React.lazy(() =>
+  import("../components/MyBooks/ViewMyBook/ViewMyBook")
+);
 const Genres = React.lazy(() => import("../views/Dashboard/Genres"));
 const Authors = React.lazy(() => import("../views/Dashboard/Authors"));
 const BooksDashboard = React.lazy(() => import("../views/Dashboard/Books"));
@@ -172,6 +175,17 @@ const ROUTES = [
       <>
         <Navbar />
         <ViewBook {...props} />
+      </>
+    ),
+  },
+  {
+    path: "/books/my-book/:id",
+    key: "ROOT",
+    exact: true,
+    component: (props) => (
+      <>
+        <Navbar />
+        <ViewMyBook {...props} />
       </>
     ),
   },

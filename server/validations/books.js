@@ -64,6 +64,13 @@ const validator = {
         .required(),
     }),
   },
+  download: {
+    params: Joi.object({
+      bookId: Joi.string()
+        .regex(/^[0-9a-fA-F]{24}$/)
+        .required(),
+    }),
+  },
 };
 
 // Exports of this file.
