@@ -76,7 +76,6 @@ const getAllBooksFailed = (payload) => ({
 });
 const getAllBooksReset = () => ({ type: GET_ALL_BOOKS_RESET });
 
-
 // Action Creators: Get One Book.
 const getOneBookStart = (payload) => ({
   type: GET_ONE_BOOK_START,
@@ -92,7 +91,6 @@ const getOneBookFailed = (payload) => ({
 });
 const getOneBookReset = () => ({ type: GET_ONE_BOOK_RESET });
 
-
 // Action Creators: Create New Book.
 const createBookStart = (payload) => ({
   type: CREATE_BOOK_START,
@@ -107,7 +105,6 @@ const createBookFailed = (payload) => ({
   payload,
 });
 const createBookReset = () => ({ type: CREATE_BOOK_RESET });
-
 
 // Action Creators: Upload Photo Book
 const uploadPhotoBookStart = (payload) => ({
@@ -126,7 +123,6 @@ const uploadPhotoBookReset = () => ({
   type: UPLOAD_PHOTO_BOOK_START,
 });
 
-
 // Action Creators: Update One Book.
 const updateOneBookStart = (payload) => ({
   type: UPDATE_ONE_BOOK_START,
@@ -144,7 +140,6 @@ const updateOneBookReset = () => ({
   type: UPDATE_ONE_BOOK_RESET,
 });
 
-
 // Action Creators: Delete One Book.
 const deleteOneBookStart = (payload) => ({
   type: DELETE_ONE_BOOK_START,
@@ -161,7 +156,6 @@ const deleteOneBookFailed = (payload) => ({
 const deleteOneBookReset = () => ({
   type: DELETE_ONE_BOOK_RESET,
 });
-
 
 // Action Creators: Buy One Book.
 const buyOneBookStart = (payload) => ({
@@ -198,7 +192,6 @@ const getUserBooksReset = () => ({
   type: GET_USER_BOOKS_RESET,
 });
 
-
 // Action Creators: Review.
 const createBookReviewStart = (payload) => ({
   type: CREATE_BOOK_REVIEW_START,
@@ -216,7 +209,6 @@ const createBookReviewReset = () => ({
   type: CREATE_BOOK_REVIEW_RESET,
 });
 
-
 // Action Creators: Get Book Reviews.
 const getAllBookReviewsStart = (payload) => ({
   type: GET_ALL_BOOK_REVIEWS_START,
@@ -230,7 +222,7 @@ const getAllBookReviewsFailed = (payload) => ({
   type: GET_ALL_BOOK_REVIEWS_FAILED,
   payload,
 });
-const getAllBookReviewsReset = () => ({ type: GET_ALL_BOOK_REVIEWS_RESET  });
+const getAllBookReviewsReset = () => ({ type: GET_ALL_BOOK_REVIEWS_RESET });
 
 // Actions: Get All Books.
 export const getAllBooks = (payload) => {
@@ -246,9 +238,25 @@ export const getAllBooks = (payload) => {
     );
 
     try {
-      const { page, limit, pagination } = payload;
+      const {
+        page,
+        limit,
+        pagination,
+        bookName,
+        bookCredits,
+        authors,
+        genres,
+      } = payload;
       const result = await ApiClient.get("books", {
-        params: { page, limit, pagination },
+        params: {
+          page,
+          limit,
+          pagination,
+          bookName,
+          bookCredits,
+          authors,
+          genres,
+        },
       });
       if (result.data?.success) {
         const { books } = result.data.data;
@@ -819,8 +827,8 @@ export const createBookReview = (payload, options) => {
         })
       );
     }
-  }
-}
+  };
+};
 
 // Actions: Get All Book Reviews
 export const getAllBookReviews = (payload) => {
@@ -839,7 +847,7 @@ export const getAllBookReviews = (payload) => {
 
     try {
       const result = await ApiClient.get(`books/${bookId}/reviews`, {
-        params: { page, limit }
+        params: { page, limit },
       });
       console.log(result);
 
@@ -848,7 +856,10 @@ export const getAllBookReviews = (payload) => {
           getAllBookReviewsSuccess({
             loading: false,
             success: true,
-            data: { reviews: result.data.data.reviews, totalItems: result.data.data.totalItems },
+            data: {
+              reviews: result.data.data.reviews,
+              totalItems: result.data.data.totalItems,
+            },
             error: false,
             errorMessage: null,
           })
@@ -875,5 +886,5 @@ export const getAllBookReviews = (payload) => {
         })
       );
     }
-  }
-}
+  };
+};

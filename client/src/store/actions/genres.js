@@ -124,9 +124,9 @@ export const getAllGenres = (payload) => {
     );
 
     try {
-      const { page, limit, pagination } = payload;
+      const { page, limit, pagination, genreName } = payload;
       const result = await ApiClient.get("genres", {
-        params: { page, limit, pagination },
+        params: { page, limit, pagination, genreName },
       });
       if (result.data?.success) {
         const { genres } = result.data.data;
@@ -235,9 +235,7 @@ export const createGenre = (payload, options) => {
       })
     );
 
-    const {
-      name, description
-    } = payload;
+    const { name, description } = payload;
     const {
       toastNotification,
       history,
@@ -249,7 +247,8 @@ export const createGenre = (payload, options) => {
 
     try {
       const result = await ApiClient.post("genres", {
-        name, description
+        name,
+        description,
       });
       if (result.data?.success) {
         const { genre } = result.data.data;
@@ -317,10 +316,7 @@ export const updateOneGenre = (payload, options) => {
       })
     );
 
-    const {
-      genreId,
-      name, description
-    } = payload;
+    const { genreId, name, description } = payload;
     const {
       toastNotification,
       history,
@@ -331,7 +327,8 @@ export const updateOneGenre = (payload, options) => {
 
     try {
       const result = await ApiClient.put(`genres/${genreId}`, {
-        name, description
+        name,
+        description,
       });
       if (result.data?.success) {
         const { genre } = result.data.data;

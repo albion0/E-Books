@@ -20,6 +20,7 @@ import {
 import Swal from "sweetalert2";
 import moment from "moment";
 import jwtDecode from "jwt-decode";
+import Filters from "./Filters";
 
 const defaultPage = 0;
 const defaultLimit = 10;
@@ -111,6 +112,7 @@ export const ListGenres = () => {
   const [currentLimit, setCurrentLimit] = useState(defaultLimit);
   const [currentGenres, setCurrentGenres] = useState([]);
   const [currentTotal, setCurrentTotal] = useState(0);
+  const [genreName, setGenreName] = useState("");
 
   const getAllGenresResponse = useSelector(({ genres }) => genres.getAll);
 
@@ -134,9 +136,10 @@ export const ListGenres = () => {
         page: currentPage + 1,
         limit: currentLimit,
         pagination: true,
+        genreName: genreName || null,
       })
     );
-  }, [currentPage, currentLimit]);
+  }, [currentPage, currentLimit, genreName]);
 
   useEffect(() => {
     if (getAllGenresResponse && getAllGenresResponse.loading) {
@@ -212,6 +215,14 @@ export const ListGenres = () => {
     setIsViewVisible(!isViewVisible);
   };
 
+  const handleSearchChange = (value) => {
+    setGenreName(value);
+  };
+
+  const handleReset = () => {
+    setGenreName("");
+  };
+
   if (!token) return <Redirect to="/" />;
   if (isLoading)
     return (
@@ -231,6 +242,11 @@ export const ListGenres = () => {
       >
         <PlusOutlined /> Create
       </Button>
+
+      <Filters
+        handleSearchChange={handleSearchChange}
+        handleReset={handleReset}
+      />
 
       {modalState.isOpen && (
         <CreateGenre

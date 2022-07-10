@@ -54,6 +54,9 @@ const ForumTopics = React.lazy(() => import("../views/Dashboard/Forum"));
 const DashboardPayments = React.lazy(() =>
   import("../views/Dashboard/Payments")
 );
+const BookPurchases = React.lazy(() =>
+  import("../views/Dashboard/BookPurchases")
+);
 
 const ROUTES = [
   {
@@ -141,6 +144,16 @@ const ROUTES = [
         icon: DollarCircleOutlined,
         shouldShow: true,
         component: (props) => <DashboardPayments {...props} />,
+      },
+      {
+        path: "/dashboard/bookPurchases",
+        key: "bookPurchases",
+        exact: true,
+        role: "admin",
+        categoryName: "Book Purchases",
+        icon: DollarCircleOutlined,
+        shouldShow: true,
+        component: (props) => <BookPurchases {...props} />,
       },
     ],
   },

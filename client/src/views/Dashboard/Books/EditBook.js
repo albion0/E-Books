@@ -111,8 +111,8 @@ export const EditBook = ({ visible, recallAllBooks, handleModal, bookId }) => {
   }, []);
 
   useEffect(() => {
-    dispatch(getAllAuthors({ pagination: false }));
-    dispatch(getAllGenres({ pagination: false }));
+    // dispatch(getAllAuthors({ pagination: false }));
+    // dispatch(getAllGenres({ pagination: false }));
     dispatch(getOneBook({ bookId }));
   }, []);
 

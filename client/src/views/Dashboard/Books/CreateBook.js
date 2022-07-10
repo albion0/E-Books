@@ -93,10 +93,10 @@ export const CreateBook = ({ visible, recallAllBooks, handleModal }) => {
 
   const editorContent = watch("content");
 
-  useEffect(() => {
-    dispatch(getAllAuthors({ pagination: false }));
-    dispatch(getAllGenres({ pagination: false }));
-  }, []);
+  // useEffect(() => {
+  //   dispatch(getAllAuthors({ pagination: false }));
+  //   dispatch(getAllGenres({ pagination: false }));
+  // }, []);
 
   const resetFields = () => {
     setValue("title", "");

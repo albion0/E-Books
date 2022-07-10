@@ -20,6 +20,7 @@ import {
 import Swal from "sweetalert2";
 import moment from "moment";
 import jwtDecode from "jwt-decode";
+import Filters from "./Filters";
 
 const defaultPage = 0;
 const defaultLimit = 10;
@@ -111,6 +112,7 @@ export const ListAuthors = () => {
   const [currentLimit, setCurrentLimit] = useState(defaultLimit);
   const [currentAuthors, setCurrentAuthors] = useState([]);
   const [currentTotal, setCurrentTotal] = useState(0);
+  const [authorName, setAuthorName] = useState("");
 
   const getAllAuthorsResponse = useSelector(({ authors }) => authors.getAll);
 
@@ -134,9 +136,10 @@ export const ListAuthors = () => {
         page: currentPage + 1,
         limit: currentLimit,
         pagination: true,
+        authorName: authorName || null,
       })
     );
-  }, [currentPage, currentLimit]);
+  }, [currentPage, currentLimit, authorName]);
 
   useEffect(() => {
     if (getAllAuthorsResponse && getAllAuthorsResponse.loading) {
@@ -177,6 +180,14 @@ export const ListAuthors = () => {
   const onChangeRowsPerPage = (limit) => {
     setCurrentPage(defaultPage);
     setCurrentLimit(limit);
+  };
+
+  const handleSearchChange = (value) => {
+    setAuthorName(value);
+  };
+
+  const handleReset = () => {
+    setAuthorName("");
   };
 
   const swalOptions = {
@@ -231,6 +242,11 @@ export const ListAuthors = () => {
       >
         <PlusOutlined /> Create
       </Button>
+
+      <Filters
+        handleSearchChange={handleSearchChange}
+        handleReset={handleReset}
+      />
 
       {modalState.isOpen && (
         <CreateAuthor

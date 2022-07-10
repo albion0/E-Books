@@ -36,8 +36,6 @@ const MyBooks = () => {
   return (
     <>
       <div className={classes.wrapper}>
-        <Filters />
-
         {/* <div className={classes.books}>
           {userResponse?.data?.user?.books?.map((item) => (
             <MyBook
