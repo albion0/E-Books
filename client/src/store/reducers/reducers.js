@@ -7,6 +7,7 @@ import forumTopicsReducer from "./forumTopics";
 import forumCommentsReducer from "./forumComments";
 import paymentsReducer from "./payments";
 import bookPurchasesReducer from "./bookPurchases";
+import reportsReducer from "./reports";
 
 export default combineReducers({
   auth: authReducer,
@@ -17,4 +18,5 @@ export default combineReducers({
   forumComments: forumCommentsReducer,
   payments: paymentsReducer,
   bookPurchases: bookPurchasesReducer,
+  reports: reportsReducer,
 });

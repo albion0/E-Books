@@ -8,10 +8,9 @@ const User = require("../models/User");
 const BookPurchase = require("../models/BookPurchase");
 const Payment = require("../models/Payment");
 const Review = require("../models/Review");
-const ForumTopic = require("../models/ForumTopic");
-const ForumComment = require("../models/ForumComment");
 const UserAdmin = require("../models/UserAdmin");
 const db = require("../utils/functions/sequelize");
+const { Op } = require("sequelize");
 
 /**
  * @description Get count reports for different models.
@@ -40,20 +39,23 @@ const getCounts = asyncHandler(async (request, response, next) => {
     mysqlquery = {
       where: {
         createdAt: {
-          $gte: new Date(startDate),
+          [Op.gte]: new Date(startDate),
         },
       },
     };
   else if (!startDate && endDate)
     mysqlquery = {
       where: {
-        createdAt: { $lte: new Date(endDate) },
+        createdAt: { [Op.lte]: new Date(endDate) },
       },
     };
   else if (startDate && endDate)
     mysqlquery = {
       where: {
-        createdAt: { $gte: new Date(startDate), $lte: new Date(endDate) },
+        createdAt: {
+          [Op.gte]: new Date(startDate),
+          [Op.lte]: new Date(endDate),
+        },
       },
     };
   else mysqlquery = {};
