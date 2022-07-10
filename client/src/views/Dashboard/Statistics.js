@@ -4,11 +4,16 @@ import { counts } from "../../store/actions/actions";
 import { toastNotification } from "../../utils/toastNotification";
 import { Row, Col, Tabs } from "antd";
 import {
-  PersonPlusFill,
-  Diagram3Fill,
-  LightbulbFill,
-  MegaphoneFill,
   UiChecks,
+  BookFill,
+  Type,
+  CurrencyDollar,
+  BagFill,
+  StarFill,
+  QuestionCircleFill,
+  ChatFill,
+  PersonBadgeFill,
+  PersonLinesFill,
 } from "react-bootstrap-icons";
 import Datetime from "react-datetime";
 import "react-datetime/css/react-datetime.css";
@@ -112,14 +117,14 @@ const StatisticPage = () => {
             <div className="card flex-row align-items-center align-items-stretch border-0">
               <div
                 className="col-4 d-flex align-items-center justify-content-center rounded-left"
-                style={{ backgroundColor: "#003143", color: "white" }}
+                style={{ backgroundColor: "#aeaeae", color: "white" }}
               >
-                <PersonPlusFill size={"3em"} />
+                <PersonLinesFill size={"3em"} />
               </div>
               <div
                 className="col-8 py-3 rounded-right"
                 style={{
-                  backgroundColor: "#003143",
+                  backgroundColor: "#aeaeae",
                   color: "white",
                   opacity: "0.9",
                 }}
@@ -140,15 +145,15 @@ const StatisticPage = () => {
             <div className="card flex-row align-items-center align-items-stretch border-0">
               <div
                 className="col-4 d-flex align-items-center justify-content-center rounded-left"
-                style={{ backgroundColor: "#f16d20", color: "white" }}
+                style={{ backgroundColor: "#aeaeae", color: "white" }}
               >
-                <Diagram3Fill size={"3em"} />
+                <PersonBadgeFill size={"3em"} />
                 <em className="fa-3x fas fa-handshake"></em>
               </div>
               <div
                 className="col-8 py-3 rounded-right"
                 style={{
-                  backgroundColor: "#f16d20",
+                  backgroundColor: "#aeaeae",
                   color: "white",
                   opacity: "0.9",
                 }}
@@ -169,15 +174,15 @@ const StatisticPage = () => {
             <div className="card flex-row align-items-center align-items-stretch border-0">
               <div
                 className="col-4 d-flex align-items-center justify-content-center rounded-left"
-                style={{ backgroundColor: "#00aced", color: "white" }}
+                style={{ backgroundColor: "#aeaeae", color: "white" }}
               >
                 <em className="fa-3x fas fa-handshake"></em>
-                <MegaphoneFill size={"3em"} />
+                <BookFill size={"3em"} />
               </div>
               <div
                 className="col-8 py-3 rounded-right"
                 style={{
-                  backgroundColor: "#00aced",
+                  backgroundColor: "#aeaeae",
                   color: "white",
                   opacity: "0.9",
                 }}
@@ -198,7 +203,7 @@ const StatisticPage = () => {
             <div className="card flex-row align-items-center align-items-stretch border-0">
               <div
                 className="col-4 d-flex align-items-center justify-content-center rounded-left"
-                style={{ backgroundColor: "#001726", color: "white" }}
+                style={{ backgroundColor: "#aeaeae", color: "white" }}
               >
                 <em className="fa-3x fas fa-handshake"></em>
                 <UiChecks size={"3em"} />
@@ -206,7 +211,7 @@ const StatisticPage = () => {
               <div
                 className="col-8 py-3 rounded-right"
                 style={{
-                  backgroundColor: "#001726",
+                  backgroundColor: "#aeaeae",
                   color: "white",
                   opacity: "0.9",
                 }}
@@ -227,15 +232,15 @@ const StatisticPage = () => {
             <div className="card flex-row align-items-center align-items-stretch border-0">
               <div
                 className="col-4 d-flex align-items-center justify-content-center rounded-left"
-                style={{ backgroundColor: "#DD4B39", color: "white" }}
+                style={{ backgroundColor: "#aeaeae", color: "white" }}
               >
                 <em className="fa-3x fas fa-handshake"></em>
-                <LightbulbFill size={"3em"} />
+                <Type size={"3em"} />
               </div>
               <div
                 className="col-8 py-3 rounded-right"
                 style={{
-                  backgroundColor: "#DD4B39",
+                  backgroundColor: "#aeaeae",
                   color: "white",
                   opacity: "0.9",
                 }}
@@ -256,15 +261,15 @@ const StatisticPage = () => {
             <div className="card flex-row align-items-center align-items-stretch border-0">
               <div
                 className="col-4 d-flex align-items-center justify-content-center rounded-left"
-                style={{ backgroundColor: "#DD4B39", color: "white" }}
+                style={{ backgroundColor: "#aeaeae", color: "white" }}
               >
                 <em className="fa-3x fas fa-handshake"></em>
-                <LightbulbFill size={"3em"} />
+                <CurrencyDollar size={"3em"} />
               </div>
               <div
                 className="col-8 py-3 rounded-right"
                 style={{
-                  backgroundColor: "#DD4B39",
+                  backgroundColor: "#aeaeae",
                   color: "white",
                   opacity: "0.9",
                 }}
@@ -285,15 +290,15 @@ const StatisticPage = () => {
             <div className="card flex-row align-items-center align-items-stretch border-0">
               <div
                 className="col-4 d-flex align-items-center justify-content-center rounded-left"
-                style={{ backgroundColor: "#DD4B39", color: "white" }}
+                style={{ backgroundColor: "#aeaeae", color: "white" }}
               >
                 <em className="fa-3x fas fa-handshake"></em>
-                <LightbulbFill size={"3em"} />
+                <BagFill size={"3em"} />
               </div>
               <div
                 className="col-8 py-3 rounded-right"
                 style={{
-                  backgroundColor: "#DD4B39",
+                  backgroundColor: "#aeaeae",
                   color: "white",
                   opacity: "0.9",
                 }}
@@ -314,15 +319,15 @@ const StatisticPage = () => {
             <div className="card flex-row align-items-center align-items-stretch border-0">
               <div
                 className="col-4 d-flex align-items-center justify-content-center rounded-left"
-                style={{ backgroundColor: "#DD4B39", color: "white" }}
+                style={{ backgroundColor: "#aeaeae", color: "white" }}
               >
                 <em className="fa-3x fas fa-handshake"></em>
-                <LightbulbFill size={"3em"} />
+                <StarFill size={"3em"} />
               </div>
               <div
                 className="col-8 py-3 rounded-right"
                 style={{
-                  backgroundColor: "#DD4B39",
+                  backgroundColor: "#aeaeae",
                   color: "white",
                   opacity: "0.9",
                 }}
@@ -343,15 +348,15 @@ const StatisticPage = () => {
             <div className="card flex-row align-items-center align-items-stretch border-0">
               <div
                 className="col-4 d-flex align-items-center justify-content-center rounded-left"
-                style={{ backgroundColor: "#DD4B39", color: "white" }}
+                style={{ backgroundColor: "#aeaeae", color: "white" }}
               >
                 <em className="fa-3x fas fa-handshake"></em>
-                <LightbulbFill size={"3em"} />
+                <QuestionCircleFill size={"3em"} />
               </div>
               <div
                 className="col-8 py-3 rounded-right"
                 style={{
-                  backgroundColor: "#DD4B39",
+                  backgroundColor: "#aeaeae",
                   color: "white",
                   opacity: "0.9",
                 }}
@@ -372,15 +377,15 @@ const StatisticPage = () => {
             <div className="card flex-row align-items-center align-items-stretch border-0">
               <div
                 className="col-4 d-flex align-items-center justify-content-center rounded-left"
-                style={{ backgroundColor: "#DD4B39", color: "white" }}
+                style={{ backgroundColor: "#aeaeae", color: "white" }}
               >
                 <em className="fa-3x fas fa-handshake"></em>
-                <LightbulbFill size={"3em"} />
+                <ChatFill size={"3em"} />
               </div>
               <div
                 className="col-8 py-3 rounded-right"
                 style={{
-                  backgroundColor: "#DD4B39",
+                  backgroundColor: "#aeaeae",
                   color: "white",
                   opacity: "0.9",
                 }}
