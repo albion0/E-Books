@@ -488,9 +488,9 @@ const downloadBook = asyncHandler(async (request, response, next) => {
  */
  const bookReview = asyncHandler(async (request, response, next) => {
   const { bookId, userId } = request.params;
-  const { title, description, rating } = request.body;
+  const { title, description, rating, page, limit } = request.body;
 
-  const book = await Book.findOne({ _id: bookId });
+  const book = await Book.findOne({ _id: bookId }).populate("reviews");
   const user = await User.findOne({ _id: userId });
   const review = await Review.create({
     title,
@@ -524,8 +524,17 @@ const downloadBook = asyncHandler(async (request, response, next) => {
     return;
   }
 
+    // pagination
+    const reviews = [];
+    for (let i = (page - 1) * limit; i < limit * page; i++) {
+      const review = await Review.findOne({ _id: book.reviews[i] });
+      if (!review) break;
+      reviews.push(review);
+    }
+
   response.status(statusCodes.OK).json({
     success: true,
+    data: { reviews: reviews, totalItems: book.reviews.length }
   })
 });
 
@@ -577,11 +586,8 @@ module.exports = {
   buyBook,
   userBooks,
   downloadBook,
-<<<<<<< HEAD
   bookReview,
   getBookReviews
-};
-=======
 };
 
 const getDefaultQuery = (request) => {
@@ -611,6 +617,7 @@ const getDefaultQuery = (request) => {
     },
   ];
 };
+
 const getQueryFromRequest = (request) => {
   const query = { isDeleted: false, isActive: true };
 
@@ -629,4 +636,3 @@ const getQueryFromRequest = (request) => {
     };
   return query;
 };
->>>>>>> 50c261c38ccd33fcd1ece2d141e41d7e54b81e34

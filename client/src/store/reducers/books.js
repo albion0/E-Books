@@ -138,7 +138,6 @@ const booksReducer = (state = initialState, action) => {
       return { ...state, deleteOne: { ...action.payload } };
     case DELETE_ONE_BOOK_RESET:
       return { ...state, deleteOne: { ...initialLoadingState } };
-
     /**
      * =======================================================================
      * GET USER BOOKS
@@ -171,13 +170,13 @@ const booksReducer = (state = initialState, action) => {
      * =======================================================================
      */
     case GET_ALL_BOOK_REVIEWS_START:
-      return { ...state, getAllbookReviews: { ...action.payload } };
+      return { ...state, bookReviews: { ...action.payload } };
     case GET_ALL_BOOK_REVIEWS_SUCCESS:
-      return { ...state, getAllbookReviews: { ...action.payload } };
+      return { ...state, bookReviews: { ...action.payload } };
     case GET_ALL_BOOK_REVIEWS_FAILED:
-      return { ...state, getAllbookReviews: { ...action.payload } };
+      return { ...state, bookReviews: { ...action.payload } };
     case GET_ALL_BOOK_REVIEWS_RESET:
-      return { ...state, getAllbookReviews: { ...initialLoadingState } };
+      return { ...state, bookReviews: { ...initialLoadingState } };
     default:
     return state;
   }

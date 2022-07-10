@@ -24,25 +24,40 @@ for(let i = 1; i <= 5; i++) {
 const defaultPage = 0;
 const defaultLimit = 10;
 
-const Reviews = ({ bookId }) => {
+const Reviews = ({ bookId, paginationLimits }) => {
   const [currentReviews, setCurrentReviews] = useState([]);
   const [currentPage, setCurrentPage] = useState(defaultPage);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
   const [currentLimit, setCurrentLimit] = useState(defaultLimit);
   const [totalItems, setTotalItems] = useState(100);
   const [isLoading, setIsLoading] = useState(false);
 
   const dispatch = useDispatch();
-  const getAllBookReviewsResponse = useSelector(({ books }) => books.getAllbookReviews);
+  const getAllBookReviewsResponse = useSelector(({ books }) => books.bookReviews);
+
+  /*
+  const getBookReviewsResponse = useSelector(({ books }) => books.bookReviews);
+  useEffect(() => {
+    if(getBookReviewsResponse.loading) {
+      dispatch(getAllBookReviews({
+        bookId,
+        page: currentPage + 1,
+        limit: currentLimit
+      }))
+    }
+  }, [getBookReviewsResponse.loading]);
+  */
+
   console.log(getAllBookReviewsResponse);
 
   useEffect(() => {
+    paginationLimits({ page: currentPage, limit: currentLimit});
+
     dispatch(getAllBookReviews({
       bookId,
       page: currentPage + 1,
       limit: currentLimit
     }))
-  }, []);
+  }, [currentPage, currentLimit]);
 
   useEffect(() => {
     if (getAllBookReviewsResponse && getAllBookReviewsResponse.loading) {
@@ -53,6 +68,7 @@ const Reviews = ({ bookId }) => {
       const { reviews, totalItems } = getAllBookReviewsResponse.data;
 
       setCurrentReviews(reviews);
+      console.log(reviews);
       setTotalItems(totalItems);
     } else if (getAllBookReviewsResponse && getAllBookReviewsResponse.error) {
       setIsLoading(false);
@@ -74,7 +90,7 @@ const Reviews = ({ bookId }) => {
   };
 
   const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
+    setCurrentLimit(parseInt(event.target.value, 10));
     setCurrentPage(0);
   };
 
@@ -84,7 +100,7 @@ const Reviews = ({ bookId }) => {
         <Review
           key={review._id}
           name={review.name}
-          stars={review.stars}
+          rating={review.rating}
           title={review.title}
           description={review.description}
         />
@@ -96,7 +112,7 @@ const Reviews = ({ bookId }) => {
           count={totalItems}
           page={currentPage}
           onPageChange={handleChangePage}
-          rowsPerPage={rowsPerPage}
+          rowsPerPage={currentLimit}
           onRowsPerPageChange={handleChangeRowsPerPage}
           style={{ marginBottom: "20px" }}
           className={classes.table}

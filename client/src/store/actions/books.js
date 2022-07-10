@@ -763,7 +763,7 @@ export const createBookReview = (payload, options) => {
       })
     );
 
-    const { userId, bookId, title, description, rating } = payload;
+    const { userId, bookId, title, description, rating, page, limit } = payload;
     const {
       toastNotification,
       history,
@@ -776,15 +776,19 @@ export const createBookReview = (payload, options) => {
       const result = await ApiClient.post(`books/${bookId}/${userId}/review`, {
         title,
         description,
-        rating
+        rating,
+        page,
+        limit
       });
+      console.log('result is')
+      console.log(result);
 
       if (result.data?.success) {
         dispatch(
           createBookReviewSuccess({
             loading: false,
             success: true,
-            data: { review: description },
+            data: { reviews: result.data.data.reviews, totalItems: result.data.data.totalItems },
             error: false,
             errorMessage: null,
           })

@@ -17,6 +17,8 @@ import { toastNotification } from "../../../utils/toastNotification";
 import { useEffect } from "react";
 import { createBookReview, getOneBook } from "../../../store/actions/books";
 import { NavLink, useHistory } from "react-router-dom";
+import { Spin } from "antd";
+import { LoadingOutlined } from "@ant-design/icons";
 
 const ViewBook = (props) => {
   const token = localStorage.getItem("eBook-token");
@@ -24,11 +26,12 @@ const ViewBook = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [book, setBook] = useState({});
   const [genres, setGenres] = useState("Loading...");
-  const [totalItems, setTotalItems] = useState(100);
   const [showFeedback, setShowFeedback] = useState(false);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [rating, setRating] = useState(0);
+  const [page, setPage] = useState(0);
+  const [limit, setLimit] = useState(10);
 
   const dispatch = useDispatch();
   const { id } = props.match.params;
@@ -63,7 +66,7 @@ const ViewBook = (props) => {
     if (!!title && !!description) {
       dispatch(
         createBookReview(
-          { userId: getUser.data.user._id, bookId: id, title, description, rating: rating },
+          { userId: getUser.data.user._id, bookId: id, title, description, rating: rating, page, limit },
           {
             toastNotification,
             history,
@@ -71,7 +74,7 @@ const ViewBook = (props) => {
             onSuccessMessage: "Review added successfully!",
             onFailMessage: "Failed to add review!",
           }
-          )
+        )
       );
       
       closeFeedbackMenu();
@@ -94,6 +97,21 @@ const ViewBook = (props) => {
     setRating(0);
     setShowFeedback(false);
   };
+
+  const handlePaginationLimits = ({ page, limit }) => {
+    setPage(page + 1);
+    setLimit(limit);
+  }
+  
+  if (isLoading)
+    return (
+      <div
+        className="d-flex justify-content-center"
+        style={{ marginTop: "300px" }}
+      >
+        <Spin indicator={<LoadingOutlined style={{ fontSize: 100 }} spin />} />
+      </div>
+    );
 
   return (
     <div className={classes.wrapper}>
@@ -199,7 +217,7 @@ const ViewBook = (props) => {
 
         <div className={classes.constumer}>
           <Ratings />
-          <Reviews bookId={id} />
+          <Reviews bookId={id} paginationLimits={handlePaginationLimits} />
         </div>
       </section>
     </div>

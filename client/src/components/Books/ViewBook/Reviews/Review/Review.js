@@ -36,18 +36,18 @@ const Review = (props) => {
 }
 */
 
-const Review = (props) => {
+const Review = ({ name, rating, title, description }) => {
   return (
     <div className={classes.wrapper}>
         <div className={classes.user}>
             <img src={personImg} alt="Person Img" className={classes.img} />
-            <p className={classes.name}>{props.name}</p>
+            <p className={classes.name}>{name}</p>
         </div>
 
-        <Rate disabled allowHalf defaultValue={4.5} />
+        <Rate disabled allowHalf defaultValue={rating} />
         
-        <p className={classes.title}>{props.title}</p>
-        <div className={classes.review} dangerouslySetInnerHTML={{ __html: props.description }}></div>
+        <p className={classes.title}>{title}</p>
+        <div className={classes.review} dangerouslySetInnerHTML={{ __html: description }}></div>
     </div> 
   )
 }
