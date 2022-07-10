@@ -8,6 +8,24 @@ const validator = {
       page: Joi.number().optional().default(1),
       limit: Joi.number().optional().default(10),
       pagination: Joi.boolean().optional().default(true),
+      bookName: Joi.string().optional(),
+      bookCredits: Joi.string().optional(),
+      authors: Joi.array()
+        .optional()
+        .default(null)
+        .items(
+          Joi.string()
+            .regex(/^[0-9a-fA-F]{24}$/)
+            .required()
+        ),
+      genres: Joi.array()
+        .optional()
+        .default(null)
+        .items(
+          Joi.string()
+            .regex(/^[0-9a-fA-F]{24}$/)
+            .required()
+        ),
     }),
   },
   createBook: {

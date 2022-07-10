@@ -8,6 +8,7 @@ const validator = {
       page: Joi.number().optional().default(1),
       limit: Joi.number().optional().default(10),
       pagination: Joi.boolean().optional().default(true),
+      genreName: Joi.string().optional(),
     }),
   },
   createGenre: {

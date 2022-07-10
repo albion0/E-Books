@@ -14,6 +14,9 @@ const getAll = asyncHandler(async (request, response, next) => {
   const options = { page, limit, pagination, sort: "-_id" };
   const query = { isDeleted: false, isActive: true };
 
+  if (request.query.authorName)
+    query["name"] = { $regex: request.query.authorName, $options: "i" };
+
   const authors = await Author.paginate(query, options);
   response
     .status(statusCodes.OK)

@@ -12,6 +12,7 @@ const { ApiError } = require("../utils/classes");
 const libre = require("libreoffice-convert");
 const Docxtemplater = require("docxtemplater");
 const PizZip = require("pizzip");
+const { ObjectId } = require("mongodb");
 
 /**
  * @description Get all books.
@@ -27,9 +28,12 @@ const getAll = asyncHandler(async (request, response, next) => {
     sort: "-_id",
     populate: [{ path: "authors" }, { path: "genres" }],
   };
-  const query = { isDeleted: false, isActive: true };
+  let query = {};
+  query = getDefaultQuery(request);
 
-  const books = await Book.paginate(query, options);
+  const booksAggregate = Book.aggregate(query);
+  const books = await Book.aggregatePaginate(booksAggregate, options);
+
   response
     .status(statusCodes.OK)
     .json({ success: true, data: { books }, error: null });
@@ -481,4 +485,50 @@ module.exports = {
   buyBook,
   userBooks,
   downloadBook,
+};
+
+const getDefaultQuery = (request) => {
+  const query = getQueryFromRequest(request);
+  return [
+    {
+      $lookup: {
+        from: "authors",
+        localField: "authors",
+        foreignField: "_id",
+        as: "authors",
+      },
+    },
+    {
+      $lookup: {
+        from: "genres",
+        localField: "genres",
+        foreignField: "_id",
+        as: "genres",
+      },
+    },
+
+    {
+      $match: {
+        ...query,
+      },
+    },
+  ];
+};
+const getQueryFromRequest = (request) => {
+  const query = { isDeleted: false, isActive: true };
+
+  if (request.query.bookName)
+    query["title"] = { $regex: request.query.bookName, $options: "i" };
+
+  if (request.query.bookCredits)
+    query["credits"] = { $regex: request.query.bookCredits, $options: "i" };
+  if (request.query.authors)
+    query["authors._id"] = {
+      $in: request.query.authors.map((author) => ObjectId(author)),
+    };
+  if (request.query.genres)
+    query["genres._id"] = {
+      $in: request.query.genres.map((genre) => ObjectId(genre)),
+    };
+  return query;
 };
