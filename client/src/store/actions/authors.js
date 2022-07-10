@@ -124,9 +124,9 @@ export const getAllAuthors = (payload) => {
     );
 
     try {
-      const { page, limit, pagination } = payload;
+      const { page, limit, pagination, authorName } = payload;
       const result = await ApiClient.get("authors", {
-        params: { page, limit, pagination },
+        params: { page, limit, pagination, authorName },
       });
       if (result.data?.success) {
         const { authors } = result.data.data;

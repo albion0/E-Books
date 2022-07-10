@@ -24,6 +24,7 @@ import { toastNotification } from "../../../utils/toastNotification";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import Reply from "./Replies/Reply/Reply";
+import Footer from "../../Footer/Footer";
 
 const Topic = (props) => {
   const id = props.match.params.id;
@@ -164,95 +165,98 @@ const Topic = (props) => {
 
   if (!id) return <Redirect to="/" />;
   return (
-    <div className={classes.wrapper}>
-      {loading ? (
-        <div
-          className="d-flex justify-content-center"
-          style={{ marginTop: "100px" }}
-        >
-          <Spin
-            indicator={<LoadingOutlined style={{ fontSize: 100 }} spin />}
-          />
-        </div>
-      ) : (
-        <>
-          <div className={classes.topic}>
-            <User forumTopic={localForumTopic} />
-            <div className={classes.content}>
-              <p
-                className={classes.text}
-                dangerouslySetInnerHTML={{ __html: localForumTopic.content }}
-              ></p>
-
-              <p className={classes.date}>
-                {" "}
-                {moment(localForumTopic.createdAt).format(
-                  "dddd, MMMM Do YYYY, h:mm:ss a"
-                )}
-              </p>
-            </div>
-          </div>
-
-          <Form
-            id="org-form"
-            layout="vertical"
-            name="basic"
-            onFinish={handleSubmit(onSubmit)}
-            style={{ marginBottom: "30px" }}
+    <>
+      <div className={classes.wrapper}>
+        {loading ? (
+          <div
+            className="d-flex justify-content-center"
+            style={{ marginTop: "100px" }}
           >
-            <div className={classes.content} style={{ marginTop: "30px" }}>
-              <p
-                className={classes.fieldName}
-                style={{
-                  color: errors.text ? "red" : "inherit",
-                }}
-              >
-                {errors.text ? "Comment is required" : "Comment"}
-              </p>
-              <ReactQuill
-                value={editorContent ? editorContent : ""}
-                onChange={(editorState) => onEditorStateChange(editorState)}
-                theme="snow"
-                modules={{
-                  toolbar: [
-                    [{ header: [1, 2, 3, 4, 5, 6] }],
-                    ["bold", "italic", "underline", "strike", "blockquote"],
-                    [
-                      { list: "ordered" },
-                      { list: "bullet" },
-                      { indent: "-1" },
-                      { indent: "+1" },
-                    ],
-                    ["link", "image"],
-                    ["clean"],
-                  ],
-                }}
-              />
+            <Spin
+              indicator={<LoadingOutlined style={{ fontSize: 100 }} spin />}
+            />
+          </div>
+        ) : (
+          <>
+            <div className={classes.topic}>
+              <User forumTopic={localForumTopic} />
+              <div className={classes.content}>
+                <p
+                  className={classes.text}
+                  dangerouslySetInnerHTML={{ __html: localForumTopic.content }}
+                ></p>
+
+                <p className={classes.date}>
+                  {" "}
+                  {moment(localForumTopic.createdAt).format(
+                    "dddd, MMMM Do YYYY, h:mm:ss a"
+                  )}
+                </p>
+              </div>
             </div>
 
-            <div className={classes.buttons}>
-              <button className={classes.submitBtn} type="submit">
-                Submit
-              </button>
-            </div>
-          </Form>
-
-          {commentsLoading ? (
-            <div
-              className="d-flex justify-content-center"
-              style={{ marginTop: "50px" }}
+            <Form
+              id="org-form"
+              layout="vertical"
+              name="basic"
+              onFinish={handleSubmit(onSubmit)}
+              style={{ marginBottom: "30px" }}
             >
-              <Spin
-                indicator={<LoadingOutlined style={{ fontSize: 100 }} spin />}
-              />
-            </div>
-          ) : (
-            localComments &&
-            localComments.map((comment) => <Reply forumComment={comment} />)
-          )}
-        </>
-      )}
-    </div>
+              <div className={classes.content} style={{ marginTop: "30px" }}>
+                <p
+                  className={classes.fieldName}
+                  style={{
+                    color: errors.text ? "red" : "inherit",
+                  }}
+                >
+                  {errors.text ? "Comment is required" : "Comment"}
+                </p>
+                <ReactQuill
+                  value={editorContent ? editorContent : ""}
+                  onChange={(editorState) => onEditorStateChange(editorState)}
+                  theme="snow"
+                  modules={{
+                    toolbar: [
+                      [{ header: [1, 2, 3, 4, 5, 6] }],
+                      ["bold", "italic", "underline", "strike", "blockquote"],
+                      [
+                        { list: "ordered" },
+                        { list: "bullet" },
+                        { indent: "-1" },
+                        { indent: "+1" },
+                      ],
+                      ["link", "image"],
+                      ["clean"],
+                    ],
+                  }}
+                />
+              </div>
+
+              <div className={classes.buttons}>
+                <button className={classes.submitBtn} type="submit">
+                  Submit
+                </button>
+              </div>
+            </Form>
+
+            {commentsLoading ? (
+              <div
+                className="d-flex justify-content-center"
+                style={{ marginTop: "50px" }}
+              >
+                <Spin
+                  indicator={<LoadingOutlined style={{ fontSize: 100 }} spin />}
+                />
+              </div>
+            ) : (
+              localComments &&
+              localComments.map((comment) => <Reply forumComment={comment} />)
+            )}
+          </>
+        )}
+      </div>
+      <Footer />
+    </>
   );
 };
 

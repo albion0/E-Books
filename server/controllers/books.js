@@ -486,7 +486,7 @@ const downloadBook = asyncHandler(async (request, response, next) => {
  * @route       POST /api/books/:bookId/:userId/review
  * @access      Private
  */
- const bookReview = asyncHandler(async (request, response, next) => {
+const bookReview = asyncHandler(async (request, response, next) => {
   const { bookId, userId } = request.params;
   const { title, description, rating } = request.body;
 
@@ -496,9 +496,9 @@ const downloadBook = asyncHandler(async (request, response, next) => {
     title,
     description,
     rating,
-    createdBy: user
-  })
-  
+    createdBy: user,
+  });
+
   book.reviews = [...book.reviews, review];
   await book.save();
 
@@ -526,9 +526,8 @@ const downloadBook = asyncHandler(async (request, response, next) => {
 
   response.status(statusCodes.OK).json({
     success: true,
-  })
+  });
 });
-
 
 /**
  * @description Book Reviews
@@ -539,7 +538,7 @@ const getBookReviews = asyncHandler(async (request, response, next) => {
   const { bookId } = request.params;
   const { page, limit } = request.query;
 
-  const book = await Book.findOne({ _id: bookId}).populate("reviews");
+  const book = await Book.findOne({ _id: bookId }).populate("reviews");
   if (!book) {
     next(
       new ApiError(
@@ -577,11 +576,8 @@ module.exports = {
   buyBook,
   userBooks,
   downloadBook,
-<<<<<<< HEAD
   bookReview,
-  getBookReviews
-};
-=======
+  getBookReviews,
 };
 
 const getDefaultQuery = (request) => {
@@ -629,4 +625,3 @@ const getQueryFromRequest = (request) => {
     };
   return query;
 };
->>>>>>> 50c261c38ccd33fcd1ece2d141e41d7e54b81e34
