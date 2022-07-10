@@ -18,6 +18,10 @@ import {
 import Datetime from "react-datetime";
 import "react-datetime/css/react-datetime.css";
 import "../../style/stats.scss";
+import { BookReports } from "./Reports/BookReports";
+import { PaymentReports } from "./Reports/PaymentReports";
+
+const { TabPane } = Tabs;
 
 const StatisticPage = () => {
   const [startDate, setStartDate] = useState(new Date());
@@ -28,7 +32,9 @@ const StatisticPage = () => {
   const countsResponse = useSelector(({ reports }) => reports.counts);
 
   useEffect(() => {
-    if (startDate || endDate) dispatch(counts({ startDate, endDate }));
+    if (startDate || endDate) {
+      dispatch(counts({ startDate, endDate }));
+    }
   }, [startDate, endDate]);
 
   const handleStartDateChange = (date) => {
@@ -402,6 +408,18 @@ const StatisticPage = () => {
               </div>
             </div>
           </Col>
+        </Row>
+        <Row style={{ margin: "0px !important" }}>
+          <div role="tabpanel" className="w-100">
+            <Tabs type="card" destroyInactiveTabPane>
+              <TabPane tab="Books" key="books">
+                <BookReports startDate={startDate} endDate={endDate} />
+              </TabPane>
+              <TabPane tab="Payments" key="payments">
+                <PaymentReports startDate={startDate} endDate={endDate} />
+              </TabPane>
+            </Tabs>
+          </div>
         </Row>
       </div>
     </>

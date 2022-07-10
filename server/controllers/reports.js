@@ -86,5 +86,128 @@ const getCounts = asyncHandler(async (request, response, next) => {
   response.status(statusCodes.OK).json({ success: true, data: { counts } });
 });
 
+const getBooks = asyncHandler(async (request, response, next) => {
+  const { startDate, endDate, type } = request.body;
+
+  let query = {};
+
+  if (startDate && !endDate)
+    query = {
+      isActive: true,
+      isDeleted: false,
+      createdAt: { $gte: new Date(startDate) },
+    };
+  else if (!startDate && endDate)
+    query = {
+      isActive: true,
+      isDeleted: false,
+      createdAt: { $lte: new Date(endDate) },
+    };
+  else if (startDate && endDate)
+    query = {
+      isActive: true,
+      isDeleted: false,
+      createdAt: { $gte: new Date(startDate), $lte: new Date(endDate) },
+    };
+  else query = {};
+
+  if (type === "BY_AUTHORS") {
+    const authors = await Author.find({
+      isActive: true,
+      isDeleted: false,
+    }).select("_id name");
+    const responseArr = [];
+
+    for (const author of authors) {
+      const count = await Book.countDocuments({
+        authors: { $in: [author._id] },
+        ...query,
+      });
+      responseArr.push([author.name, count]);
+    }
+
+    response
+      .status(statusCodes.OK)
+      .json({ success: true, data: { books: responseArr } });
+    return;
+  } else if (type === "BY_GENRES") {
+    const genres = await Genre.find({
+      isActive: true,
+      isDeleted: false,
+    }).select("_id name");
+    const responseArr = [];
+
+    for (const genre of genres) {
+      const count = await Book.countDocuments({
+        genres: { $in: [genre._id] },
+        ...query,
+      });
+      responseArr.push([genre.name, count]);
+    }
+
+    response
+      .status(statusCodes.OK)
+      .json({ success: true, data: { books: responseArr } });
+    return;
+  } else {
+    next(
+      new ApiError("Wrong filter type", "WRONG_TYPE", statusCodes.BAD_REQUEST)
+    );
+    return;
+  }
+});
+
+const getPayments = asyncHandler(async (request, response, next) => {
+  const { startDate, endDate, type } = request.body;
+
+  let query = {};
+
+  if (startDate && !endDate)
+    query = {
+      isActive: true,
+      isDeleted: false,
+      createdAt: { $gte: new Date(startDate) },
+    };
+  else if (!startDate && endDate)
+    query = {
+      isActive: true,
+      isDeleted: false,
+      createdAt: { $lte: new Date(endDate) },
+    };
+  else if (startDate && endDate)
+    query = {
+      isActive: true,
+      isDeleted: false,
+      createdAt: { $gte: new Date(startDate), $lte: new Date(endDate) },
+    };
+  else query = {};
+
+  if (type === "BY_READERS") {
+    const users = await User.find({
+      isActive: true,
+      isDeleted: false,
+    }).select("_id username");
+    const responseArr = [];
+
+    for (const user of users) {
+      const count = await Payment.countDocuments({
+        user: { $in: [user._id] },
+        ...query,
+      });
+      responseArr.push([user.username, count]);
+    }
+
+    response
+      .status(statusCodes.OK)
+      .json({ success: true, data: { payments: responseArr } });
+    return;
+  } else {
+    next(
+      new ApiError("Wrong filter type", "WRONG_TYPE", statusCodes.BAD_REQUEST)
+    );
+    return;
+  }
+});
+
 // Exports of this file.
-module.exports = { getCounts };
+module.exports = { getCounts, getBooks, getPayments };
