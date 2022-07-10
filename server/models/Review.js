@@ -3,39 +3,19 @@ const mongoose = require("mongoose");
 const mongoosePaginate = require("mongoose-paginate-v2");
 const mongooseAggregatePaginate = require("mongoose-aggregate-paginate-v2");
 
-// Book Schema that is used to represent single Book in our API.
-const BookSchema = new mongoose.Schema({
+// Review Schema that is used to represent a single Review.
+const ReviewSchema = new mongoose.Schema({
   title: {
     type: String,
-    required: true,
+    required: false,
   },
-  content: {
-    type: String,
-    required: true,
-  },
-  credits: {
-    type: String,
-    required: true,
-  },
-  bookPhoto: {
+  description: {
     type: String,
     required: false,
-    default: null,
   },
-  authors: {
-    type: [{ type: mongoose.Schema.Types.ObjectId, ref: "Author" }],
-    required: false,
-    default: [],
-  },
-  genres: {
-    type: [{ type: mongoose.Schema.Types.ObjectId, ref: "Genre" }],
-    required: false,
-    default: [],
-  },
-  reviews: {
-    type: [{ type: mongoose.Schema.Types.ObjectId, ref: "Review" }],
-    required: false,
-    default: [],
+  rating: {
+    type: Number,
+    required: true,
   },
   isActive: {
     type: Boolean,
@@ -72,8 +52,8 @@ const BookSchema = new mongoose.Schema({
 });
 
 // Plugins.
-BookSchema.plugin(mongoosePaginate);
-BookSchema.plugin(mongooseAggregatePaginate);
+ReviewSchema.plugin(mongoosePaginate);
+ReviewSchema.plugin(mongooseAggregatePaginate);
 
 // Exports of this file.
-module.exports = mongoose.model("Book", BookSchema);
+module.exports = mongoose.model("Review", ReviewSchema);

@@ -1,4 +1,5 @@
 import { FaStar, FaStarHalfAlt } from "react-icons/fa";
+import { Rate } from "antd";
 import classes from "./Ratings.module.css";
 
 const Ratings = () => {
@@ -6,11 +7,12 @@ const Ratings = () => {
     <div className={classes.wrapper}>
       <h4 className={classes.heading}>Customer reviews</h4>
       <div className={classes.stars}>
+        <Rate disabled allowHalf defaultValue={4.5} />
+        {/* <FaStar style={{color: '#ffa41c'}} />
         <FaStar style={{color: '#ffa41c'}} />
         <FaStar style={{color: '#ffa41c'}} />
         <FaStar style={{color: '#ffa41c'}} />
-        <FaStar style={{color: '#ffa41c'}} />
-        <FaStarHalfAlt style={{color: '#ffa41c'}} />
+        <FaStarHalfAlt style={{color: '#ffa41c'}} /> */}
         <p className={classes.text}>4.5 out of 5</p>
       </div>
 

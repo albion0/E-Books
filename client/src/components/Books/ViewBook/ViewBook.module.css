@@ -112,6 +112,32 @@
 
 .ratingText {
     margin: 0;
+    margin-right: 10px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-size: 15px;
+}
+
+.text {
+    margin-left: 10px;
+    margin-bottom: 0;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.input {
+    width: 100%;
+    border: 1.5px solid #cccccc;
+    padding: 5px 10px;
+    font-size: 14px;
+}
+
+.input:focus {
+    outline: none;
+}
+
+.categoryTxt {
+    margin: 0;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-size: 15.5px;
 }
 
 .options {
@@ -131,14 +157,4 @@
 
 .btn:hover {
     background-color: rgb(7, 171, 7);
-}
-
-.pagination {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-}
-
-.table p {
-    margin-bottom: 0;
 }

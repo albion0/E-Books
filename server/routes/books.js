@@ -16,13 +16,15 @@ const {
   buyBook,
   userBooks,
   downloadBook,
+  bookReview,
+  getBookReviews
 } = require("../controllers/books");
 const {
   getAllBooks,
   createBook,
   updateBook,
   validateBookId,
-  download,
+  download
 } = require("../validations/books");
 const { validate } = require("../utils/functions");
 
@@ -42,6 +44,8 @@ router.route("/:bookId/:userId").post(authorize, buyBook);
 router.route("/:userId/:page/:limit").get(authorize, userBooks);
 
 router.route("/:bookId/generate").get(validate(download), downloadBook);
+router.route("/:bookId/:userId/review").post(authorize, bookReview);
+router.route("/:bookId/reviews").get(authorize, getBookReviews);
 
 // Exports of this file.
 module.exports = router;

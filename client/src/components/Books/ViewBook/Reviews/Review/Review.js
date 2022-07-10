@@ -1,7 +1,9 @@
 import { FaStar, FaStarHalfAlt, FaRegStar } from "react-icons/fa";
+import { Rate } from "antd";
 import classes from "./Review.module.css";
 import personImg from "../../../../../assets/images/person.jpg";
 
+/*
 const Review = (props) => {
   const halfStar = `${props.stars}`.split(".")[1] ? true : false;
   let num = halfStar ? props.stars - 0.5 : props.stars;
@@ -30,6 +32,23 @@ const Review = (props) => {
         <p className={classes.title}>{props.title}</p>
         <p className={classes.review}>{props.review}</p>
     </div>
+  )
+}
+*/
+
+const Review = (props) => {
+  return (
+    <div className={classes.wrapper}>
+        <div className={classes.user}>
+            <img src={personImg} alt="Person Img" className={classes.img} />
+            <p className={classes.name}>{props.name}</p>
+        </div>
+
+        <Rate disabled allowHalf defaultValue={4.5} />
+        
+        <p className={classes.title}>{props.title}</p>
+        <div className={classes.review} dangerouslySetInnerHTML={{ __html: props.description }}></div>
+    </div> 
   )
 }
 

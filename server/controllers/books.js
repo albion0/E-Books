@@ -6,6 +6,7 @@ const fs = require("fs");
 const Book = require("../models/Book");
 const User = require("../models/User");
 const Author = require("../models/Author");
+const Review = require("../models/Review");
 const asyncHandler = require("../middlewares/asyncHandler");
 const { statusCodes } = require("../config");
 const { ApiError } = require("../utils/classes");
@@ -370,6 +371,7 @@ const userBooks = asyncHandler(async (request, response, next) => {
     return;
   }
 
+  // pagination
   const books = [];
   for (let i = (page - 1) * limit; i < limit * page; i++) {
     const book = await Book.findOne({ _id: user.books[i] });
@@ -384,6 +386,11 @@ const userBooks = asyncHandler(async (request, response, next) => {
   });
 });
 
+/**
+ * @description PDF BOOK.
+ * @route       GET /api/books/:bookId/generate
+ * @access      Public
+ */
 const downloadBook = asyncHandler(async (request, response, next) => {
   const { bookId } = request.params;
 
@@ -470,6 +477,91 @@ const downloadBook = asyncHandler(async (request, response, next) => {
   });
 });
 
+/**
+ * @description Book Reviews
+ * @route       POST /api/books/:bookId/:userId/review
+ * @access      Private
+ */
+ const bookReview = asyncHandler(async (request, response, next) => {
+  const { bookId, userId } = request.params;
+  const { title, description, rating } = request.body;
+
+  const book = await Book.findOne({ _id: bookId });
+  const user = await User.findOne({ _id: userId });
+  const review = await Review.create({
+    title,
+    description,
+    rating,
+    createdBy: user
+  })
+  
+  book.reviews = [...book.reviews, review];
+  await book.save();
+
+  if (!user) {
+    next(
+      new ApiError(
+        "User not found with id!",
+        "RESOURCE_NOT_FOUND",
+        statusCodes.NOT_FOUND
+      )
+    );
+    return;
+  }
+
+  if (!book) {
+    next(
+      new ApiError(
+        "Book not found with id!",
+        "RESOURCE_NOT_FOUND",
+        statusCodes.NOT_FOUND
+      )
+    );
+    return;
+  }
+
+  response.status(statusCodes.OK).json({
+    success: true,
+  })
+});
+
+
+/**
+ * @description Book Reviews
+ * @route       GET /api/books/:bookId/reviews
+ * @access      Private
+ */
+const getBookReviews = asyncHandler(async (request, response, next) => {
+  const { bookId } = request.params;
+  const { page, limit } = request.query;
+
+  const book = await Book.findOne({ _id: bookId}).populate("reviews");
+  if (!book) {
+    next(
+      new ApiError(
+        "Book not found with id!",
+        "RESOURCE_NOT_FOUND",
+        statusCodes.NOT_FOUND
+      )
+    );
+    return;
+  }
+
+  // pagination
+  const reviews = [];
+  for (let i = (page - 1) * limit; i < limit * page; i++) {
+    const review = await Review.findOne({ _id: book.reviews[i] });
+    if (!review) break;
+    reviews.push(review);
+  }
+
+  response.status(statusCodes.OK).json({
+    success: true,
+    data: { reviews: reviews, totalItems: book.reviews.length },
+    error: null,
+  });
+});
+
 // Exports of this file.
 module.exports = {
   getAll,
@@ -481,4 +573,6 @@ module.exports = {
   buyBook,
   userBooks,
   downloadBook,
+  bookReview,
+  getBookReviews
 };

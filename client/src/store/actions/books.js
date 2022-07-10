@@ -47,7 +47,19 @@ export const BUY_ONE_BOOK_RESET = "DELETE_ONE_BOOK_RESET";
 export const GET_USER_BOOKS_START = "GET_USER_BOOKS_START";
 export const GET_USER_BOOKS_SUCCESS = "GET_USER_BOOKS_SUCCESS";
 export const GET_USER_BOOKS_FAILED = "GET_USER_BOOKS_FAILED";
-export const GET_USER_BOOKS_RESET = "DELETE_USER_BOOKS_RESET";
+export const GET_USER_BOOKS_RESET = "GET_USER_BOOKS_RESET";
+
+// Action Types: Book Review.
+export const CREATE_BOOK_REVIEW_START = "CREATE_BOOK_REVIEW_START";
+export const CREATE_BOOK_REVIEW_SUCCESS = "CREATE_BOOK_REVIEW_SUCCESS";
+export const CREATE_BOOK_REVIEW_FAILED = "CREATE_BOOK_REVIEW_FAILED";
+export const CREATE_BOOK_REVIEW_RESET = "CREATE_BOOK_REVIEW_RESET";
+
+// Action Types: Get Book Reviews.
+export const GET_ALL_BOOK_REVIEWS_START = "GET_ALL_BOOK_REVIEWS_START";
+export const GET_ALL_BOOK_REVIEWS_SUCCESS = "GET_ALL_BOOK_REVIEWS_SUCCESS";
+export const GET_ALL_BOOK_REVIEWS_FAILED = "GET_ALL_BOOK_REVIEWS_FAILED";
+export const GET_ALL_BOOK_REVIEWS_RESET = "GET_ALL_BOOK_REVIEWS_RESET";
 
 // Action Creators: Get All Books.
 const getAllBooksStart = (payload) => ({
@@ -64,6 +76,7 @@ const getAllBooksFailed = (payload) => ({
 });
 const getAllBooksReset = () => ({ type: GET_ALL_BOOKS_RESET });
 
+
 // Action Creators: Get One Book.
 const getOneBookStart = (payload) => ({
   type: GET_ONE_BOOK_START,
@@ -79,6 +92,7 @@ const getOneBookFailed = (payload) => ({
 });
 const getOneBookReset = () => ({ type: GET_ONE_BOOK_RESET });
 
+
 // Action Creators: Create New Book.
 const createBookStart = (payload) => ({
   type: CREATE_BOOK_START,
@@ -93,6 +107,7 @@ const createBookFailed = (payload) => ({
   payload,
 });
 const createBookReset = () => ({ type: CREATE_BOOK_RESET });
+
 
 // Action Creators: Upload Photo Book
 const uploadPhotoBookStart = (payload) => ({
@@ -111,6 +126,7 @@ const uploadPhotoBookReset = () => ({
   type: UPLOAD_PHOTO_BOOK_START,
 });
 
+
 // Action Creators: Update One Book.
 const updateOneBookStart = (payload) => ({
   type: UPDATE_ONE_BOOK_START,
@@ -127,6 +143,7 @@ const updateOneBookFailed = (payload) => ({
 const updateOneBookReset = () => ({
   type: UPDATE_ONE_BOOK_RESET,
 });
+
 
 // Action Creators: Delete One Book.
 const deleteOneBookStart = (payload) => ({
@@ -145,17 +162,16 @@ const deleteOneBookReset = () => ({
   type: DELETE_ONE_BOOK_RESET,
 });
 
+
 // Action Creators: Buy One Book.
 const buyOneBookStart = (payload) => ({
   type: BUY_ONE_BOOK_START,
   payload,
 });
-
 const buyOneBookSuccess = (payload) => ({
   type: BUY_ONE_BOOK_SUCCESS,
   payload,
 });
-
 const buyOneBookFailed = (payload) => ({
   type: BUY_ONE_BOOK_FAILED,
   payload,
@@ -170,20 +186,51 @@ const getUserBooksStart = (payload) => ({
   type: GET_USER_BOOKS_START,
   payload,
 });
-
 const getUserBooksSuccess = (payload) => ({
   type: GET_USER_BOOKS_SUCCESS,
   payload,
 });
-
 const getUserBooksFailed = (payload) => ({
   type: GET_USER_BOOKS_FAILED,
   payload,
 });
-
 const getUserBooksReset = () => ({
   type: GET_USER_BOOKS_RESET,
 });
+
+
+// Action Creators: Review.
+const createBookReviewStart = (payload) => ({
+  type: CREATE_BOOK_REVIEW_START,
+  payload,
+});
+const createBookReviewSuccess = (payload) => ({
+  type: CREATE_BOOK_REVIEW_SUCCESS,
+  payload,
+});
+const createBookReviewFailed = (payload) => ({
+  type: CREATE_BOOK_REVIEW_FAILED,
+  payload,
+});
+const createBookReviewReset = () => ({
+  type: CREATE_BOOK_REVIEW_RESET,
+});
+
+
+// Action Creators: Get Book Reviews.
+const getAllBookReviewsStart = (payload) => ({
+  type: GET_ALL_BOOK_REVIEWS_START,
+  payload,
+});
+const getAllBookReviewsSuccess = (payload) => ({
+  type: GET_ALL_BOOK_REVIEWS_SUCCESS,
+  payload,
+});
+const getAllBookReviewsFailed = (payload) => ({
+  type: GET_ALL_BOOK_REVIEWS_FAILED,
+  payload,
+});
+const getAllBookReviewsReset = () => ({ type: GET_ALL_BOOK_REVIEWS_RESET  });
 
 // Actions: Get All Books.
 export const getAllBooks = (payload) => {
@@ -702,3 +749,127 @@ export const getUserBooks = (payload) => {
     }
   };
 };
+
+// Actions: Book Review
+export const createBookReview = (payload, options) => {
+  return async (dispatch) => {
+    dispatch(
+      createBookReviewStart({
+        loading: true,
+        success: false,
+        data: null,
+        error: false,
+        errorMessage: null,
+      })
+    );
+
+    const { userId, bookId, title, description, rating } = payload;
+    const {
+      toastNotification,
+      history,
+      pathname,
+      onSuccessMessage,
+      onFailMessage,
+    } = options;
+
+    try {
+      const result = await ApiClient.post(`books/${bookId}/${userId}/review`, {
+        title,
+        description,
+        rating
+      });
+
+      if (result.data?.success) {
+        dispatch(
+          createBookReviewSuccess({
+            loading: false,
+            success: true,
+            data: { review: description },
+            error: false,
+            errorMessage: null,
+          })
+        );
+
+        toastNotification("success", onSuccessMessage);
+      } else {
+        dispatch(
+          createBookReviewFailed({
+            loading: false,
+            success: false,
+            data: null,
+            error: true,
+            errorMessage: result.data?.error || "Internal Server Error!",
+          })
+        );
+
+        toastNotification("error", onFailMessage);
+      }
+    } catch (error) {
+      dispatch(
+        createBookReviewFailed({
+          loading: false,
+          success: false,
+          data: null,
+          error: true,
+          errorMessage: error.message || "Internal Server Error!",
+        })
+      );
+    }
+  }
+}
+
+// Actions: Get All Book Reviews
+export const getAllBookReviews = (payload) => {
+  return async (dispatch) => {
+    dispatch(
+      getAllBookReviewsStart({
+        loading: true,
+        success: false,
+        data: null,
+        error: false,
+        errorMessage: null,
+      })
+    );
+
+    const { bookId, page, limit } = payload;
+
+    try {
+      const result = await ApiClient.get(`books/${bookId}/reviews`, {
+        params: { page, limit }
+      });
+      console.log(result);
+
+      if (result.data?.success) {
+        dispatch(
+          getAllBookReviewsSuccess({
+            loading: false,
+            success: true,
+            data: { reviews: result.data.data.reviews, totalItems: result.data.data.totalItems },
+            error: false,
+            errorMessage: null,
+          })
+        );
+      } else {
+        dispatch(
+          getAllBookReviewsFailed({
+            loading: false,
+            success: false,
+            data: null,
+            error: true,
+            errorMessage: result.data?.error || "Internal Server Error!",
+          })
+        );
+      }
+    } catch (error) {
+      dispatch(
+        getAllBookReviewsFailed({
+          loading: false,
+          success: false,
+          data: null,
+          error: true,
+          errorMessage: error.message || "Internal Server Error!",
+        })
+      );
+    }
+  }
+}

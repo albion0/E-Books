@@ -27,7 +27,15 @@ import {
   GET_USER_BOOKS_START,
   GET_USER_BOOKS_SUCCESS,
   GET_USER_BOOKS_FAILED,
-  GET_USER_BOOKS_RESET
+  GET_USER_BOOKS_RESET,
+  CREATE_BOOK_REVIEW_START,
+  CREATE_BOOK_REVIEW_SUCCESS,
+  CREATE_BOOK_REVIEW_FAILED,
+  CREATE_BOOK_REVIEW_RESET,
+  GET_ALL_BOOK_REVIEWS_START,
+  GET_ALL_BOOK_REVIEWS_SUCCESS,
+  GET_ALL_BOOK_REVIEWS_FAILED,
+  GET_ALL_BOOK_REVIEWS_RESET
 } from "../actions/actions";
 
 const initialLoadingState = {
@@ -45,7 +53,9 @@ const initialState = {
   uploadPhoto: initialLoadingState,
   updateOne: initialLoadingState,
   deleteOne: initialLoadingState,
-  getUserBooks: initialLoadingState
+  getUserBooks: initialLoadingState,
+  bookReviews: initialLoadingState,
+  getAllbookReviews: initialLoadingState
 };
 
 const booksReducer = (state = initialState, action) => {
@@ -129,7 +139,7 @@ const booksReducer = (state = initialState, action) => {
     case DELETE_ONE_BOOK_RESET:
       return { ...state, deleteOne: { ...initialLoadingState } };
 
-          /**
+    /**
      * =======================================================================
      * GET USER BOOKS
      * =======================================================================
@@ -142,6 +152,32 @@ const booksReducer = (state = initialState, action) => {
       return { ...state, getUserBooks: { ...action.payload } };
     case GET_USER_BOOKS_RESET:
       return { ...state, getUserBooks: { ...initialLoadingState } };
+    /**
+     * =======================================================================
+     * BOOK REVIEWS
+     * =======================================================================
+     */
+     case CREATE_BOOK_REVIEW_START:
+      return { ...state, bookReviews: { ...action.payload } };
+    case CREATE_BOOK_REVIEW_SUCCESS:
+      return { ...state, bookReviews: { ...action.payload } };
+    case CREATE_BOOK_REVIEW_FAILED:
+      return { ...state, bookReviews: { ...action.payload } };
+    case CREATE_BOOK_REVIEW_RESET:
+      return { ...state, bookReviews: { ...initialLoadingState } };
+    /**
+     * =======================================================================
+     * GET ALL BOOK REVIEWS
+     * =======================================================================
+     */
+    case GET_ALL_BOOK_REVIEWS_START:
+      return { ...state, getAllbookReviews: { ...action.payload } };
+    case GET_ALL_BOOK_REVIEWS_SUCCESS:
+      return { ...state, getAllbookReviews: { ...action.payload } };
+    case GET_ALL_BOOK_REVIEWS_FAILED:
+      return { ...state, getAllbookReviews: { ...action.payload } };
+    case GET_ALL_BOOK_REVIEWS_RESET:
+      return { ...state, getAllbookReviews: { ...initialLoadingState } };
     default:
     return state;
   }

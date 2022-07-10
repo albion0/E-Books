@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { TablePagination } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import moment from "moment";
+import { Rate } from "antd";
 
 import Ratings from "./Ratings/Ratings";
 import Reviews from "./Reviews/Reviews";
@@ -13,27 +13,31 @@ import bookImg from "../../../assets/images/book.png";
 import ConfirmModal from "../ConfirmModal/ConfirmModal";
 
 import { toastNotification } from "../../../utils/toastNotification";
-import { useHistory } from "react-router";
+// import { useHistory } from "react-router";
 import { useEffect } from "react";
-import { getOneBook } from "../../../store/actions/books";
-import { NavLink } from "react-router-dom";
+import { createBookReview, getOneBook } from "../../../store/actions/books";
+import { NavLink, useHistory } from "react-router-dom";
 
 const ViewBook = (props) => {
   const token = localStorage.getItem("eBook-token");
-  const [rowsPerPage, setRowsPerPage] = useState(10);
-  const [currentPage, setCurrentPage] = useState(1);
+
   const [isLoading, setIsLoading] = useState(false);
   const [book, setBook] = useState({});
   const [genres, setGenres] = useState("Loading...");
   const [totalItems, setTotalItems] = useState(100);
   const [showFeedback, setShowFeedback] = useState(false);
-  const [value, setValue] = useState("");
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [rating, setRating] = useState(0);
 
   const dispatch = useDispatch();
   const { id } = props.match.params;
 
+  const history = useHistory();
+
   const getBookResponse = useSelector(({ books }) => books.getOne);
   const getUser = useSelector(({ auth }) => auth.getOne);
+
   const isBookBought =
     getUser.data?.user.books.findIndex((book) => book._id === id) >= 0;
 
@@ -56,23 +60,39 @@ const ViewBook = (props) => {
   }, [getBookResponse]);
 
   const submitHandler = () => {
-    if (!value) {
+    if (!!title && !!description) {
+      dispatch(
+        createBookReview(
+          { userId: getUser.data.user._id, bookId: id, title, description, rating: rating },
+          {
+            toastNotification,
+            history,
+            pathname: "/book/id",
+            onSuccessMessage: "Review added successfully!",
+            onFailMessage: "Failed to add review!",
+          }
+          )
+      );
+      
+      closeFeedbackMenu();
+    } else {
       toastNotification("error", "Form can't be empty.");
     }
   };
 
-  const cancelHandler = () => {
-    setValue("");
+  const titleInputHandler = (e) => {
+    setTitle(e.target.value);
+  }
+
+  const rateHandler = (e) => {
+    setRating(e);
+  }
+
+  const closeFeedbackMenu = () => {
+    setTitle("");
+    setDescription("");
+    setRating(0);
     setShowFeedback(false);
-  };
-
-  const handleChangePage = (event, newPage) => {
-    setCurrentPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setCurrentPage(0);
   };
 
   return (
@@ -139,27 +159,31 @@ const ViewBook = (props) => {
           <div className={classes.addReply}>
             <div className={classes.rating}>
               <p className={classes.ratingText}>Choose your Rating:</p>
-              <select name="" id="" className={classes.options}>
-                <option value="">1</option>
-                <option value="">2</option>
-                <option value="">3</option>
-                <option value="">4</option>
-                <option value="">5</option>
-              </select>
+              <Rate allowHalf allowClear defaultValue={rating} value={rating} onChange={rateHandler} />
+              <p className={classes.text}>{rating} out of 5</p>
             </div>
 
-            <ReactQuill
-              theme="snow"
-              value={value}
-              onChange={setValue}
-              style={{ height: "150px" }}
-            />
+            <div className={classes.title}>
+              <p className={classes.categoryTxt}>Title</p>
+              <input type="text" placeholder="Title" value={title} className={classes.input} onChange={titleInputHandler} />
+            </div>
+
+            <div className={classes.content}>
+            <p className={classes.categoryTxt}>Description</p>
+              <ReactQuill
+                theme="snow"
+                value={description}
+                placeholder="Description"
+                onChange={setDescription}
+                style={{ height: "150px" }}
+              />
+            </div>
           </div>
           <div className={classes.buttons}>
             <button className={classes.submitBtn} onClick={submitHandler}>
               Submit
             </button>
-            <button className={classes.clearBtn} onClick={cancelHandler}>
+            <button className={classes.clearBtn} onClick={closeFeedbackMenu}>
               Cancel
             </button>
           </div>
@@ -175,22 +199,9 @@ const ViewBook = (props) => {
 
         <div className={classes.constumer}>
           <Ratings />
-          <Reviews />
+          <Reviews bookId={id} />
         </div>
       </section>
-
-      <div className={classes.pagination}>
-        <TablePagination
-          component="div"
-          count={100}
-          page={currentPage}
-          onPageChange={handleChangePage}
-          rowsPerPage={rowsPerPage}
-          onRowsPerPageChange={handleChangeRowsPerPage}
-          style={{ marginBottom: "20px" }}
-          className={classes.table}
-        />
-      </div>
     </div>
   );
 };
