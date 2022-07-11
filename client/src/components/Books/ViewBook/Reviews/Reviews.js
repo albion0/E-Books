@@ -32,7 +32,9 @@ const Reviews = ({ bookId, paginationLimits }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const dispatch = useDispatch();
-  const getAllBookReviewsResponse = useSelector(({ books }) => books.bookReviews);
+  const getAllBookReviewsResponse = useSelector(
+    ({ books }) => books.bookReviews
+  );
 
   /*
   const getBookReviewsResponse = useSelector(({ books }) => books.bookReviews);
@@ -47,16 +49,16 @@ const Reviews = ({ bookId, paginationLimits }) => {
   }, [getBookReviewsResponse.loading]);
   */
 
-  console.log(getAllBookReviewsResponse);
-
   useEffect(() => {
-    paginationLimits({ page: currentPage, limit: currentLimit});
+    paginationLimits({ page: currentPage, limit: currentLimit });
 
-    dispatch(getAllBookReviews({
-      bookId,
-      page: currentPage + 1,
-      limit: currentLimit
-    }))
+    dispatch(
+      getAllBookReviews({
+        bookId,
+        page: currentPage + 1,
+        limit: currentLimit,
+      })
+    );
   }, [currentPage, currentLimit]);
 
   useEffect(() => {
@@ -68,7 +70,6 @@ const Reviews = ({ bookId, paginationLimits }) => {
       const { reviews, totalItems } = getAllBookReviewsResponse.data;
 
       setCurrentReviews(reviews);
-      console.log(reviews);
       setTotalItems(totalItems);
     } else if (getAllBookReviewsResponse && getAllBookReviewsResponse.error) {
       setIsLoading(false);
@@ -96,7 +97,7 @@ const Reviews = ({ bookId, paginationLimits }) => {
 
   return (
     <div>
-      {currentReviews.map(review => (
+      {currentReviews.map((review) => (
         <Review
           key={review._id}
           name={review.name}
@@ -119,7 +120,7 @@ const Reviews = ({ bookId, paginationLimits }) => {
         />
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default Reviews;

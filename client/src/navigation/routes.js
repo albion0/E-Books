@@ -9,6 +9,7 @@ import {
   QuestionOutlined,
   DollarCircleOutlined,
   BookOutlined,
+  StarOutlined,
 } from "@ant-design/icons";
 import { Route, Switch } from "react-router-dom";
 
@@ -57,6 +58,7 @@ const DashboardPayments = React.lazy(() =>
 const BookPurchases = React.lazy(() =>
   import("../views/Dashboard/BookPurchases")
 );
+const DashboardReviews = React.lazy(() => import("../views/Dashboard/Reviews"));
 
 const ROUTES = [
   {
@@ -154,6 +156,16 @@ const ROUTES = [
         icon: DollarCircleOutlined,
         shouldShow: true,
         component: (props) => <BookPurchases {...props} />,
+      },
+      {
+        path: "/dashboard/reviews",
+        key: "reviews",
+        exact: true,
+        role: "admin",
+        categoryName: "Reviews",
+        icon: StarOutlined,
+        shouldShow: true,
+        component: (props) => <DashboardReviews {...props} />,
       },
     ],
   },

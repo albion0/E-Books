@@ -20,6 +20,7 @@ const forumCommentRoutes = require("./routes/forumComments");
 const paymentRoutes = require("./routes/payments.js");
 const bookPurchaseRoutes = require("./routes/bookPurchases");
 const reportRoutes = require("./routes/reports");
+const reviewRoutes = require("./routes/reviews");
 
 const app = express();
 app.use(fileUpload());
@@ -38,6 +39,7 @@ app.use("/api/forumComments", forumCommentRoutes);
 app.use("/api/payments", paymentRoutes);
 app.use("/api/bookPurchases", bookPurchaseRoutes);
 app.use("/api/reports", reportRoutes);
+app.use("/api/reviews", reviewRoutes);
 
 // User error handling middleware.
 app.use(errorHandler);

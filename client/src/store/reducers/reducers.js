@@ -8,6 +8,7 @@ import forumCommentsReducer from "./forumComments";
 import paymentsReducer from "./payments";
 import bookPurchasesReducer from "./bookPurchases";
 import reportsReducer from "./reports";
+import reviewsReducer from "./reviews";
 
 export default combineReducers({
   auth: authReducer,
@@ -19,4 +20,5 @@ export default combineReducers({
   payments: paymentsReducer,
   bookPurchases: bookPurchasesReducer,
   reports: reportsReducer,
+  reviews: reviewsReducer,
 });

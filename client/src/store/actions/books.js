@@ -786,17 +786,18 @@ export const createBookReview = (payload, options) => {
         description,
         rating,
         page,
-        limit
+        limit,
       });
-      console.log('result is')
-      console.log(result);
 
       if (result.data?.success) {
         dispatch(
           createBookReviewSuccess({
             loading: false,
             success: true,
-            data: { reviews: result.data.data.reviews, totalItems: result.data.data.totalItems },
+            data: {
+              reviews: result.data.data.reviews,
+              totalItems: result.data.data.totalItems,
+            },
             error: false,
             errorMessage: null,
           })
@@ -849,7 +850,6 @@ export const getAllBookReviews = (payload) => {
       const result = await ApiClient.get(`books/${bookId}/reviews`, {
         params: { page, limit },
       });
-      console.log(result);
 
       if (result.data?.success) {
         dispatch(

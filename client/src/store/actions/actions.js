@@ -8,3 +8,4 @@ export * from "./forumComments";
 export * from "./payments";
 export * from "./bookPurchases";
 export * from "./reports";
+export * from "./reviews";
