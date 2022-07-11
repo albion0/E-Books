@@ -19,6 +19,7 @@ import { createBookReview, getOneBook } from "../../../store/actions/books";
 import { NavLink, useHistory } from "react-router-dom";
 import { Spin } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
+import moment from "moment";
 
 const ViewBook = (props) => {
   const token = localStorage.getItem("eBook-token");
@@ -66,7 +67,15 @@ const ViewBook = (props) => {
     if (!!title && !!description) {
       dispatch(
         createBookReview(
-          { userId: getUser.data.user._id, bookId: id, title, description, rating: rating, page, limit },
+          {
+            userId: getUser.data.user._id,
+            bookId: id,
+            title,
+            description,
+            rating: rating,
+            page,
+            limit,
+          },
           {
             toastNotification,
             history,
@@ -76,7 +85,7 @@ const ViewBook = (props) => {
           }
         )
       );
-      
+
       closeFeedbackMenu();
     } else {
       toastNotification("error", "Form can't be empty.");
@@ -85,11 +94,11 @@ const ViewBook = (props) => {
 
   const titleInputHandler = (e) => {
     setTitle(e.target.value);
-  }
+  };
 
   const rateHandler = (e) => {
     setRating(e);
-  }
+  };
 
   const closeFeedbackMenu = () => {
     setTitle("");
@@ -101,8 +110,8 @@ const ViewBook = (props) => {
   const handlePaginationLimits = ({ page, limit }) => {
     setPage(page + 1);
     setLimit(limit);
-  }
-  
+  };
+
   if (isLoading)
     return (
       <div
@@ -133,7 +142,9 @@ const ViewBook = (props) => {
                 : "Loading..."}
             </p>
             <p className={classes.price}>Price: {book.credits} Credits</p>
-            <p className={classes.date}>Date: {book.createdAt}</p>
+            <p className={classes.date}>
+              Date: {moment(book.createdAt).format("DD/MM/YYYY")}
+            </p>
             <p className={classes.reviews}>Total Reviews: 10</p>
             {!token ? (
               <button className={classes.addFeedback}>
@@ -177,17 +188,29 @@ const ViewBook = (props) => {
           <div className={classes.addReply}>
             <div className={classes.rating}>
               <p className={classes.ratingText}>Choose your Rating:</p>
-              <Rate allowHalf allowClear defaultValue={rating} value={rating} onChange={rateHandler} />
+              <Rate
+                allowHalf
+                allowClear
+                defaultValue={rating}
+                value={rating}
+                onChange={rateHandler}
+              />
               <p className={classes.text}>{rating} out of 5</p>
             </div>
 
             <div className={classes.title}>
               <p className={classes.categoryTxt}>Title</p>
-              <input type="text" placeholder="Title" value={title} className={classes.input} onChange={titleInputHandler} />
+              <input
+                type="text"
+                placeholder="Title"
+                value={title}
+                className={classes.input}
+                onChange={titleInputHandler}
+              />
             </div>
 
             <div className={classes.content}>
-            <p className={classes.categoryTxt}>Description</p>
+              <p className={classes.categoryTxt}>Description</p>
               <ReactQuill
                 theme="snow"
                 value={description}

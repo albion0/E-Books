@@ -100,7 +100,9 @@ const ViewMyBook = (props) => {
                 : "Loading..."}
             </p>
             <p className={classes.price}>Price: {book.credits} Credits</p>
-            <p className={classes.date}>Date: {book.createdAt}</p>
+            <p className={classes.date}>
+              Date: {moment(book.createdAt).format("DD/MM/YYYY")}
+            </p>
             <p className={classes.reviews}>Total Reviews: 10</p>
 
             {loadingButton ? (
