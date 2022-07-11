@@ -354,6 +354,8 @@ export const ListBooks = () => {
       </Button>
 
       <Filters
+        bookName={bookName}
+        bookCredits={bookCredits}
         handleSearchChange={handleSearchChange}
         onAuthorChange={onAuthorChange}
         selectedAuthor={selectedAuthor}

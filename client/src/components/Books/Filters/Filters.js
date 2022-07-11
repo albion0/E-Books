@@ -5,6 +5,7 @@ import { MinusCircleOutlined } from "@ant-design/icons";
 
 const Filters = ({
   bookName,
+  bookCredits,
   handleSearchChange,
   onAuthorChange,
   selectedAuthor,
@@ -145,6 +146,7 @@ const Filters = ({
             id="basic-url"
             onBlur={(e) => handleCreditsChange("credits", e.target.value)}
             aria-describedby="basic-addon3"
+            defaultValue={bookCredits || ""}
             style={{
               fontSize: "15.5px",
               height: "37.5px",

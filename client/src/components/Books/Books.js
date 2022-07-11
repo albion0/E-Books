@@ -182,6 +182,7 @@ const Books = () => {
       <div className={classes.wrapper}>
         <Filters
           bookName={bookName}
+          bookCredits={bookCredits}
           handleSearchChange={handleSearchChange}
           onAuthorChange={onAuthorChange}
           selectedAuthor={selectedAuthor}

@@ -3,6 +3,7 @@ import classes from "./ContactUs.module.css";
 import { useState } from "react";
 import Api from "../../api";
 import "./contactus.scss";
+import { toastNotification } from "../../utils/toastNotification";
 //import "./ContactUs.css";
 
 const ContactUs = () => {
@@ -20,7 +21,9 @@ const ContactUs = () => {
     };
 
     Api("auth/sendEmail", "POST", body)
-      .then(() => setSuccess("Email sent successfully, thank you!"))
+      .then(() =>
+        toastNotification("success", "Email sent successfully, thank you!")
+      )
       .catch((err) => {});
   };
 
