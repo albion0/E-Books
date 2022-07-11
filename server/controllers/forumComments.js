@@ -41,8 +41,9 @@ function getOne(req, res, next) {
 }
 
 function create(req, res, next) {
+  const userId = req.user._id.toString();
   forumCommentService
-    .create(req.body, req.user)
+    .create(req.body, req.user, userId)
     .then((forumComment) =>
       res.status(statusCodes.OK).json({
         success: true,

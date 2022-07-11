@@ -16,8 +16,8 @@ async function getById(id) {
   return await getForumTopic(id);
 }
 
-async function create(params, user) {
-  const payload = { ...params, user };
+async function create(params, user, userId) {
+  const payload = { ...params, user, userId };
   const forumTopic = new db.ForumTopic(payload);
 
   // save forumTopic

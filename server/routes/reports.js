@@ -6,11 +6,21 @@ const router = express.Router();
 const authorize = require("../middlewares/authorizeUser");
 const protect = require("../middlewares/protect");
 const { Admin } = require("../middlewares/roles");
-const { getCounts, getBooks, getPayments } = require("../controllers/reports");
+const {
+  getCounts,
+  getBooks,
+  getPayments,
+  getBookPurchases,
+  getReviews,
+  getForum,
+} = require("../controllers/reports");
 const {
   validateCounts,
   validateBooks,
   validatePayments,
+  validateBookPurchases,
+  validateReviews,
+  validateForum,
 } = require("../validations/reports");
 const { validate } = require("../utils/functions");
 
@@ -24,6 +34,20 @@ router
 router
   .route("/payments")
   .post(authorize, protect(Admin), validate(validatePayments), getPayments);
+router
+  .route("/bookPurchases")
+  .post(
+    authorize,
+    protect(Admin),
+    validate(validateBookPurchases),
+    getBookPurchases
+  );
+router
+  .route("/reviews")
+  .post(authorize, protect(Admin), validate(validateReviews), getReviews);
+router
+  .route("/forum")
+  .post(authorize, protect(Admin), validate(validateForum), getForum);
 
 // Exports of this file.
 module.exports = router;

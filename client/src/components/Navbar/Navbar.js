@@ -142,16 +142,16 @@ const Navbar = () => {
             </li>
             <li>
               <Button
-                className="pb-1"
+                className="pb-2"
                 onClick={handleLogout}
                 style={{
                   border: "none",
                   backgroundColor: "transparent",
-                  height: "26px",
+                  height: "24.5px",
                 }}
               >
                 <LogoutOutlined
-                  style={{ fontSize: "15px", marginBottom: "3px" }}
+                  style={{ fontSize: "15px", paddingBottom: "5px" }}
                 />
               </Button>
             </li>

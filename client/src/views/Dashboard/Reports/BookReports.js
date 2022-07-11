@@ -154,77 +154,104 @@ export const BookReports = ({ startDate, endDate }) => {
   };
 
   const genreChartData = {
-    height: 480,
-    type: "bar",
+    height: 328,
+    type: "donut",
     options: {
       chart: {
-        id: "bar-chart",
-        stacked: true,
-        toolbar: {
-          show: true,
-        },
-        zoom: {
-          enabled: true,
-        },
-      },
-      responsive: [
-        {
-          breakpoint: 480,
-          options: {
-            legend: {
-              position: "bottom",
-              offsetX: -10,
-              offsetY: 0,
-            },
-          },
-        },
-      ],
-      plotOptions: {
-        bar: {
-          horizontal: false,
-          columnWidth: "50%",
-        },
-      },
-      xaxis: {
-        type: "category",
-        categories: booksByGenresLabels,
-      },
-      legend: {
-        show: true,
-        fontSize: "14px",
-        fontFamily: `'Roboto', sans-serif`,
-        position: "bottom",
-        offsetX: 20,
-        labels: {
-          useSeriesColors: false,
-        },
-        markers: {
-          width: 16,
-          height: 16,
-          radius: 5,
-        },
-        itemMargin: {
-          horizontal: 15,
-          vertical: 8,
-        },
-      },
-      fill: {
-        type: "solid",
+        id: "revenue-chart",
       },
       dataLabels: {
         enabled: false,
       },
-      grid: {
+      labels: booksByGenresLabels,
+      legend: {
         show: true,
+        position: "bottom",
+        fontFamily: "inherit",
+        labels: {
+          colors: "inherit",
+        },
+        itemMargin: {
+          horizontal: 10,
+          vertical: 10,
+        },
       },
     },
-    series: [
-      {
-        name: "Books",
-        data: booksByGenresData,
-      },
-    ],
+    series: booksByGenresData,
   };
+
+  // const genreChartData = {
+  //   height: 480,
+  //   type: "bar",
+  //   options: {
+  //     chart: {
+  //       id: "bar-chart",
+  //       stacked: true,
+  //       toolbar: {
+  //         show: true,
+  //       },
+  //       zoom: {
+  //         enabled: true,
+  //       },
+  //     },
+  //     responsive: [
+  //       {
+  //         breakpoint: 480,
+  //         options: {
+  //           legend: {
+  //             position: "bottom",
+  //             offsetX: -10,
+  //             offsetY: 0,
+  //           },
+  //         },
+  //       },
+  //     ],
+  //     plotOptions: {
+  //       bar: {
+  //         horizontal: false,
+  //         columnWidth: "50%",
+  //       },
+  //     },
+  //     xaxis: {
+  //       type: "category",
+  //       categories: booksByGenresLabels,
+  //     },
+  //     legend: {
+  //       show: true,
+  //       fontSize: "14px",
+  //       fontFamily: `'Roboto', sans-serif`,
+  //       position: "bottom",
+  //       offsetX: 20,
+  //       labels: {
+  //         useSeriesColors: false,
+  //       },
+  //       markers: {
+  //         width: 16,
+  //         height: 16,
+  //         radius: 5,
+  //       },
+  //       itemMargin: {
+  //         horizontal: 15,
+  //         vertical: 8,
+  //       },
+  //     },
+  //     fill: {
+  //       type: "solid",
+  //     },
+  //     dataLabels: {
+  //       enabled: false,
+  //     },
+  //     grid: {
+  //       show: true,
+  //     },
+  //   },
+  //   series: [
+  //     {
+  //       name: "Books",
+  //       data: booksByGenresData,
+  //     },
+  //   ],
+  // };
 
   if (booksByAuthorsResponse.loading || booksByGenresResponse.loading) {
     return <div class="Stats-loader">Loading...</div>;

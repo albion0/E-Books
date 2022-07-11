@@ -28,8 +28,9 @@ function getOne(req, res, next) {
 }
 
 function create(req, res, next) {
+  const userId = req.user._id.toString();
   forumTopicService
-    .create(req.body, req.user)
+    .create(req.body, req.user, userId)
     .then((forumTopic) =>
       res.status(statusCodes.OK).json({
         success: true,

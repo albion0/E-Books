@@ -209,5 +209,230 @@ const getPayments = asyncHandler(async (request, response, next) => {
   }
 });
 
+const getBookPurchases = asyncHandler(async (request, response, next) => {
+  const { startDate, endDate, type } = request.body;
+
+  let query = {};
+
+  if (startDate && !endDate)
+    query = {
+      isActive: true,
+      isDeleted: false,
+      createdAt: { $gte: new Date(startDate) },
+    };
+  else if (!startDate && endDate)
+    query = {
+      isActive: true,
+      isDeleted: false,
+      createdAt: { $lte: new Date(endDate) },
+    };
+  else if (startDate && endDate)
+    query = {
+      isActive: true,
+      isDeleted: false,
+      createdAt: { $gte: new Date(startDate), $lte: new Date(endDate) },
+    };
+  else query = {};
+
+  if (type === "BY_READERS") {
+    const users = await User.find({
+      isActive: true,
+      isDeleted: false,
+    }).select("_id username");
+    const responseArr = [];
+
+    for (const user of users) {
+      const count = await BookPurchase.countDocuments({
+        user: { $in: [user._id] },
+        ...query,
+      });
+      responseArr.push([user.username, count]);
+    }
+
+    response
+      .status(statusCodes.OK)
+      .json({ success: true, data: { bookPurchases: responseArr } });
+    return;
+  } else if (type === "BY_BOOKS") {
+    const books = await Book.find({
+      isActive: true,
+      isDeleted: false,
+    }).select("_id title");
+    const responseArr = [];
+
+    for (const book of books) {
+      const count = await BookPurchase.countDocuments({
+        book: { $in: [book._id] },
+        ...query,
+      });
+      responseArr.push([book.title, count]);
+    }
+
+    response
+      .status(statusCodes.OK)
+      .json({ success: true, data: { bookPurchases: responseArr } });
+    return;
+  } else {
+    next(
+      new ApiError("Wrong filter type", "WRONG_TYPE", statusCodes.BAD_REQUEST)
+    );
+    return;
+  }
+});
+
+const getReviews = asyncHandler(async (request, response, next) => {
+  const { startDate, endDate, type } = request.body;
+
+  let query = {};
+
+  if (startDate && !endDate)
+    query = {
+      isActive: true,
+      isDeleted: false,
+      createdAt: { $gte: new Date(startDate) },
+    };
+  else if (!startDate && endDate)
+    query = {
+      isActive: true,
+      isDeleted: false,
+      createdAt: { $lte: new Date(endDate) },
+    };
+  else if (startDate && endDate)
+    query = {
+      isActive: true,
+      isDeleted: false,
+      createdAt: { $gte: new Date(startDate), $lte: new Date(endDate) },
+    };
+  else query = {};
+
+  if (type === "BY_READERS") {
+    const users = await User.find({
+      isActive: true,
+      isDeleted: false,
+    }).select("_id username");
+    const responseArr = [];
+
+    for (const user of users) {
+      const count = await Review.countDocuments({
+        user: { $in: [user._id] },
+        ...query,
+      });
+      responseArr.push([user.username, count]);
+    }
+
+    response
+      .status(statusCodes.OK)
+      .json({ success: true, data: { reviews: responseArr } });
+    return;
+  } else if (type === "BY_BOOKS") {
+    const books = await Book.find({
+      isActive: true,
+      isDeleted: false,
+    }).select("_id title");
+    const responseArr = [];
+
+    for (const book of books) {
+      const count = await Review.countDocuments({
+        book: { $in: [book._id] },
+        ...query,
+      });
+      responseArr.push([book.title, count]);
+    }
+
+    response
+      .status(statusCodes.OK)
+      .json({ success: true, data: { reviews: responseArr } });
+    return;
+  } else {
+    next(
+      new ApiError("Wrong filter type", "WRONG_TYPE", statusCodes.BAD_REQUEST)
+    );
+    return;
+  }
+});
+
+const getForum = asyncHandler(async (request, response, next) => {
+  const { startDate, endDate, type } = request.body;
+
+  let mysqlquery = {};
+
+  if (startDate && !endDate)
+    mysqlquery = {
+      createdAt: {
+        [Op.gte]: new Date(startDate),
+      },
+    };
+  else if (!startDate && endDate)
+    mysqlquery = {
+      createdAt: { [Op.lte]: new Date(endDate) },
+    };
+  else if (startDate && endDate)
+    mysqlquery = {
+      createdAt: {
+        [Op.gte]: new Date(startDate),
+        [Op.lte]: new Date(endDate),
+      },
+    };
+  else mysqlquery = {};
+
+  if (type === "FORUM_TOPICS") {
+    const users = await User.find({
+      isActive: true,
+      isDeleted: false,
+    }).select("_id username");
+    const responseArr = [];
+
+    for (const user of users) {
+      const userId = user._id.toString();
+      const count = await db.ForumTopic.count({
+        where: {
+          userId: { [Op.in]: [userId] },
+          ...mysqlquery,
+        },
+      });
+      responseArr.push([user.username, count]);
+    }
+
+    response
+      .status(statusCodes.OK)
+      .json({ success: true, data: { forumTopics: responseArr } });
+    return;
+  } else if (type === "FORUM_COMMENTS") {
+    const users = await User.find({
+      isActive: true,
+      isDeleted: false,
+    }).select("_id username");
+    const responseArr = [];
+
+    for (const user of users) {
+      const userId = user._id.toString();
+      const count = await db.ForumComment.count({
+        where: {
+          userId: { [Op.in]: [userId] },
+          ...mysqlquery,
+        },
+      });
+      responseArr.push([user.username, count]);
+    }
+
+    response
+      .status(statusCodes.OK)
+      .json({ success: true, data: { forumComments: responseArr } });
+    return;
+  } else {
+    next(
+      new ApiError("Wrong filter type", "WRONG_TYPE", statusCodes.BAD_REQUEST)
+    );
+    return;
+  }
+});
+
 // Exports of this file.
-module.exports = { getCounts, getBooks, getPayments };
+module.exports = {
+  getCounts,
+  getBooks,
+  getPayments,
+  getBookPurchases,
+  getReviews,
+  getForum,
+};

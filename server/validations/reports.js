@@ -26,6 +26,36 @@ const validator = {
       type: Joi.string().optional().default(null).allow("BY_READERS"),
     }),
   },
+  validateBookPurchases: {
+    body: Joi.object({
+      startDate: Joi.date().optional().default(null),
+      endDate: Joi.date().optional().default(null),
+      type: Joi.string()
+        .optional()
+        .default(null)
+        .allow("BY_READERS", "BY_BOOKS"),
+    }),
+  },
+  validateReviews: {
+    body: Joi.object({
+      startDate: Joi.date().optional().default(null),
+      endDate: Joi.date().optional().default(null),
+      type: Joi.string()
+        .optional()
+        .default(null)
+        .allow("BY_READERS", "BY_BOOKS"),
+    }),
+  },
+  validateForum: {
+    body: Joi.object({
+      startDate: Joi.date().optional().default(null),
+      endDate: Joi.date().optional().default(null),
+      type: Joi.string()
+        .optional()
+        .default(null)
+        .allow("FORUM_TOPICS", "FORUM_COMMENTS"),
+    }),
+  },
 };
 
 // Exports of this file.

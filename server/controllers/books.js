@@ -496,6 +496,8 @@ const bookReview = asyncHandler(async (request, response, next) => {
     title,
     description,
     rating,
+    user: userId,
+    book: bookId,
     createdBy: user,
   });
 
@@ -524,18 +526,17 @@ const bookReview = asyncHandler(async (request, response, next) => {
     return;
   }
 
-    // pagination
-    const reviews = [];
-    for (let i = (page - 1) * limit; i < limit * page; i++) {
-      const review = await Review.findOne({ _id: book.reviews[i] });
-      if (!review) break;
-      reviews.push(review);
-    }
+  // pagination
+  const reviews = [];
+  for (let i = (page - 1) * limit; i < limit * page; i++) {
+    const review = await Review.findOne({ _id: book.reviews[i] });
+    if (!review) break;
+    reviews.push(review);
+  }
 
   response.status(statusCodes.OK).json({
     success: true,
-    data: { reviews: reviews, totalItems: book.reviews.length }
-  })
+    data: { reviews: reviews, totalItems: book.reviews.length },
   });
 });
 
@@ -587,7 +588,7 @@ module.exports = {
   userBooks,
   downloadBook,
   bookReview,
-  getBookReviews
+  getBookReviews,
 };
 
 const getDefaultQuery = (request) => {

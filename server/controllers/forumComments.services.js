@@ -23,8 +23,8 @@ async function getById(id) {
   return await getForumComment(id);
 }
 
-async function create(params, user) {
-  const payload = { ...params, user };
+async function create(params, user, userId) {
+  const payload = { ...params, user, userId };
   const forumComment = new db.ForumComment(payload);
 
   // save forumComment

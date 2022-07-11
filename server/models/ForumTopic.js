@@ -8,6 +8,7 @@ function model(sequelize) {
     topic: { type: DataTypes.STRING, allowNull: false },
     content: { type: DataTypes.STRING, allowNull: false },
     user: { type: DataTypes.JSON, allowNull: false },
+    userId: { type: DataTypes.STRING, allowNull: false },
   };
 
   return sequelize.define("ForumTopic", attributes);

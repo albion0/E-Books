@@ -20,6 +20,9 @@ import "react-datetime/css/react-datetime.css";
 import "../../style/stats.scss";
 import { BookReports } from "./Reports/BookReports";
 import { PaymentReports } from "./Reports/PaymentReports";
+import { BookPurchaseReports } from "./Reports/BookPurchaseReports";
+import { ReviewReports } from "./Reports/ReviewReports";
+import { ForumReports } from "./Reports/ForumReports";
 
 const { TabPane } = Tabs;
 
@@ -230,7 +233,7 @@ const StatisticPage = () => {
                     ? countsResponse.data.counts.authorCount
                     : null}
                 </div>
-                <div className="text-uppercase">Author</div>
+                <div className="text-uppercase">Authors</div>
               </div>
             </div>
           </Col>
@@ -417,6 +420,15 @@ const StatisticPage = () => {
               </TabPane>
               <TabPane tab="Payments" key="payments">
                 <PaymentReports startDate={startDate} endDate={endDate} />
+              </TabPane>
+              <TabPane tab="Book Purchases" key="bookPurchases">
+                <BookPurchaseReports startDate={startDate} endDate={endDate} />
+              </TabPane>
+              <TabPane tab="Reviews" key="reviews">
+                <ReviewReports startDate={startDate} endDate={endDate} />
+              </TabPane>
+              <TabPane tab="Forum" key="forum">
+                <ForumReports startDate={startDate} endDate={endDate} />
               </TabPane>
             </Tabs>
           </div>
