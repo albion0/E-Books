@@ -4,6 +4,7 @@ import { Chip, Stack, Button } from "@mui/material";
 import { MinusCircleOutlined } from "@ant-design/icons";
 
 const Filters = ({
+  bookName,
   handleSearchChange,
   onAuthorChange,
   selectedAuthor,
@@ -33,6 +34,7 @@ const Filters = ({
             className="form-control"
             id="basic-url"
             onBlur={(e) => handleSearchChange("bookName", e.target.value)}
+            defaultValue={bookName || ""}
             aria-describedby="basic-addon3"
             style={{
               fontSize: "15.5px",

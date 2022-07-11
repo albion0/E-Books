@@ -48,9 +48,24 @@ const Books = () => {
         page: currentPage + 1,
         limit: currentLimit,
         pagination: true,
+        bookName: bookName || null,
+        bookCredits: bookCredits || null,
+        authors: authorChips?.length
+          ? authorChips.map((author) => author._id)
+          : null,
+        genres: genreChips?.length
+          ? genreChips.map((genre) => genre._id)
+          : null,
       })
     );
-  }, [currentLimit, currentPage]);
+  }, [
+    currentLimit,
+    currentPage,
+    bookName,
+    bookCredits,
+    authorChips,
+    genreChips,
+  ]);
 
   useEffect(() => {
     if (getAllBooksResponse && getAllBooksResponse.loading) {
@@ -114,8 +129,6 @@ const Books = () => {
       default:
         break;
     }
-
-    recallFilteredBooks();
   };
   const onGenreChange = (genre, type) => {
     switch (type) {
@@ -137,36 +150,14 @@ const Books = () => {
       default:
         break;
     }
-
-    recallFilteredBooks();
-  };
-
-  const recallFilteredBooks = () => {
-    dispatch(
-      getAllBooks({
-        page: currentPage + 1,
-        limit: currentLimit,
-        pagination: true,
-        bookName: bookName || null,
-        bookCredits: bookCredits || null,
-        authors: authorChips?.length
-          ? authorChips.map((author) => author._id)
-          : null,
-        genres: genreChips?.length
-          ? genreChips.map((genre) => genre._id)
-          : null,
-      })
-    );
   };
 
   const handleSearchChange = (field, value) => {
     setBookName(value);
-    recallFilteredBooks();
   };
 
   const handleCreditsChange = (field, value) => {
     setBookCredits(value);
-    recallFilteredBooks();
   };
 
   const handleReset = () => {
@@ -190,6 +181,7 @@ const Books = () => {
     <>
       <div className={classes.wrapper}>
         <Filters
+          bookName={bookName}
           handleSearchChange={handleSearchChange}
           onAuthorChange={onAuthorChange}
           selectedAuthor={selectedAuthor}
